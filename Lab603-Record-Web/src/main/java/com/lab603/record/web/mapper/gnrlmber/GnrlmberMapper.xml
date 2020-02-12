@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 회원등록 -->
+<mapper namespace="com.lab603.record.web.mapper.gnrlmber.GnrlmberMapper">
+
+	<sql id="addWhere">
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+		SELECT
+			COUNT(0)
+		FROM
+			COMTN_GNRLMBER
+		WHERE 1=1
+		<include refid="addWhere"/>
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 	 MBER_ID				as mberId				<!-- 회원ID -->
+				,UNIQ_ID				as uniqId				<!-- 고유ID -->
+				,PASSWORD				as password				<!-- 비밀번호 -->
+				,MBER_NAME				as mberName				<!-- 이름 -->
+				,MBER_STTUS				as mberSttus			<!-- 상태 -->
+				,MBER_ROLE				as mberRole				<!-- 회원등급 -->
+				,MOBLPHON_NO			as moblphonNo			<!-- 휴대폰번호 -->
+				,EMAIL_ADDRESS			as emailAddress			<!-- Email 주소 -->
+				,FRST_REGISTER_ID		as frstRegisterId		<!-- 최초등록ID -->
+				,LAST_UPDUSR_ID			as lastUpdusrId			<!-- 최종등록ID -->
+				,FRST_REGISTER_PNTTM	as frstRegisterPnttm	<!-- 최초등록일 -->
+				,LAST_UPDUSR_PNTTM		as lastUpdusrPnttm		<!-- 최종등록일 -->
+		FROM
+			 COMTN_GNRLMBER T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+		LIMIT #{start}, #{end}
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+				 MBER_ID				as mberId				<!-- 회원ID -->
+				,UNIQ_ID				as uniqId				<!-- 고유ID -->
+				,PASSWORD				as password				<!-- 비밀번호 -->
+				,MBER_NAME				as mberName				<!-- 이름 -->
+				,MBER_STTUS				as mberSttus			<!-- 상태 -->
+				,MBER_ROLE				as mberRole				<!-- 회원등급 -->
+				,MOBLPHON_NO			as moblphonNo			<!-- 휴대폰번호 -->
+				,EMAIL_ADDRESS			as emailAddress			<!-- Email 주소 -->
+				,FRST_REGISTER_ID		as frstRegisterId		<!-- 최초등록ID -->
+				,LAST_UPDUSR_ID			as lastUpdusrId			<!-- 최종등록ID -->
+				,FRST_REGISTER_PNTTM	as frstRegisterPnttm	<!-- 최초등록일 -->
+				,LAST_UPDUSR_PNTTM		as lastUpdusrPnttm		<!-- 최종등록일 -->
+		FROM
+			 COMTN_GNRLMBER T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+		INSERT INTO COMTN_GNRLMBER
+			(
+			     MBER_ID					<!-- 회원ID -->
+				,UNIQ_ID					<!-- 고유ID -->
+				,PASSWORD					<!-- 비밀번호 -->
+				,MBER_NAME					<!-- 이름 -->
+				,MBER_STTUS					<!-- 상태 -->
+				,MBER_ROLE					<!-- 회원등급 -->
+				,MOBLPHON_NO				<!-- 휴대폰번호 -->
+				,EMAIL_ADDRESS				<!-- Email 주소 -->
+				,FRST_REGISTER_ID			<!-- 최초등록ID -->
+				,FRST_REGISTER_PNTTM		<!-- 최초등록일 -->
+			)
+			 VALUES
+			(
+			  	#{mberId}
+				,#{uniqId}
+				,#{password}
+				,#{mberName}
+				,#{mberSttus}
+				,#{mberRole}
+				,#{moblphonNo}
+				,#{emailAddress}
+				,#{frstRegisterId}
+				,#{frstRegisterPnttm}
+			)
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+		UPDATE COMTN_GNRLMBER
+			 SET
+				 LAST_UPDUSR_ID 	=  #{lastUpdusrId}
+				,LAST_UPDUSR_PNTTM  =  now()
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(mberId)">   		,MBER_ID = #{mberId}  	 </if>  	 <!-- 회원ID -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(uniqId)">   		,UNIQ_ID = #{uniqId}  	 </if>  	 <!-- 고유ID -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(password)">   	,PASSWORD = #{password}  </if>  	 <!-- 비밀번호 -->
+
+
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(mberName)">   	,MBER_NAME = #{mberName}    </if>  <!-- 비밀번호 -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(mberSttus)">   	,MBER_STTUS = #{mberSttus}  </if>  <!-- 상태 -->
+
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(mberRole)">   	,MBER_ROLE = #{mberRole}  		  </if>  <!-- 회원등급 -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(moblphonNo)">    ,MOBLPHON_NO = #{moblphonNo}  	  </if>  <!-- 휴대폰번호 -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(emailAddress)">  ,EMAIL_ADDRESS = #{emailAddress}  </if>  <!-- Email 주소 -->
+
+		WHERE MBER_ID = #{mberId}
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+		DELETE FROM COMTN_GNRLMBER WHERE MBER_ID = #{mberId}
+	</update>
+
+</mapper>

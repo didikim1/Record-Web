@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 수신입금계좌정보 -->
+<mapper namespace="com.lab603.record.web.mapper.playhistory.PlayHistoryMapper">
+
+	<sql id="addWhere">
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+		SELECT
+			COUNT(0)
+		FROM
+			CALL_LISTEN
+		WHERE 1=1
+		<include refid="addWhere"/>
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 LISTENID		as listenid			<!--  녹취듣기이력ID -->
+			,MBER_ID		as mberId			<!-- 회원ID -->
+			,CID			as cid				<!-- 통화이력 고유번호 -->
+			,COPYDIRNAME	as copydirname		<!-- 복사디렉토리 -->
+			,FILENAME		as filename			<!-- 복사파일명 -->
+			,CREATETIME		as createtime		<!-- 생성일 -->
+		FROM
+			 CALL_LISTEN T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+		LIMIT #{start}, #{end}
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 LISTENID		as listenid			<!--  녹취듣기이력ID -->
+			,MBER_ID		as mberId			<!-- 회원ID -->
+			,CID			as cid				<!-- 통화이력 고유번호 -->
+			,COPYDIRNAME	as copydirname		<!-- 복사디렉토리 -->
+			,FILENAME		as filename			<!-- 복사파일명 -->
+			,CREATETIME		as createtime		<!-- 생성일 -->
+		FROM
+			 CALL_LISTEN T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+		INSERT INTO CALL_LISTEN
+			(
+				 MBER_ID		<!-- 회원ID -->
+				,CID			<!-- 통화이력 고유번호 -->
+				,COPYDIRNAME	<!-- 복사디렉토리 -->
+				,FILENAME		<!-- 복사파일명 -->
+				,CREATETIME		<!-- 생성일 -->
+			)
+			 VALUES
+			(
+			   #{mberId}				<!-- 회원ID -->
+			  ,#{cid}					<!-- 통화이력 고유번호 -->
+			  ,#{copydirname}			<!-- 복사디렉토리 -->
+			  ,#{filename}				<!-- 복사파일명 -->
+			  ,NOW()					<!-- 생성일 -->
+			)
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+		UPDATE CALL_LISTEN
+			 SET
+				 MBER_ID 	=  #{mberId}	<!-- 회원ID -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(cid)">    		,CID 			= #{cid}   			</if>  <!-- 통화이력 고유번호  -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(copydirname)">  	,COPYDIRNAME 	= #{copydirname} 	</if>  <!-- 복사디렉토리 -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(filename)">  	,FILENAME 		= #{filename} 		</if>  <!-- 복사파일명 -->
+		WHERE LISTENID = #{listenid}
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+		DELETE FROM CALL_LISTEN WHERE LISTENID = #{listenid}
+	</update>
+
+</mapper>

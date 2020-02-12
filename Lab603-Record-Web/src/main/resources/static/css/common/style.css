@@ -1,0 +1,257 @@
+@font-face {font-family:NanumGothic; src:url(/r2pRecordStreaming/static/lib/font/NanumGothic.eot);}
+@font-face {font-family:NanumGothicbold; src:url(/r2pRecordStreaming/static/lib/font/NanumGothicExtraBold.eot);}
+
+* {box-sizing: border-box;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;}
+
+/* �럹�씠吏� 湲곕낯 �뀑�똿  */
+html, body { 
+	height:100%; 
+	margin:0; 
+	padding:0; 
+	text-align: center;
+	font-family:'�굹�닎怨좊뵓', 'NanumGothic', ng
+	}
+
+html #content { height:100%;}
+
+#head { 
+	position:relative; 
+	height:60px; 
+	background-color:#fff; 
+	z-index: 1;
+	margin: 0 auto;
+	}
+	
+.wrap{
+	min-height: 100%;
+	position: relative;
+	padding-bottom: 60px; 
+/* 	background-color: #F6F6F6; */
+	}
+	
+#content { 
+	min-height:100%; 
+	margin:-60px 0 -60px 0; 
+	}
+
+#box {padding:250px 0 150px;}
+
+#footer {
+	height:130px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color:#f2f2f3;
+	border-top: 1px solid #ebeef3;
+	}
+	
+	
+/* �럹�씠吏� 湲곕낯 �뀑�똿  */	
+
+/*  �뿤�뜑   */
+#layout_top {
+	width:1030px;
+	height:48px;
+	min-width:1030px;
+	margin: 0 auto;
+ 	}
+	
+#layout_top div.company {
+		float:left;
+		width:250px;
+		height:40px;
+		margin-top: 10px;
+		}
+		
+#layout_top div.rbtn {
+		float:right;
+		width:300px;
+		height:45px;
+		margin-top: 5px;
+		padding-top :7px;
+		font-size:11px;
+		color:#b8b8b9;
+		border: 1px solid #eee;
+		border-radius: 2px;
+		background-color: #eee;
+		box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+		behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+		}
+		
+#layout_menu {
+	margin-top: 10px;
+	background-color: #464646; 
+	box-shadow: 0 1px 3px rgba(0,0,0,.3);
+	behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+}
+
+#layout_top div.rbtn button.header_button { 
+	width: 70px; 
+	height: 30px;
+	margin-left: 20px;
+	background-color:#464646; 
+	border:solid 1px transparent; 
+	font-size:12px; 
+	color:#fff; 
+	cursor:pointer; 
+	box-shadow: 0 2px 3px rgba(0,0,0,0.4);
+	behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+	}		
+
+#layout_top div.rbtn button.header_button:hover{
+	background-color:#848484;
+}		
+
+#layout_top div.rbtn font.rbtn_font1 {
+	color: #1b1b1b; 
+	font-size: 14px
+}
+
+#layout_top div.rbtn font.rbtn_font2 {
+	color: #1b1b1b; 
+	font-size: 14px
+}
+
+/* �뿤�뜑    */	
+
+
+/*  �뭼�꽣   */
+
+#footer div.footer_div1{
+	width: 280px;
+	height: 40px;
+	margin:5px auto 5px auto;
+	vertical-align: middle;
+	padding: 12px;
+}
+
+#footer div.footer_div2{
+	width: 700px;
+	height: 45px;
+	text-align: left;
+	margin:25px auto 5px auto;
+	text-align:center;
+	vertical-align: middle;
+}
+
+#footer div.footer_div2 span.footer_font1{
+	font-size:10pt;
+	color: #293c66;
+}
+
+#footer div.footer_div2 span.footer_font2{
+	font-size:10pt;
+	color:464646;
+}
+
+	
+/*  �뭼�꽣   */	
+	
+	
+	
+/* �럹�씠吏�	 */
+.pagination {
+  display: inline-block;
+  padding-left: 0;
+  margin: 20px 0;
+  border-radius: 4px;
+  behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+}
+.pagination > li {
+	display: inline;
+}
+.pagination > li > a,
+.pagination > li > span {
+  position: relative;
+  float: left;
+  padding: 6px 12px;
+  margin-left: -1px;
+  line-height: 1.42857143;
+  color: #999;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  margin-right: 5px;
+  behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+}
+
+.pagination i.line {
+	line-height: 1.32857143;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  margin-left: 0;
+  border-radius: 2px;
+  behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+}
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-radius:2px;
+  behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+}
+.pagination > li > a:hover,
+.pagination > li > span:hover,
+.pagination > li > a:focus,
+.pagination > li > span:focus {
+  color: #23527c;
+  border-color: #ddd;
+  background-color: #F9F9F9;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 2;
+  color: #555;
+  cursor: default;
+  border-color: #AAA;
+  background-color: #F9F9F9;
+}
+.pagination > .disabled > span,
+.pagination > .disabled > span:hover,
+.pagination > .disabled > span:focus,
+.pagination > .disabled > a,
+.pagination > .disabled > a:hover,
+.pagination > .disabled > a:focus {
+  color: #777;
+  cursor: not-allowed;
+  border-color: #ddd;
+}
+.pagination-sm > li > a,
+.pagination-sm > li > span {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.pagination-sm > li:first-child > a,
+.pagination-sm > li:first-child > span {
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+.pagination-sm > li:last-child > a,
+.pagination-sm > li:last-child > span {
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}	
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}	
+	
+/* table hover	 */
+.table-hover > tbody > tr:hover {
+  background-color: #f5f5f5;
+}
+
+	
+
+
+
+

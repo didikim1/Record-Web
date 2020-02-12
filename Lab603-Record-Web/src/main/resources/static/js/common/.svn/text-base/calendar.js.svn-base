@@ -1,0 +1,326 @@
+<!--
+var cal_Day = "";
+var menuPopup;
+var scriptId;
+var splitC;
+var scriptName;
+var callbackFn; // 콜백함수
+
+menuDelay1 = 50;
+menuSpeed1 = 5;
+menuWidth1 = 180;
+menuHeight1 = 200;
+
+var menuXPos = "";
+var menuYPos = "";
+
+function day2(d) {
+    var str = new String();
+    if (parseInt(d) < 10) {
+        str = "0" + parseInt(d);
+    } else {
+        str = "" + parseInt(d);
+    }
+    return str;
+}
+function setCusDate(returnStr) {
+    menuPopup.hide();
+    setCalDate(scriptId, returnStr);
+}
+function setCalDate(targetName, returnStr) {
+    var returnValue = new String(returnStr);
+
+    if (this.splitC != undefined) {
+        returnValue = returnValue.substr(0, 4) + this.splitC + returnValue.substr(4, 2) + this.splitC + returnValue.substr(6, 2);
+    } else {
+        returnValue = returnStr;
+    }
+    eval(scriptId).value = returnValue;
+
+    if (this.callbackFn != undefined)
+        eval(this.callbackFn);
+}
+function doClick(el) {
+    cal_Day = el.title;
+    el.style.borderColor = "red";
+
+    // 날자 값이있으면
+    if (cal_Day.length > 7) {
+        setCalDate(scriptId, cal_Day);
+    }
+
+    menuPopup.hide();
+}
+function doOver(el) {
+    cal_Day = el.title;
+
+    // 날자 값이 있으면.
+    if (cal_Day.length > 7) {
+        el.style.borderTopColor = el.style.borderLeftColor = "buttonhighlight";
+        el.style.borderRightColor = el.style.borderBottomColor = "buttonshadow";
+    }
+}
+function doOut(el) {
+    cal_Day = el.title;
+
+    if (cal_Day.length > 7) {
+        el.style.borderColor = "white";
+    }
+}
+function makeYearCombo(year, month, day) {
+    var min = parseInt(year) - 100;
+    var max = parseInt(year) + 100;
+    var i = 0;
+    var str = "";
+
+    str = "<SELECT  onChange='parent.showCalendar(this.value," + month + "," + day + ");' onmouseover=parent.doOver(window.event.srcElement);>";
+
+    for (i = max; i >= min; i--) {
+        if (i == parseInt(year)) {
+            str += "<OPTION VALUE=" + i + " selected onmouseover=parent.doOver(window.event.srcElement);>" + i + "</OPTION>";
+        } else {
+            str += "<OPTION VALUE=" + i + " onmouseover=parent.doOver(window.event.srcElement);>" + i + "</OPTION>";
+        }
+    }
+
+    str += "</SELECT>";
+    return str;
+}
+function makeMonthCombo(year, month, day) {
+    var i = new Number();
+    var str = new String();
+
+    str = "<SELECT onChange='parent.showCalendar(" + year + ",this.value," + day + ");' onmouseover=parent.doOver(window.event.srcElement);>";
+
+    for (i = 1; i <= 12; i++) {
+        if (i == parseInt(month)) {
+            str += "<OPTION VALUE=" + i + " selected onmouseover=parent.doOver(window.event.srcElement);>" + i + "</OPTION>";
+        } else {
+            str += "<OPTION VALUE=" + i + " onmouseover=parent.doOver(window.event.srcElement);>" + i + "</OPTION>";
+        }
+    }
+
+    str += "</SELECT>";
+    return str;
+}
+function makeCalendar(sYear, sMonth, sDay) {
+    var lastDays = new Array(0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    var intThisYear = 0;
+    var intThisMonth = 0;
+    var intThisDay = 0;
+    var intFirstWeekday;
+    var intThisWeekday;
+    var NowThisMonth;
+    var inHtml = "";
+
+    datToday = new Date();
+    intThisYear = parseInt(sYear);
+    intThisMonth = parseInt(sMonth);
+    intThisDay = parseInt(sDay);
+
+    // 값이 없을 경우
+    if (intThisYear == 0)
+        intThisYear = datToday.getFullYear();
+    // 월 값은 실제값 보다 -1 한 값이 돼돌려 진다.
+    if (intThisMonth == 0)
+        intThisMonth = parseInt(datToday.getMonth()) + 1;
+    if (intThisDay == 0)
+        intThisDay = datToday.getDate();
+
+    switch (intThisMonth) {
+        case 1:
+            intPrevYear = intThisYear - 1;
+            intPrevMonth = 12;
+            intNextYear = intThisYear;
+            intNextMonth = 2;
+            break;
+        case 12:
+            intPrevYear = intThisYear;
+            intPrevMonth = 11;
+            intNextYear = intThisYear + 1;
+            intNextMonth = 1;
+            break;
+        default:
+            intPrevYear = intThisYear;
+            intPrevMonth = parseInt(intThisMonth) - 1;
+            intNextYear = intThisYear;
+            intNextMonth = parseInt(intThisMonth) + 1;
+            break;
+    }
+
+    NowThisYear = datToday.getFullYear();
+    NowThisMonth = datToday.getMonth() + 1;
+    NowThisDay = datToday.getDate();
+
+    datFirstDay = new Date(intThisYear, intThisMonth - 1, 1);
+
+    var intFirstWeekday = datFirstDay.getDay();
+
+    intThirdWeekday = datFirstDay.getDay();
+    datThisDay = new Date(intThisYear, intThisMonth, intThisDay);
+
+    intPrintDay = 1;
+    secondPrintDay = 1;
+    thirdPrintDay = 1;
+    Stop_Flag = 0;
+
+    if ((intThisYear % 4) == 0) {
+        if ((intThisYear % 100) == 0) {
+            if ((intThisYear % 400) == 0) {
+                lastDays[2] = 29;
+            }
+        } else {
+            lastDays[2] = 29;
+        }
+    }
+    intLastDay = lastDays[intThisMonth];
+    Stop_flag = 0
+
+    inHtml = "<FORM style=font-family:verdana; NAME=calendar>"
+            + "<TABLE  border='0' cellpadding='0' cellspacing='3'width='180px' height='180px'  bgcolor='#FFFFFF' style='border:1 solid #CCCCCC' onmouseover='parent.doOver(window.event.srcElement)' ONMOUSEOUT='parent.doOut(window.event.fromElement)'>"
+            + "<TR align='center'>"
+            + "<TD>"
+            + " <img src='/images/common/forw.gif' style='cursor:hand' width='11' height='11' alt='' border='0' align='absmiddle' onClick='javascript:parent.showCalendar(" + intPrevYear + "," + intPrevMonth + ",1);'>&nbsp;"
+            +   makeYearCombo(intThisYear, intThisMonth, intThisDay) + "&nbsp;"
+            +   makeMonthCombo(intThisYear, intThisMonth, intThisDay)
+            + " <img src='/images/common/pre.gif' style='cursor:hand' width='11' height='11' alt='' border='0' align='absmiddle' onClick='javascript:parent.showCalendar(" + intNextYear + "," + intNextMonth + ",1);'></TD></TR>"
+            + "<TR ><TD bgcolor='#FFFFFF'>"
+            + "<TABLE border='0' cellpadding='0' cellspacing='1' width='100%'><TR align='center' style='padding-top:2' bgcolor='#FFFFFF'>"
+            + "<TD width='24' height='18' style='color:#CE6826;font-size: 8pt'>일</TD>"
+            + "<TD style='font-size: 8pt'>월</TD>"
+            + "<TD style='font-size: 8pt'>화</TD>"
+            + "<TD style='font-size: 8pt'>수</TD>"
+            + "<TD style='font-size: 8pt'>목</TD>"
+            + "<TD style='font-size: 8pt'>금</TD>"
+            + "<TD style='font-size: 8pt'>토</TD></TR>";
+
+    for (intLoopWeek = 1; intLoopWeek < 7; intLoopWeek++) {
+        inHtml += "<TR bgcolor='#F7F3F7' align='center'>";
+
+        for (intLoopDay = 1; intLoopDay <= 7; intLoopDay++) {
+            if (intThirdWeekday > 0) {
+                intThirdWeekday--;
+                inHtml += "<TD>";
+            } else {
+                if (thirdPrintDay > intLastDay) {
+                    inHtml += "";
+                    inHtml += "<TD  bgcolor='#F7F3F7' style='font-size: 8pt'  height='19' >";
+                } else {
+                    inHtml += "<TD bgcolor='#F7F3F7' style='font-size: 8pt' height='19' onClick=parent.doClick(window.event.srcElement); title=" + intThisYear + day2(intThisMonth).toString() + day2(thirdPrintDay).toString()
+                           + " style='cursor:Hand;border:1px solid white;";
+                    if (intThisYear == NowThisYear && intThisMonth == NowThisMonth && thirdPrintDay == NowThisDay) {
+                        inHtml += "color:green;font-weight:bold;text-decoration: underline;";
+                    }
+
+                    switch (intLoopDay) {
+                        case 1:
+                            inHtml += "color:red;>" + thirdPrintDay;
+                            break;
+                        case 7:
+                            inHtml += "color:blue;>" + thirdPrintDay;
+                            break;
+                        default:
+                            inHtml += "color:black;>" + thirdPrintDay;
+                            break;
+                    }
+                    inHtml += "'>" + thirdPrintDay;
+                }
+
+                thirdPrintDay++;
+
+                if (thirdPrintDay > intLastDay) {
+                    Stop_Flag = 1;
+                }
+            }
+            inHtml += "</TD>";
+        }
+
+        inHtml += "</TR>";
+        if (Stop_Flag == 1) break;
+    }
+
+    for (var i = intLoopWeek + 1; i < 7; i++)
+        inHtml += "<TR bgcolor='#F7F3F7' align='center'><TD colspan='7' bgcolor='#ffffff' height='19'></TD></TR>";
+
+    var strToday = NowThisYear + "" +  day2(NowThisMonth) + "" + day2(NowThisDay);
+
+    inHtml += "<TR><TD colspan='7' bgcolor='#EFEFEF' height='19' style='text-align:center; font-size: 0.28cm'><span onClick='parent.setCusDate(" + strToday + ");' style='cursor:hand'>오늘(" + strToday + ")</span>|<span onClick='parent.setCusDate(\"\");' style='cursor:hand'>없음</span></TD></TR>";
+    inHtml += "</TABLE>";
+    inHtml += "</TD>";
+    inHtml += "</TR></TABLE></FORM>";
+
+    menuPopup = window.createPopup();
+    menuPopup.document.body.innerHTML = inHtml;
+}
+function openMenu(height, width) {
+    iHeight = height;
+    iWidth = width;
+
+    if (iHeight < menuHeight1) {
+        menuTimer = setTimeout("openMenu(iHeight + menuYIncrement, iWidth + menuXIncrement)", 1);
+    } else {
+        menuPopup.show(menuXPos, menuYPos, iWidth, iHeight, document.body);
+        clearTimeout(menuTimer);
+    }
+}
+function showCalendar(sYear, sMonth, sDay) {
+    makeCalendar(sYear, sMonth, sDay);
+    var obj = document.getElementById(scriptName);
+
+    try {
+        menuXPos = event.clientX + 5;
+        menuYPos = event.clientY + 5;
+    } catch (e) {
+        // menuXPos = getX(obj)+5;
+        // menuYPos = getY(obj)+18;
+    }
+
+    menuXIncrement = menuWidth1 / menuSpeed1;
+    menuYIncrement = menuHeight1 / menuSpeed1;
+
+    menuTimer = setTimeout("openMenu(0,0)", menuDelay1);
+
+    return false;
+}
+function initCalendar(scriptId, scriptName, sYear, sMonth, sDay) {
+    if (window.navigator.appName == "Microsoft Internet Explorer" && window.navigator.appVersion.substring(window.navigator.appVersion.indexOf("MSIE") + 5, window.navigator.appVersion.indexOf("MSIE") + 8) >= 5.5) {
+    } else {
+        return alert("Version of Internet Explorer must higher than 5.5");
+    }
+
+    this.scriptId = scriptId;
+    this.scriptName = scriptName;
+
+    showCalendar(sYear, sMonth, sDay);
+}
+function callCalendar(scriptId, splitC, scriptName, callbackFn) {
+    if (scriptName == undefined)
+        scriptName = scriptId.name;
+
+    this.scriptId = scriptId;
+    this.splitC = splitC;
+    this.callbackFn = callbackFn;
+
+    var arrayNow = new Array();
+
+    if (splitC != undefined) {
+        arrayNow = scriptId.value.split(splitC);
+    } else if (scriptId.value.length == 8 && !isNaN(new Number(scriptId.value))){
+        arrayNow[0] = scriptId.value.substr(0, 4);
+        arrayNow[1] = scriptId.value.substr(4, 2);
+        arrayNow[2] = scriptId.value.substr(6, 2);
+    }
+
+    if (arrayNow.length == 3) {
+        initCalendar(scriptId, scriptName, arrayNow[0], arrayNow[1], arrayNow[2]);
+    } else {
+        arrayNow = new Date();
+        initCalendar(scriptId, scriptName, arrayNow.getFullYear(), arrayNow.getMonth() + 1, arrayNow.getDate());
+    }
+}
+//-->
+/***
+ * EX:
+ * <input type="text" name="sDate" id="sDate" style="width:80px;" value="2005/02/09" onClick="callCalendar(this, '/');" readonly /> ~
+ * <input type="text" name="eDate" id="eDate" style="width:80px;" value="20090212" onClick="callCalendar(this);" readonly />
+ */

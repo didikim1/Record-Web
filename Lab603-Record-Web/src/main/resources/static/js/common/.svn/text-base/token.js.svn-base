@@ -1,0 +1,661 @@
+var tokenArr = ['공격명',
+    '수집일시', 
+    '참가기관',
+    '수집서버',
+    '공격코드',
+    '출발지IP',
+    '국가',
+    '출발지포트',
+    '목적지IP',
+    '목적지포트',
+    '방향성',
+    '공격자정보',
+    '위험도',
+    '탐지건수',
+    '출발지IP축약',
+    '목적지IP축약',
+    '공격명몇건',
+    '참가기관몇건',
+    '수집서버몇건',
+    '공격코드몇건',
+    '출발지IP몇건',
+    '국가몇건',
+    '출발지포트몇건',
+    '목적지IP몇건',
+    '목적지포트몇건',
+    '방향성몇건',
+    '공격자정보몇건',
+    '위험도몇건',
+    '공격명외몇건',
+    '참가기관외몇건',
+    '수집서버외몇건',
+    '공격코드외몇건',
+    '출발지IP외몇건',
+    '국가외몇건',
+    '출발지포트외몇건',
+    '목적지IP외몇건',
+    '목적지포트외몇건',
+    '방향성외몇건',
+    '공격자정보외몇건',
+    '위험도외몇건',
+    '출발지국가',
+    '출발지국가몇건',
+    '출발지국가외몇건',
+    '목적지국가',
+    '목적지국가몇건',
+    '목적지국가외몇건'
+];
+
+var tokenReplaceKeyValue = {
+"공격명":"detectnm",
+"수집일시":"logdt",
+"참가기관":"sitenm",
+"수집서버":"agentnm",
+"공격코드":"topcatecd",
+"출발지ip":"sip",
+"국가":"sipnation",
+"출발지포트":"sport",
+"목적지ip":"dip",
+"목적지포트":"dport",
+"방향성":"direction",
+"공격자정보":"sipinfo",
+"위험도":"dangergrade",
+"탐지건수":"idscount",
+"출발지ip축약":"sipint",
+"목적지ip축약":"dipint",
+"공격명몇건" : "countdetectnm",
+"참가기관몇건" :"countsitenm",
+"수집서버몇건" : "countagentid",
+"공격코드몇건" : "countdetectcd",
+"출발지ip몇건" : "countsip",
+"국가몇건" : "countnation",
+"출발지포트몇건" : "countsport",
+"목적지ip몇건" : "countdip",
+"목적지포트몇건" : "countdport",
+"방향성몇건": "countdirection",
+"공격자정보몇건" : "countddangergrade",
+"위험도몇건" : "countddangergrade",
+"공격명외몇건" : "countddangergrade",
+"참가기관외몇건" : "countddangergrade",
+"수집서버외몇건" : "countddangergrade",
+"공격코드외몇건" : "countddangergrade",
+"출발지ip외몇건" : "countddangergrade",
+"국가외몇건" : "countddangergrade",
+"출발지포트외몇건" : "countddangergrade",
+"목적지ip외몇건" : "countddangergrade",
+"목적지포트외몇건" : "countddangergrade",
+"방향성외몇건" : "countddangergrade",
+"공격자정보외몇건" : "countddangergrade",
+"위험도외몇건" : "countddangergrade"
+};
+
+
+
+function tokenCheck(str) {
+    var returnValue = [];
+	var pattern = /##([^#]+)##/g;
+    var matches;
+    
+    matches = pattern.exec(str);
+    while (matches != null) {
+        if (tokenArr.search(matches[1]) == -1) {
+            returnValue.push(matches[0]);
+        }
+		//returnValue.push(matches.index + "~" + matches.lastIndex + " " + matches[0] + ' : ' + matches[1]);
+        matches = pattern.exec(str);
+    }
+	return returnValue;
+}
+
+
+function tokenReplaceCheck(str) {
+    var returnValue = [];
+    var pattern = /##([^#]+)##/g;
+    var matches;
+    
+    matches = pattern.exec(str);
+    while (matches != null) {
+        if (tokenArr.search(matches[1]) != -1) {
+            returnValue.push(matches[0]);
+        }
+        //returnValue.push(matches.index + "~" + matches.lastIndex + " " + matches[0] + ' : ' + matches[1]);
+        matches = pattern.exec(str);
+    }
+    return returnValue;
+}
+
+
+//토큰값 가져오기
+function tokenReplace(str,obj) {
+	
+	
+    var returnValue = [];
+    var pattern = /##([^#]+)##/g;
+    var matches;
+    var returnHanValue = [];
+    var returnHannCo = [];
+    var resultreplaceValue="";
+    matches = pattern.exec(str);
+    /*
+    while (matches != null) {
+        if (tokenArr.search(matches[1]) != -1) {
+            returnHannCo.push(matches[1]);
+        }
+        matches = pattern.exec(str);
+    }
+    
+    for (var key in tokenReplaceKeyValue){
+        for (i = 0; i < returnHannCo.length; i++){
+            if(key == returnHannCo[i]){
+                returnHanValue.push(tokenReplaceKeyValue[key]);
+            }
+        }
+    }
+    */
+    resultreplaceValue = str.replace(/\##공격명\##/ig,obj.detectnmlist);     
+//    resultreplaceValue = resultreplaceValue.replace(/\##공격명\##/ig,obj.detectnmlist);
+    
+    var arrSplitLogdt =  obj.logdt.split(/\s/ig);
+    
+    
+    resultreplaceValue = resultreplaceValue.replace(/\##수집일시\##/ig,strDatePatternReplace(arrSplitLogdt[0], arrSplitLogdt[1])+" "+"~"+" "+strDatePatternReplace(arrSplitLogdt[3], arrSplitLogdt[4]));
+    resultreplaceValue = resultreplaceValue.replace(/\##참가기관\##/ig,obj.sitenmlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##수집서버\##/ig,obj.agentnmlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##공격코드\##/ig,obj.detectcdlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP\##/ig,obj.siplist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지국가\##/ig,obj.sipnationlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지국가\##/ig,obj.dipnationlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지포트\##/ig,obj.sportlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP\##/ig,obj.diplist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지포트\##/ig,obj.dportlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##방향성\##/ig,obj.directionlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##공격자정보\##/ig,obj.sipinfolist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##위험도\##/ig,obj.dangergradelist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##탐지건수\##/ig,obj.idscountlist.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP축약\##/ig,obj.siplistcontraction.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP축약\##/ig,obj.diplistcontraction.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##공격명몇건\##/ig,obj.countdetectnm.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##참가기관몇건\##/ig,obj.countsitenm.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##수집서버몇건\##/ig,obj.countagentid.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##공격코드몇건\##/ig,obj.countdetectcd.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP몇건\##/ig,obj.countsip.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지국가몇건\##/ig,obj.countsipnation.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지국가몇건\##/ig,obj.countdipnation.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지포트몇건\##/ig,obj.countsport.replace(/,/ig, ", ")); 
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP몇건\##/ig,obj.countdip.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지포트몇건\##/ig,obj.countdport.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##방향성몇건\##/ig,obj.countdirection.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##공격자정보몇건\##/ig,obj.countsipinfo.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##위험도몇건\##/ig,obj.countddangergrade.replace(/,/ig, ", "));
+    resultreplaceValue = resultreplaceValue.replace(/\##공격명외몇건\##/ig,"대표이벤트 \""+obj.detectnm+"\" 외 "+(Number(obj.countdetectnm)-1)+"건");
+    resultreplaceValue = resultreplaceValue.replace(/\##참가기관외몇건\##/ig,"대표이벤트 \""+obj.sitenm+"\" 외 "+(Number(obj.countsitenm) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##수집서버외몇건\##/ig,"대표이벤트 \""+obj.agentnm+"\" 외 "+(Number(obj.countagentid) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##공격코드외몇건\##/ig,"대표이벤트 \""+obj.detectcd+"\" 외 "+(Number(obj.countdetectcd) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP외몇건\##/ig," 대표이벤트 \""+obj.sip+"\" 외 "+(Number(obj.countsip) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지국가외몇건\##/ig,"대표이벤트 \""+obj.sipnation+"\"외 "+(Number(obj.countsipnation) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지국가외몇건\##/ig,"대표이벤트 \""+obj.dipnation+"\"외 "+(Number(obj.countdipnation) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지포트외몇건\##/ig,"대표이벤트 \""+obj.sport+"\"외 "+(Number(obj.countsport) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP외몇건\##/ig,"대표이벤트 \""+obj.dip+"\"외 "+(Number(obj.countdport) - 1)+" 건 ");
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지포트외몇건\##/ig,"대표이벤트 \""+obj.dport+"\"외 "+(Number(obj.countdport) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##방향성외몇건\##/ig,"대표이벤트 \""+obj.direction+"\"외 "+(Number(obj.countdirection) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##공격자정보외몇건\##/ig,"대표이벤트 \""+obj.sipinfo+"\"외 "+(Number(obj.countsipinfo) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##위험도외몇건\##/ig,"대표이벤트 \""+obj.dangergrade+"\"외 "+(Number(obj.countddangergrade) - 1)+" 건");
+    return resultreplaceValue;
+}
+
+
+//토큰값 가져오기
+function tokenReplace_Email(str,obj) {
+    var returnValue = [];
+    var pattern = /##([^#]+)##/g;
+    var matches;
+    var returnHanValue = [];
+    var returnHannCo = [];
+    var resultreplaceValue="";
+    matches = pattern.exec(str);
+    /*
+    while (matches != null) {
+        if (tokenArr.search(matches[1]) != -1) {
+            returnHannCo.push(matches[1]);
+        }
+        matches = pattern.exec(str);
+    }
+    
+    for (var key in tokenReplaceKeyValue){
+        for (i = 0; i < returnHannCo.length; i++){
+            if(key == returnHannCo[i]){
+                returnHanValue.push(tokenReplaceKeyValue[key]);
+            }
+        }
+    }
+    */
+    resultreplaceValue = str.replace(/\##공격명\##/ig,obj.detectnm);
+    resultreplaceValue = resultreplaceValue.replace(/\##수집일시\##/ig,obj.logdt);
+    resultreplaceValue = resultreplaceValue.replace(/\##참가기관\##/ig,obj.sitenm);
+    resultreplaceValue = resultreplaceValue.replace(/\##수집서버\##/ig,obj.agentnm);
+    resultreplaceValue = resultreplaceValue.replace(/\##공격코드\##/ig,obj.detectcd);
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP\##/ig,obj.sip);
+    resultreplaceValue = resultreplaceValue.replace(/\##국가\##/ig,obj.sipnation);
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지포트\##/ig,obj.sport);
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP\##/ig,obj.dip);
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지포트\##/ig,obj.dport);
+    resultreplaceValue = resultreplaceValue.replace(/\##방향성\##/ig,obj.direction);
+    resultreplaceValue = resultreplaceValue.replace(/\##공격자정보\##/ig,obj.sipinfo);
+    resultreplaceValue = resultreplaceValue.replace(/\##위험도\##/ig,obj.dangergrade);
+    resultreplaceValue = resultreplaceValue.replace(/\##탐지건수\##/ig,obj.idscount);
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP축약\##/ig,obj.sipint);
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP축약\##/ig,obj.dipint);
+    resultreplaceValue = resultreplaceValue.replace(/\##공격명몇건\##/ig,obj.countdetectnm);
+    resultreplaceValue = resultreplaceValue.replace(/\##참가기관몇건\##/ig,obj.countsitenm);
+    resultreplaceValue = resultreplaceValue.replace(/\##수집서버몇건\##/ig,obj.countagentid);
+    resultreplaceValue = resultreplaceValue.replace(/\##공격코드몇건\##/ig,obj.countdetectcd);
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP몇건\##/ig,obj.countsip);
+    resultreplaceValue = resultreplaceValue.replace(/\##국가몇건\##/ig,obj.countnation);
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지포트몇건\##/ig,obj.countsport); 
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP몇건\##/ig,obj.countdip);
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지포트몇건\##/ig,obj.countdport);
+    resultreplaceValue = resultreplaceValue.replace(/\##방향성몇건\##/ig,obj.countdirection);
+    resultreplaceValue = resultreplaceValue.replace(/\##공격자정보몇건\##/ig,obj.countsipinfo);
+    resultreplaceValue = resultreplaceValue.replace(/\##위험도몇건\##/ig,obj.countddangergrade);
+    resultreplaceValue = resultreplaceValue.replace(/\##공격명외몇건\##/ig,"대표이벤트 \""+obj.detectnm+"\" 외 "+(Number(obj.countdetectnm)-1)+"건");
+    resultreplaceValue = resultreplaceValue.replace(/\##참가기관외몇건\##/ig,"대표이벤트 \""+obj.sitenm+"\" 외 "+(Number(obj.countsitenm) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##수집서버외몇건\##/ig,"대표이벤트 \""+obj.agentnm+"\" 외 "+(Number(obj.countagentid) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##공격코드외몇건\##/ig,"대표이벤트 \""+obj.detectcd+"\" 외 "+(Number(obj.countdetectcd) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지IP외몇건\##/ig," 대표이벤트 \""+obj.sip+"\" 외 "+(Number(obj.countsip) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##국가외몇건\##/ig,"대표이벤트 \""+obj.sipnation+"\"외 "+(Number(obj.countnation) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##출발지포트외몇건\##/ig,"대표이벤트 \""+obj.sport+"\"외 "+(Number(obj.countsport) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지IP외몇건\##/ig,"대표이벤트 \""+obj.dip+"\"외 "+(Number(obj.countdport) - 1)+" 건 ");
+    resultreplaceValue = resultreplaceValue.replace(/\##목적지포트외몇건\##/ig,"대표이벤트 \""+obj.dport+"\"외 "+(Number(obj.countdport) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##방향성외몇건\##/ig,"대표이벤트 \""+obj.direction+"\"외 "+(Number(obj.countdirection) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##공격자정보외몇건\##/ig,"대표이벤트 \""+obj.sipinfo+"\"외 "+(Number(obj.countsipinfo) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace(/\##위험도외몇건\##/ig,"대표이벤트 \""+obj.dangergrade+"\"외 "+(Number(obj.countddangergrade) - 1)+" 건");
+    return resultreplaceValue;
+}
+
+
+//토큰값 가져오기
+function tokenReplaceList(str,obj) {
+    var returnValue = [];
+    var pattern = /##([^#]+)##/g;
+    var matches;
+    var returnHanValue = [];
+    var returnHannCo = [];
+    var resultreplaceValue="";
+    matches = pattern.exec(str);
+    
+    var Datalist = obj
+    
+    //토큰 사용시 유틸 변수 
+    var   tmpArrUnique_logdt = []                                //수집일지                  
+        , tmpArrUnique_sitenm = []                               //참과기관
+        , tmpArrUnique_agentnm = []                              //수집서버
+        , tmpArrUnique_detectcd = []                             //공격코드
+        , tmpArrUnique_detectnm =[];                             //탐지명
+    
+    var   tmpArrUnique_sip = []                                    //출발지IP
+        , tmpArrUnique_sipnation = []                              //출발지국가
+        , tmpArrUnique_sport = [];                                 //출발지포트
+                              
+    var   tmpArrUnique_dip = []                                  //출발지IP
+        , tmpArrUnique_dport = [];                                //출발지포트             
+                              
+    var   tmpArrUnique_direction = []                           //방향성
+        , tmpArrUnique_sipinfo = []                              //공격자정보
+        , tmpArrUnique_dangergrade = [];                          //위험도
+    
+    var   tmpArrUnique_sipint = []                               //출발지IP축약
+        , tmpArrUnique_dipint = [];                               //목적지IP축약
+    
+    var   tmpArrUnique_countdetectnm = []                        // 공격명 몇건 
+        , tmpArrUnique_countsitenm = []                          // 참가기관 몇건 
+        , tmpArrUnique_countagentid = []                         // 수집서버몇건 
+        , tmpArrUnique_countdetectcd = [];                        // 공격코드몇건
+    
+    var   tmpArrUnique_idscount = []                             //탐지건수
+        , tmpArrUnique_countsip = []                             //출발지IP몇건
+        , tmpArrUnique_countnation = []                          //국가몇건
+        , tmpArrUnique_countsport = []                           //출발지포트몇건
+        , tmpArrUnique_countdip = []                             //목적지IP몇건
+        , tmpArrUnique_countdport = [];                           //목적지포트몇건
+    
+    var   tmpArrUnique_countdirection = []                        //방향성 외 몇건
+        , tmpArrUnique_countsipinfo = []                          //공격자정보외 몇건
+        , tmpArrUnique_countddangergrade = []                     //위험도 카운트
+    
+                                            
+    var   plus_idscount = 0                                      //탐지건수
+        , plus_countsip = 0                                      //출발지IP몇건
+        , plus_countnation = 0                                   //국가몇건
+        , plus_countsport = 0                                    //출발지포트몇건
+        , plus_countdip = 0                                      //목적지IP몇건
+        , plus_countdport = 0                                    //목적지포트몇건
+        , plus_countdirection = 0                                //방향성 외 몇건
+        , plus_countsipinfo = 0                                  //공격자정보외 몇건
+        , plus_countddangergrade = 0                             //위험도 카운트
+        , plus_countdetectnm = 0                                 //공격명 명건
+        , plus_countsitenm = 0                                   //참가기관 몇건
+        , plus_countagentid = 0                                  //수집서버 몇건
+        , plus_countdetectcd = 0                                 //공격코드몇건
+        
+        
+    var   MaxDetectNm = null                                     //대표 공격명
+        , MaxSiteNm = null                                       //대표 기관
+        , MaxAgentnm = null                                      //대표 수집서버
+        , MaxDetectcd = null                                     //대표 공격코드
+        , MaxSip = null                                          //대표 출발지IP
+        , MaxSipnation = null                                    //대표 출발지국가
+        , MaxSport = null                                        //대표 출발지포트
+        , MaxDip = null                                          //대표 목적지IP
+        , MaxDport = null                                        //대표 목적지 PORT
+        , MaxDirection = null                                    //대표 방향성 몇건
+        , MaxSipinfo = null                                      //대표 공격자정보
+        , MaxDangergrade = 0;                                    //대표 위험도
+    
+    
+    var LogDtTerm = "";
+    
+    
+    //토큰 합치기                    
+    for ( var index = 0; index < Datalist.size(); index++) {
+        var tmpMap = Datalist.get(index);
+        
+        tmpArrUnique_detectnm.push(tmpMap.detectnm);                                    //공격명
+        
+        tmpArrUnique_logdt.push(tmpMap.logdt);                                          //수집일시
+        tmpArrUnique_sitenm.push(tmpMap.sitenm)                                         //참과기관
+        tmpArrUnique_agentnm.push(tmpMap.agentnm);                                      //수집서버
+        tmpArrUnique_detectcd.push(tmpMap.detectcd);                                    //공격코드
+        
+        tmpArrUnique_sip.push(tmpMap.sip);                                              //출발지IP
+        tmpArrUnique_sipnation.push(tmpMap.sipnation);                                  //출발지국가
+        tmpArrUnique_sport.push(tmpMap.sport);                                          //출발지PORT
+        tmpArrUnique_sipinfo.push(tmpMap.sipinfo);                                      //공격자정보
+        
+        tmpArrUnique_dip.push(tmpMap.dip);                                              //목적지IP
+        tmpArrUnique_dport.push(tmpMap.dport);                                          //목적지PORT
+        
+        tmpArrUnique_direction.push(tmpMap.direction);                                  //방향성
+        tmpArrUnique_dangergrade.push(tmpMap.dangergrade);                              //위험도
+        tmpArrUnique_idscount.push(tmpMap.idscount);                       //탐지건수
+        
+        tmpArrUnique_countdetectnm.push(tmpMap.countdetectnm);                          // 공격명 몇건 
+        tmpArrUnique_countsitenm.push(tmpMap.countsitenm);                              // 참가기관 몇건 
+        tmpArrUnique_countagentid.push(tmpMap.countagentid);                            // 수집서버몇건 
+        tmpArrUnique_countdetectcd.push(tmpMap.countdetectcd);                          // 공격코드몇건
+        
+        tmpArrUnique_countsip.push(tmpMap.countsip);                                    //출발지IP몇건
+        tmpArrUnique_countnation.push(tmpMap.countnation);                              //국가몇건
+        tmpArrUnique_countsport.push(tmpMap.countsport);                                //출발지포트몇건
+        tmpArrUnique_countdip.push(tmpMap.countdip);                                    //목적지IP몇건
+        tmpArrUnique_countdport.push(tmpMap.countdport);                                //목적지포트몇건
+        
+        tmpArrUnique_countdirection.push(tmpMap.countdirection);                               //방향성 외 몇건
+        tmpArrUnique_countsipinfo.push(tmpMap.countsipinfo);                                   //공격자정보외 몇건
+        tmpArrUnique_countddangergrade.push(tmpMap.countddangergrade);                         //위험도 카운트
+        
+        
+        tmpArrUnique_sipint.push(tmpMap.sipint);                                    //출발지 축약
+        tmpArrUnique_dipint.push(tmpMap.dipint);                                    //목적지 축약
+        
+        if (index == 0 || MaxDangergrade < new Number(tmpMap.dangergrade)) {
+            MaxDangergrade = tmpMap.dangergrade;
+            MaxDetectNm = tmpMap.detectnm;                                              //대표 공격명
+            MaxSiteNm = tmpMap.sitenm;                                                  //대표 기관
+            MaxAgentnm = tmpMap.agentnm;                                                //대표 수집서버
+            MaxDetectcd = tmpMap.detectcd;                                              //대표 공격코드
+            MaxSip = tmpMap.sip;                                                        //대표 출발지IP
+            MaxSipnation = tmpMap.sipnation;                                            //대표 출발지국가
+            MaxSport = tmpMap.sport;                                                    //대표 출발지포트
+            MaxDip = tmpMap.dip;                                                        //대표 목적지IP
+            MaxDport = tmpMap.dport;                                                    //대표 목적지 PORT
+            MaxDirection = tmpMap.direction;                                            //대표 방향성 몇건
+            MaxSipinfo = tmpMap.sipinfo;                                                //대표 공격자정보
+        }
+        
+    }
+    
+    
+    //데이터 정리 중복제거
+    
+    tmpArrUnique_detectnm.unique();                                                     //공격명
+    tmpArrUnique_logdt.unique();                                                        //수집일시
+    tmpArrUnique_sitenm.unique();                                                       //참과기관
+    tmpArrUnique_agentnm.unique();                                                      //수집서버
+    tmpArrUnique_detectcd.unique();                                                     //공격코드
+    tmpArrUnique_sip.unique();                                                          //출발지IP
+    tmpArrUnique_sipnation.unique();                                                    //출발지국가
+    tmpArrUnique_sport.unique();                                                        //출발지PORT
+    tmpArrUnique_dip.unique();                                                          //목적지IP
+    tmpArrUnique_dport.unique();                                                        //목적지PORT
+    tmpArrUnique_direction.unique();                                                    //방향성
+    tmpArrUnique_sipinfo.unique();                                                      //공격자정보
+    tmpArrUnique_dangergrade.unique();                                                  //위험도
+    
+    tmpArrUnique_sipint.unique();                                   					//출발지 축약
+    tmpArrUnique_dipint.unique();                                  						//목적지 축약
+    
+    //카운터더하기
+    
+    //탐지건수
+    for ( var ids_index = 0; ids_index < tmpArrUnique_idscount.length; ids_index++) {
+        plus_idscount += new Number(tmpArrUnique_idscount[ids_index]);
+    }
+    
+    //출발지IP몇건
+    for ( var countsip_index = 0; countsip_index < tmpArrUnique_countsip.length; countsip_index++) {
+        plus_countsip += new Number(tmpArrUnique_countsip[countsip_index]);
+    }
+    
+    //국가몇건
+    for ( var countnation_index = 0; countnation_index < tmpArrUnique_countnation.length; countnation_index++) {
+        plus_countnation += new Number(tmpArrUnique_countnation[countnation_index]);
+    }
+    
+    //출발지포트몇건
+    for ( var countsport_index = 0; countsport_index < tmpArrUnique_countsport.length; countsport_index++) {
+        plus_countsport += new Number(tmpArrUnique_countsport[countsport_index]);
+    }
+    
+    //목적지아이피몇건
+    for ( var countdip_index = 0; countdip_index < tmpArrUnique_countdip.length; countdip_index++) {
+        plus_countdip += new Number(tmpArrUnique_countdip[countdip_index]);
+    }
+    
+    //목적지포트몇건
+    for ( var countdport_index = 0; countdport_index < tmpArrUnique_countdport.length; countdport_index++) {
+        plus_countdport += new Number(tmpArrUnique_countdport[countdport_index]);
+    }
+    
+    //방향성 몇건
+    for ( var countdirection_index = 0; countdirection_index < tmpArrUnique_countdirection.length; countdirection_index++) {
+        plus_countdirection += new Number(tmpArrUnique_countdirection[countdirection_index]);
+    }
+    
+    //공격자정보 몇건
+    for ( var countsipinfo_index = 0; countsipinfo_index < tmpArrUnique_countsipinfo.length; countsipinfo_index++) {
+        plus_countsipinfo += new Number(tmpArrUnique_countsipinfo[countsipinfo_index]);
+    }
+    
+    //위험도 카운트
+    for ( var countddangergrade_index = 0; countddangergrade_index < tmpArrUnique_countddangergrade.length; countddangergrade_index++) {
+        plus_countddangergrade += new Number(tmpArrUnique_countddangergrade[countddangergrade_index]);
+    }
+    
+    //공격명 몇건
+    for ( var countdetectnm_index = 0; countdetectnm_index < tmpArrUnique_countdetectnm.length; countdetectnm_index++) {
+        plus_countdetectnm += new Number(tmpArrUnique_countdetectnm[countdetectnm_index]);
+    }
+    
+    //참가기관 몇건
+    for ( var countsitenm_index = 0; countsitenm_index < tmpArrUnique_countsitenm.length; countsitenm_index++) {
+        plus_countsitenm += new Number(tmpArrUnique_countsitenm[countsitenm_index]);
+    }
+    
+    //수집서버 몇건
+    for ( var countagentid_Index = 0; countagentid_Index < tmpArrUnique_countagentid.length; countagentid_Index++) {
+        plus_countagentid += new Number(tmpArrUnique_countagentid[countagentid_Index]);
+    }
+    
+    //공격코드몇건
+    for ( var countdetectcd_index = 0; countdetectcd_index < tmpArrUnique_countdetectcd.length; countdetectcd_index++) {
+        plus_countdetectcd += new Number(tmpArrUnique_countdetectcd[countdetectcd_index]);
+    }
+    
+    
+    LogDtTerm = getLodDtMin(tmpArrUnique_logdt)+"~"+getLodDtMax(tmpArrUnique_logdt);
+    
+    
+    console.log(tmpArrUnique_detectnm.toString());                                                     //공격명
+    console.log(tmpArrUnique_logdt.toString());                                                        //수집일시
+    console.log(tmpArrUnique_sitenm.toString());                                                       //참과기관
+    console.log(tmpArrUnique_agentnm.toString());                                                      //수집서버
+    console.log(tmpArrUnique_detectcd.toString());                                                     //공격코드
+    console.log(tmpArrUnique_sip.toString());                                                          //출발지IP
+    console.log(tmpArrUnique_sipnation.toString());                                                    //출발지국가
+    console.log(tmpArrUnique_sport.toString());                                                        //출발지PORT
+    console.log(tmpArrUnique_dip.toString());                                                          //목적지IP
+    console.log(tmpArrUnique_dport.toString());                                                        //목적지PORT
+    console.log(tmpArrUnique_direction.toString());                                                    //방향성
+    console.log(tmpArrUnique_sipinfo.toString());                                                      //공격자정보
+    console.log(tmpArrUnique_dangergrade.toString());                                                  //위험도
+    
+    
+    console.log(plus_idscount);
+    console.log(plus_countsip);
+    console.log(plus_countnation);
+    console.log(plus_countsport);
+    console.log(plus_countdip);
+    console.log(plus_countdport);
+    console.log(plus_countdirection);
+    console.log(plus_countsipinfo);
+    console.log(plus_countddangergrade); 
+    
+    console.log(MaxDetectNm                                     );
+    console.log(MaxSiteNm                                       );
+    console.log(MaxAgentnm                                      );
+    console.log(MaxDetectcd                                     );
+    console.log(MaxSip                                          );
+    console.log(MaxSipnation                                    );
+    console.log(MaxSport                                        );
+    console.log(MaxDip                                          );
+    console.log(MaxDport                                        );
+    console.log(MaxDirection                                    );
+    console.log(MaxSipinfo                                      );
+    console.log(MaxDangergrade);   
+    
+    
+    
+    
+    
+    resultreplaceValue = str.replace("##공격명##",tmpArrUnique_detectnm.toString());
+    
+    
+    resultreplaceValue = resultreplaceValue.replace("##수집일시##",LogDtTerm);
+    resultreplaceValue = resultreplaceValue.replace("##참가기관##",tmpArrUnique_sitenm.toString());
+    resultreplaceValue = resultreplaceValue.replace("##수집서버##",tmpArrUnique_agentnm.toString());
+    resultreplaceValue = resultreplaceValue.replace("##공격코드##",tmpArrUnique_detectcd.toString());
+    
+    resultreplaceValue = resultreplaceValue.replace("##출발지IP##",tmpArrUnique_sip.toString());
+    resultreplaceValue = resultreplaceValue.replace("##국가##",tmpArrUnique_sipnation.toString());
+    resultreplaceValue = resultreplaceValue.replace("##출발지포트##",tmpArrUnique_sport.toString());
+    
+    resultreplaceValue = resultreplaceValue.replace("##목적지IP##",tmpArrUnique_dip.toString());
+    resultreplaceValue = resultreplaceValue.replace("##목적지포트##",tmpArrUnique_dport.toString());
+    
+    resultreplaceValue = resultreplaceValue.replace("##방향성##",tmpArrUnique_direction.toString());
+    resultreplaceValue = resultreplaceValue.replace("##공격자정보##",tmpArrUnique_sipinfo.toString());
+    resultreplaceValue = resultreplaceValue.replace("##위험도##",tmpArrUnique_dangergrade.toString());
+    resultreplaceValue = resultreplaceValue.replace("##탐지건수##",plus_idscount);
+    
+    
+    resultreplaceValue = resultreplaceValue.replace("##출발지IP축약##",tmpArrUnique_sipint.toString());
+    resultreplaceValue = resultreplaceValue.replace("##목적지IP축약##",tmpArrUnique_dipint.toString());
+    
+    
+    resultreplaceValue = resultreplaceValue.replace("##공격명몇건##",plus_countdetectnm);
+    resultreplaceValue = resultreplaceValue.replace("##참가기관몇건##",plus_countsitenm);
+    resultreplaceValue = resultreplaceValue.replace("##수집서버몇건##",plus_countagentid);
+    resultreplaceValue = resultreplaceValue.replace("##공격코드몇건##",plus_countdetectcd);
+    
+    
+    
+    
+    resultreplaceValue = resultreplaceValue.replace("##출발지IP몇건##",plus_countsip);
+    resultreplaceValue = resultreplaceValue.replace("##국가몇건##",plus_countnation);
+    resultreplaceValue = resultreplaceValue.replace("##출발지포트몇건##",plus_countsport); 
+    
+    resultreplaceValue = resultreplaceValue.replace("##목적지IP몇건##",plus_countdip);
+    resultreplaceValue = resultreplaceValue.replace("##목적지포트몇건##",plus_countdport);
+    
+    
+    resultreplaceValue = resultreplaceValue.replace("##방향성몇건##",plus_countdirection);
+    resultreplaceValue = resultreplaceValue.replace("##공격자정보몇건##",plus_countsipinfo);
+    resultreplaceValue = resultreplaceValue.replace("##위험도몇건##",plus_countddangergrade);
+    
+    
+    resultreplaceValue = resultreplaceValue.replace('##공격명외몇건##',"대표이벤트 \""+MaxDetectNm+"\" 외 "+(Number(plus_countdetectnm)-1)+"건");
+    resultreplaceValue = resultreplaceValue.replace("##참가기관외몇건##","대표이벤트 \""+MaxSiteNm+"\" 외 "+(Number(plus_countsitenm) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##수집서버외몇건##","대표이벤트 \""+MaxAgentnm+"\" 외 "+(Number(plus_countagentid) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##공격코드외몇건##","대표이벤트 \""+MaxDetectcd+"\" 외 "+(Number(plus_countdetectcd) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##출발지IP외몇건##"," 대표이벤트 \""+MaxSip+"\" 외 "+(Number(plus_countsip) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##국가외몇건##","대표이벤트 \""+MaxSipnation+"\"외 "+(Number(plus_countnation) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##출발지포트외몇건##","대표이벤트 \""+MaxSport+"\"외 "+(Number(plus_countsport) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##목적지IP외몇건##","대표이벤트 \""+MaxDip+"\"외 "+(Number(plus_countdip) - 1)+" 건 ");
+    resultreplaceValue = resultreplaceValue.replace("##목적지포트외몇건##","대표이벤트 \""+MaxDport+"\"외 "+(Number(plus_countdport) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##방향성외몇건##","대표이벤트 \""+MaxDirection+"\"외 "+(Number(plus_countdirection) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##공격자정보외몇건##","대표이벤트 \""+MaxSipinfo+"\"외 "+(Number(plus_countsipinfo) - 1)+" 건");
+    resultreplaceValue = resultreplaceValue.replace("##위험도외몇건##","대표이벤트 \""+MaxDangergrade+"\"외 "+(Number(plus_countddangergrade) - 1)+" 건");
+    
+    return resultreplaceValue;
+}
+
+
+function getLodDtMax(arr){
+    var  l_arrList = []     //로컬배열
+        ,regExp = /\s/g;    //공백 제거
+    
+    var  Max = 0
+        ,RESULT_MAX = "";
+    l_arrList = arr.toString().replace(regExp,'').split(",");
+    
+    Max  = l_arrList[0];
+    
+    alert(l_arrList.length);
+    
+    for ( var arr_Index = 0; arr_Index < l_arrList.length; arr_Index++) {
+        if (Max < l_arrList[arr_Index]){
+            Max = l_arrList[arr_Index];
+            alert(Max);
+        }
+    }
+    RESULT_MAX += Max.toString().substring(0, 8);
+    RESULT_MAX += " "+Max.toString().substring(8, Max.toString().length);
+    return RESULT_MAX;
+}
+
+
+function getLodDtMin(arr){
+    var  l_arrList = []     //로컬배열
+        ,regExp = /\s/g;    //공백 제거
+    
+    var  Min = 0
+        ,REUSLT_MIN = "";
+    l_arrList = arr.toString().replace(regExp,'').split(",");
+    
+    Min  = l_arrList[0];
+    for ( var arr_Index = 0; arr_Index < l_arrList.length; arr_Index++) {
+        if (Min > l_arrList[arr_Index]){
+            Min = l_arrList[arr_Index];
+        }
+    }
+    REUSLT_MIN +=  Min.toString().substring(0, 8);
+    REUSLT_MIN += " "+Min.toString().substring(8, Min.toString().length);
+    return REUSLT_MIN;
+}
+
+
+function fn_getDelegate(pArr, pMdata, pList){
+	var  l_arr    =   pArr
+		,l_mData  =   pMdata; 
+	
+}

@@ -1,0 +1,98 @@
+#content div.login_input_box input.loginInput{	
+	width:250px; 
+	height: 46px; 
+	padding: 10px 16px; 
+	font-size: 14px; 
+	line-height: 1.3333333; 
+	border-radius: 1px;
+	border:solid 1px #dadada;
+	float: left; 
+	margin-top : 10px;
+	behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+	}
+
+	
+#content div.login_input_box button.loginButton{
+	padding: 10px 16px;  
+	line-height: 1.3333333; 
+	border-radius: 1px;  
+	border: none; 
+	width:350px;
+	height:46px; 
+	margin : 10px auto 20px auto;
+	font-size:13pt; 
+	background-color:#848484;
+	color: #fff; 
+	cursor: pointer;
+	behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+	}
+
+#content div.login_input_box button.loginButton:HOVER{
+	background-color:#464646;
+}
+
+#content div.login_box{
+	width: 1060px;
+	height: 500px;
+/* 	border: 1px solid black; */
+	margin: 180px auto 150px auto; 
+}
+
+#content div.login_text_box{
+	width: 480px;
+	height: 300px;
+/* 	border: 1px solid black; */
+	padding-top: 30px;
+}
+
+#content div.login_input_box{
+	width: 400px;
+	height: 350px;
+/* 	box-shadow: 1px 1px 1px #BDBDBD; */
+	margin-top: 80px;
+	border:1px solid #ccc;
+	border-radius: 10px;
+	behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
+}
+
+
+#content div.login_div_sub {
+	width: 380px;
+	height: 180px;
+	margin: 40px auto 10px auto;
+}	  
+	    
+#content div.login_div {
+	width: 80px;
+	height: 46px;
+	border:solid 1px #dadada;
+	background-color : #eee;
+	border-right:none;
+	float: left; 
+	font-weight:bold;
+	padding-top: 12px;
+	margin : 10px 0 0 25px;
+}
+
+.block{
+	display: inline-block; 
+	margin: 1em;
+	vertical-align: middle;
+}
+
+#content div.login_box p.main_text1 {
+	font-size:19pt;
+	color:#6E6E6E;
+	margin-top: 70px;
+}
+
+#content div.login_box p.main_text2 {
+	font-size:30pt;
+	color:#464646;
+}
+
+#content p.main_text3 {
+	font-size:9pt; 
+	color:#A4A4A4;
+}
+

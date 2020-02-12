@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 수신입금계좌정보 -->
+<mapper namespace="com.lab603.record.web.mapper.recordplay.RecordPlayMapper">
+
+	<sql id="addWhere">
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+		SELECT
+			COUNT(0)
+		FROM
+			CALL_HISTORY
+		WHERE 1=1
+		<include refid="addWhere"/>
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 CID			as CID				<!--통화이력 고유번호-->
+			,SERVER_IP 		as SERVER_IP	 	<!--IVR서버-->
+			,BTIME  		as BTIME 			<!--통화시작시간-->
+			,ETIME  		as ETIME 			<!--통화종료시간-->
+			,RBTIME 		as RBTIME 			<!--통화수신시간-->
+			,TELECOM  		as TELECOM 			<!--트렁크정보 및 통신사정보-->
+			,CALLDURATION   as CALLDURATION 	<!--통화시간-->
+			,CALLER 		as CALLER 			<!--발신번호-->
+			,CALLED 		as CALLED 			<!--수신번호-->
+			,CPID 			as CPID 			<!--고객사코드명-->
+			,CPNAME 		as CPNAME 			<!--고객사명칭-->
+			,CPFILENAME  	as CPFILENAME 		<!--고객사요청파일명-->
+			,CPRECUSE  		as CPRECUSE 		<!--고객사녹취요청여부-->
+			,LINKEDID 		as LINKEDID  		<!--통화이력고유값-->
+			,DIRNAME  		as DIRNAME 			<!--녹취파일디렉토리-->
+			,FILENAME  		as FILENAME 		<!--녹취파일명-->
+			,FILESIZE 		as FILESIZE  		<!--녹취파일사이즈-->
+			,RECORDCHARGEID as RECORDCHARGEID 	<!--녹취고유ID-->
+			,INFO1   		as INFO1 			<!--기타정보1-->
+			,INFO2  		as INFO2 			<!--기타정보2-->
+			,INFO3  		as INFO3 			<!--기타정보3-->
+			,INFO4 			as INFO4 			<!--기타정보4-->
+			,CREATETIME  	as CREATETIME 		<!--생성일-->
+			,UPDATETIME 	as UPDATETIME 		<!--마지막업데이트일-->
+		FROM
+			 CALL_HISTORY T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+		LIMIT #{start}, #{end}
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 CID			as CID				<!--통화이력 고유번호-->
+			,SERVER_IP 		as SERVER_IP	 	<!--IVR서버-->
+			,BTIME  		as BTIME 			<!--통화시작시간-->
+			,ETIME  		as ETIME 			<!--통화종료시간-->
+			,RBTIME 		as RBTIME 			<!--통화수신시간-->
+			,TELECOM  		as TELECOM 			<!--트렁크정보 및 통신사정보-->
+			,CALLDURATION   as CALLDURATION 	<!--통화시간-->
+			,CALLER 		as CALLER 			<!--발신번호-->
+			,CALLED 		as CALLED 			<!--수신번호-->
+			,CPID 			as CPID 			<!--고객사코드명-->
+			,CPNAME 		as CPNAME 			<!--고객사명칭-->
+			,CPFILENAME  	as CPFILENAME 		<!--고객사요청파일명-->
+			,CPRECUSE  		as CPRECUSE 		<!--고객사녹취요청여부-->
+			,LINKEDID 		as LINKEDID  		<!--통화이력고유값-->
+			,DIRNAME  		as DIRNAME 			<!--녹취파일디렉토리-->
+			,FILENAME  		as FILENAME 		<!--녹취파일명-->
+			,FILESIZE 		as FILESIZE  		<!--녹취파일사이즈-->
+			,RECORDCHARGEID as RECORDCHARGEID 	<!--녹취고유ID-->
+			,INFO1   		as INFO1 			<!--기타정보1-->
+			,INFO2  		as INFO2 			<!--기타정보2-->
+			,INFO3  		as INFO3 			<!--기타정보3-->
+			,INFO4 			as INFO4 			<!--기타정보4-->
+			,CREATETIME  	as CREATETIME 		<!--생성일-->
+			,UPDATETIME 	as UPDATETIME 		<!--마지막업데이트일-->
+		FROM
+			 CALL_HISTORY T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+
+	</update>
+
+</mapper>

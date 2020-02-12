@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 수신입금계좌정보 -->
+<mapper namespace="com.lab603.record.web.mapper.login.LoginMapper">
+
+	<sql id="addWhere">
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 	MBER_ID				as mberId					<!-- 회원ID -->
+				,UNIQ_ID				as uniqId				<!-- 고유ID -->
+				,PASSWORD				as password				<!-- 비밀번호 -->
+				,MBER_NAME				as mberName				<!-- 이름 -->
+				,MBER_STTUS				as mberSttus			<!-- 상태 -->
+				,MBER_ROLE				as mberRole				<!-- 회원등급 -->
+				,MOBLPHON_NO			as moblphonNo			<!-- 휴대폰번호 -->
+				,EMAIL_ADDRESS			as emailAddress			<!-- Email 주소 -->
+				,FRST_REGISTER_ID		as frstRegisterId		<!-- 최초등록ID -->
+				,LAST_UPDUSR_ID			as lastUpdusrId			<!-- 최종등록ID -->
+				,FRST_REGISTER_PNTTM	as frstRegisterPnttm	<!-- 최초등록일 -->
+				,LAST_UPDUSR_PNTTM		as lastUpdusrPnttm		<!-- 최종등록일 -->
+		FROM
+			 CONSTANTIVRTTS T1
+		WHERE 1=1
+			AND
+				MBER_ID = #{mberId}
+			AND
+				PASSWORD = password(#{password})
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+	</update>
+
+</mapper>

@@ -1,0 +1,35 @@
+<!--
+try {
+    document.execCommand("BackgroundImageCache", false, true);
+} catch(ignored) {}
+// '\이벤트 차단 여부'
+var isDeny = false;
+
+document.oncontextmenu = function (e) {
+    return (isDeny) ? false : true;
+}
+document.onselectstart = function (e) {
+    return (isDeny) ? false : true;
+}
+document.ondragstart = function (e) {
+    return (isDeny) ? false : true;
+}
+
+var gbHost = 'http://' + location.host;
+
+function gbSess() {
+    var request = new AjaxHttpRequest();
+    var intervalId = null;
+    var second = 60 * 10;
+
+    clearInterval(intervalId);
+    intervalId = setInterval(function() {
+        request.get('sess.do', null, sessCallback);
+    }, second * 1000);
+}
+
+function sessCallback() {
+// var result = sessCallback.arguments[0].trim();
+// result = eval('(' + result + ')');
+}
+//-->

@@ -1,0 +1,101 @@
+
+
+    /*
+     * 값 채우는 도중 subu 라는 클래스를 add 해줌으로 나중 한번에 subu 클래스를 초기화 해버린다. Type A가 체인지 될경우 B ,C 의 값을 초기화한다.
+     */
+     function emptySelectSubuClass(){
+        $('.subu').empty();
+    };
+    /*
+     * 값 채우는 도중 subu 라는 클래스를 add 해줌으로 나중 한번에 subu 클래스를 초기화 해버린다. Type B가 체인지 될경우 C 의 값을 초기화한다.
+     */
+    function emptySelectSSubuClass(){
+        $('.ssubu').empty();
+    };
+    
+    $.fn.loadSelect = function(optionsDataArray, opt,title){
+        options = jQuery.extend({
+            label : 'label',
+            value : 'value'
+        }, opt);
+        var tmpa = '<option  value="" selected="true">'+title+'</option>';
+        $.each(optionsDataArray,function(index,optionData){
+            tmpa += '<option index='+index+' value='+optionData[options.value]+'>'+optionData[options.label]+'</option>';
+        });
+        $(this).append(tmpa);
+   };
+   
+   $.fn.loadSelectMid = function(optionsDataArray, opt,title){
+       options = jQuery.extend({
+           label : 'label',
+           value : 'value',
+           parent : 'parent'
+       }, opt);
+       var tmpa = '<option  value="" selected="true">'+title+'</option>';
+       $.each(optionsDataArray,function(index,optionData){
+           console.log(optionData[options.parent]);
+           tmpa += '<option index='+index+' value='+optionData[options.value]+' >'+optionData[options.label]+'</option>';
+       });
+       $(this).append(tmpa);
+   };
+   
+   $.fn.loadSelectBot = function(optionsDataArray, opt,title){
+       options = jQuery.extend({
+           label : 'label',
+           value : 'value'
+       }, opt);
+       var tmpa = '<option  value="" selected="true">'+title+'</option>';
+       $.each(optionsDataArray,function(index,optionData){
+           tmpa += '<option index='+index+' value='+optionData[options.value]+'>'+optionData[options.label]+'</option>';
+       });
+       $(this).append(tmpa);
+   };
+   
+   $.fn.loadSelectRequirment = function(optionsDataArray, opt,req,title){
+       var fn_req = req
+       options = jQuery.extend({
+           label : 'label',
+           value : 'value'
+       }, opt);
+       var tmpa = '<option  value="" selected="true">'+title+'</option>';
+       $.each(optionsDataArray,function(index,optionData){
+           if(fn_req!= optionData[options.value]){
+               tmpa += '<option index='+index+' value='+optionData[options.value]+'>'+optionData[options.label]+'</option>';
+            }
+       });
+       $(this).append(tmpa);
+   };
+   
+   
+   $.fn.loadSelectDedefaultValue = function(optionsDataArray, opt,defaultValue){
+       options = jQuery.extend({
+           label : 'label',
+           value : 'value'
+       }, opt);
+       tmpa = "";
+       $.each(optionsDataArray,function(index,optionData){
+           if(defaultValue == optionData[options.value]){
+               tmpa += '<option index='+index+' value='+optionData[options.value]+' selected="true" >'+optionData[options.label]+'</option>';
+           }else{
+               tmpa += '<option index='+index+' value='+optionData[options.value]+'>'+optionData[options.label]+'</option>';
+           }
+       });
+       
+       
+       $(this).append(tmpa);
+   };
+
+  $.fn.loadSelectsubu = function(optionsDataArray, opt, searchkeyworkd,title){
+        options = jQuery.extend({
+            label : 'label',
+            value : 'value',
+            compare  : 'compare'    
+        }, opt);
+        var tmpa = '<option  value="" selected="true">'+title+'</option>';
+        $.each(optionsDataArray,function(index,optionData){
+           if(searchkeyworkd == optionData[options.compare]){
+               tmpa += '<option index='+index+' value='+optionData[options.value]+'>'+optionData[options.label]+'</option>';
+            }
+        });
+        $(this).append(tmpa);
+ };

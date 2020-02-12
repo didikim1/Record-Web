@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 수신입금계좌정보 -->
+<mapper namespace="com.lab603.record.web.mapper.comtn.code.ComtnCodeMapper">
+
+	<sql id="addWhere">
+		AND USE_AT = 'Y'
+		<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(resaccountid)">
+			AND CMPNYIVRTTSID 	=  #{cmpnyivrttsid}
+		</if>
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+		SELECT
+			COUNT(0)
+		FROM
+			CONSTANTIVRTTS
+		WHERE 1=1
+		<include refid="addWhere"/>
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 CMPNYIVRTTSID 											as cmpnyivrttsid		<!-- 멘트ID -->
+			,IVRCMD 												as ivrcmd				<!-- IVR전문번호 -->
+			,CALLTYPE 												as calltype				<!-- 콜타입 -->
+			,TIMELIMIT 												as timelimit			<!-- 타임아웃 -->
+			,RETRYCOUNT 											as retrycount			<!-- 재시도횟수 -->
+			,CALLERID 												as callerid				<!-- 발신번호 -->
+			,TTS_MENT_INTRO 										as ttsMentIntro			<!-- 안내멘트1 -->
+			,TTS_SUB_INTRO 											as ttsSubIntro			<!-- 안내멘트2 -->
+			,TTS_RETRY 												as ttsRetry				<!-- 재시도멘트 -->
+			,TTS_INPUT_ERROR 										as ttsInputError		<!-- 오류멘트 -->
+			,TTS_NO_INPUT 											as ttsNoInput			<!-- 미입력멘트 -->
+			,TTS_EXCEED_RETRY_01 									as ttsExceedRetry01		<!-- 허용횟수초과멘트1 -->
+			,TTS_EXCEED_RETRY_02 									as ttsExceedRetry02		<!-- 허용횟수초과멘트2 -->
+			,TTS_AUTH_CANCLE 										as ttsAuthCancle		<!-- 취소멘트 -->
+			,TTS_AUTH_OK 											as ttsAuthOk			<!-- 인증성공멘트 -->
+			,TTS_MISMATCH 											as ttsMismatch			<!-- 잘못입력시멘트 -->
+			,SERVICE_STTUS 											as serviceSttus			<!-- 현재상태 -->
+			,USE_AT 												as useAt				<!-- 사용여부 -->
+			,DATE_FORMAT(FRST_REGISTER_PNTTM, '%Y-%m-%d %H:%i:%s') 	as frstRegisterPnttm	<!-- 최초등록시점 -->
+			,FRST_REGISTER_ID										as frstRegisterId		<!-- 최초등록ID -->
+			,DATE_FORMAT(LAST_UPDUSR_PNTTM, '%Y-%m-%d %H:%i:%s') 	as lastUpdusrPnttm		<!-- 마지막수정시점 -->
+			,LAST_UPDUSR_ID											as lastUpdusrId			<!-- 마지막수정ID -->
+		FROM
+			 CONSTANTIVRTTS T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+		LIMIT #{start}, #{end}
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 CMPNYIVRTTSID 											as cmpnyivrttsid		<!-- 멘트ID -->
+			,IVRCMD 												as ivrcmd				<!-- IVR전문번호 -->
+			,CALLTYPE 												as calltype				<!-- 콜타입 -->
+			,TIMELIMIT 												as timelimit			<!-- 타임아웃 -->
+			,RETRYCOUNT 											as retrycount			<!-- 재시도횟수 -->
+			,CALLERID 												as callerid				<!-- 발신번호 -->
+			,TTS_MENT_INTRO 										as ttsMentIntro			<!-- 안내멘트1 -->
+			,TTS_SUB_INTRO 											as ttsSubIntro			<!-- 안내멘트2 -->
+			,TTS_RETRY 												as ttsRetry				<!-- 재시도멘트 -->
+			,TTS_INPUT_ERROR 										as ttsInputError		<!-- 오류멘트 -->
+			,TTS_NO_INPUT 											as ttsNoInput			<!-- 미입력멘트 -->
+			,TTS_EXCEED_RETRY_01 									as ttsExceedRetry01		<!-- 허용횟수초과멘트1 -->
+			,TTS_EXCEED_RETRY_02 									as ttsExceedRetry02		<!-- 허용횟수초과멘트2 -->
+			,TTS_AUTH_CANCLE 										as ttsAuthCancle		<!-- 취소멘트 -->
+			,TTS_AUTH_OK 											as ttsAuthOk			<!-- 인증성공멘트 -->
+			,TTS_MISMATCH 											as ttsMismatch			<!-- 잘못입력시멘트 -->
+			,SERVICE_STTUS 											as serviceSttus			<!-- 현재상태 -->
+			,USE_AT 												as useAt				<!-- 사용여부 -->
+			,DATE_FORMAT(FRST_REGISTER_PNTTM, '%Y-%m-%d %H:%i:%s') 	as frstRegisterPnttm	<!-- 최초등록시점 -->
+			,FRST_REGISTER_ID										as frstRegisterId		<!-- 최초등록ID -->
+			,DATE_FORMAT(LAST_UPDUSR_PNTTM, '%Y-%m-%d %H:%i:%s') 	as lastUpdusrPnttm		<!-- 마지막수정시점 -->
+			,LAST_UPDUSR_ID											as lastUpdusrId			<!-- 마지막수정ID -->
+		FROM
+			 CONSTANTIVRTTS T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+		INSERT INTO CONSTANTIVRTTS
+			(
+			   IVRCMD				<!-- IVR전문번호 -->
+			  ,CALLTYPE				<!-- 콜타입 -->
+			  ,TIMELIMIT			<!-- 타임아웃 -->
+			  ,RETRYCOUNT			<!-- 재시도횟수 -->
+			  ,CALLERID				<!-- 발신번호 -->
+			  ,TTS_MENT_INTRO		<!-- 안내멘트1 -->
+			  ,TTS_SUB_INTRO		<!-- 안내멘트2 -->
+			  ,TTS_RETRY			<!-- 재시도멘트 -->
+			  ,TTS_INPUT_ERROR		<!-- 오류멘트 -->
+			  ,TTS_NO_INPUT			<!-- 미입력멘트 -->
+			  ,TTS_EXCEED_RETRY_01	<!-- 허용횟수초과멘트1 -->
+			  ,TTS_EXCEED_RETRY_02	<!-- 허용횟수초과멘트2 -->
+			  ,TTS_AUTH_CANCLE		<!-- 취소멘트 -->
+			  ,TTS_AUTH_OK			<!-- 인증성공멘트 -->
+			  ,TTS_MISMATCH			<!-- 잘못입력시멘트 -->
+			  ,SERVICE_STTUS		<!-- 현재상태 -->
+			  ,USE_AT 				<!-- 사용여부 -->
+			  ,FRST_REGISTER_PNTTM	<!-- 최초등록시점 -->
+			  ,FRST_REGISTER_ID		<!-- 최초등록ID -->
+			  ,LAST_UPDUSR_PNTTM	<!-- 마지막등록시점 -->
+			  ,LAST_UPDUSR_ID		<!-- 마지막등록ID -->
+			)
+			 VALUES
+			(
+			   #{ivrcmd}				<!-- IVR전문번호 -->
+			  ,#{calltype}				<!-- 콜타입 -->
+			  ,#{timelimit}				<!-- 타임아웃 -->
+			  ,#{retrycount}			<!-- 재시도횟수 -->
+			  ,#{callerid}				<!-- 발신번호 -->
+			  ,#{ttsMentIntro}			<!-- 안내멘트1 -->
+			  ,#{ttsSubIntro}			<!-- 안내멘트2 -->
+			  ,#{ttsRetry}				<!-- 재시도멘트 -->
+			  ,#{ttsInputError}			<!-- 오류멘트 -->
+			  ,#{ttsNoInput}			<!-- 미입력멘트 -->
+			  ,#{ttsExceedRetry01}		<!-- 허용횟수초과멘트1 -->
+			  ,#{ttsExceedRetry02}		<!-- 허용횟수초과멘트2 -->
+			  ,#{ttsAuthCancle}			<!-- 취소멘트 -->
+			  ,#{ttsAuthOk}				<!-- 인증성공멘트 -->
+			  ,#{ttsMismatch}			<!-- 잘못입력시멘트 -->
+			  ,#{serviceSttus}			<!-- 현재상태 -->
+			  ,#{useAt} 				<!-- 사용여부 -->
+			  ,NOW()					<!-- 최초등록시점 -->
+			  ,#{frstRegisterId}		<!-- 최초등록ID -->
+			  ,NOW()					<!-- 마지막등록시점 -->
+			  ,#{lastUpdusrId}			<!-- 마지막등록ID -->
+			)
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+		UPDATE CONSTANTIVRTTS
+			 SET
+				 LAST_UPDUSR_ID 	=  #{lastUpdusrId}
+				,LAST_UPDUSR_PNTTM  =  now()
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ivrcmd)">    			,IVRCMD 				= #{ivrcmd}   			</if>  <!-- IVR전문번호 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(calltype)">  			,CALLTYPE 				= #{calltype} 			</if>  <!-- 콜타입 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(timelimit)">  			,TIMELIMIT 				= #{timelimit} 			</if>  <!-- 타임아웃 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(retrycount)">  		,RETRYCOUNT 			= #{retrycount} 		</if>  <!-- 재시도횟수 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(callerid)">  			,CALLERID 				= #{callerid} 			</if>  <!-- 발신번호 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsMentIntro)">  		,TTS_MENT_INTRO 		= #{ttsMentIntro} 		</if>  <!-- 안내멘트1 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsSubIntro)">  		,TTS_SUB_INTRO 			= #{ttsSubIntro} 		</if>  <!-- 안내멘트2 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsRetry)">  			,TTS_RETRY 				= #{ttsRetry} 			</if>  <!-- 재시도멘트 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsInputError)">  		,TTS_INPUT_ERROR 		= #{ttsInputError} 		</if>  <!-- 오류멘트 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsNoInput)">  		,TTS_NO_INPUT 			= #{ttsNoInput} 		</if>  <!-- 미입력멘트 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsExceedRetry01)">	,TTS_EXCEED_RETRY_01 	= #{ttsExceedRetry01} 	</if>  <!-- 허용횟수초과멘트1 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsExceedRetry02)">	,TTS_EXCEED_RETRY_02 	= #{ttsExceedRetry02} 	</if>  <!-- 허용횟수초과멘트2 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsAuthCancle)">  		,TTS_AUTH_CANCLE 		= #{ttsAuthCancle} 		</if>  <!-- 취소멘트 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsAuthOk)">  			,TTS_AUTH_OK 			= #{ttsAuthOk} 			</if>  <!-- 인증성공멘트 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(ttsMismatch)">  		,TTS_MISMATCH 			= #{ttsMismatch} 		</if>  <!-- 잘못입력시멘트 -->
+			<if test="@com.lab603.arswebapi.framework.config.mybatis.Utily@isNotEmpty(serviceSttus)">  		,SERVICE_STTUS 			= #{serviceSttus} 		</if>  <!-- 현재상태 -->
+		WHERE CMPNYIVRTTSID = #{cmpnyivrttsid}
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+		DELETE FROM CONSTANTIVRTTS WHERE CMPNYIVRTTSID = #{cmpnyivrttsid}
+	</update>
+
+</mapper>

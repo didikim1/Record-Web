@@ -1,0 +1,86 @@
+﻿function nvObject(Name, Value){
+    this.Name = Name;
+    this.Value = Value;
+}
+
+function nvObjectIndex(array, Name){
+    for (var i = 0; i < array.length; i++) 
+        if (array[i].Name == Name) 
+            return i;
+    return -1;
+}
+
+function addQs(){
+    var nv;
+    var arg = addQs.arguments;
+    var argCount = addQs.arguments.length;
+    
+    for (var i = 0; i < argCount; i++) {
+        nv = arg[i].split('=');
+        addURL.push(new nvObject(nv[0], nv[1]));
+    }
+    return getQs();
+}
+
+function chgQs(Name, Value){
+    var index = nvObjectIndex(addURL, Name);
+    if (index == -1) 
+        addQs(Name + '=' + Value);
+    else 
+        addURL.splice(nvObjectIndex(addURL, Name), 1, new nvObject(Name, Value));
+    return getQs();
+}
+
+function delQs(){
+    var index;
+    var arg = delQs.arguments;
+    var argCount = delQs.arguments.length;
+    
+    for (var i = 0; i < argCount; i++) {
+        if (nvObjectIndex(addURL, arg[i]) == -1) 
+            continue;
+        addURL.splice(nvObjectIndex(addURL, arg[i]), 1);
+    }
+    return getQs();
+}
+
+function getQsValue(Name){
+    var index = nvObjectIndex(addURL, Name);
+    return (index == -1) ? "" : addURL[index].Value;
+}
+
+function getQs(){
+    var qs = new Array();
+    var __null = (getQs.arguments.length > 0) ? true : false;
+    
+    for (var i = 0; i < addURL.length; i++) {
+        if (__null && addURL[i].Value == "") 
+            continue;
+        qs.push(addURL[i].Name + '=' + addURL[i].Value);
+    }
+    
+    return (qs.length == 0) ? "" : '?' + qs.join("&");
+}
+
+function initQs(){
+    var nv;
+    var arrayQuery = new Array();
+    var params = location.search.substring(1).split("&");
+    
+    for (var i = 0; i < params.length; i++) {
+        if (params[i].indexOf('=') == -1) 
+            continue;
+        nv = params[i].split('=');
+        arrayQuery[i] = new nvObject(nv[0], nv[1]);
+    }
+    
+    return arrayQuery;
+}
+
+// javascript link
+function GoPage(page){
+    chgQs("pageinfo.page", page);
+    location.href = location.pathname + getQs();
+}
+
+var addURL = initQs();
