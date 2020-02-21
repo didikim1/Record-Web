@@ -55,13 +55,13 @@
 		<div class="nav-container">
 			<div id="layout_menu">
 				<ul id="nav">
-				    <li class="top" id="m0"><a href="./recordSearchAndPlay.do" id="gnb_0" class="top_link">검색 / 재생</a></li>
+				    <li class="top" id="m0"><a href="/recordPlay/ListPagingData.do" id="gnb_0" class="top_link">검색 / 재생</a></li>
 
-				    <li class="top" id="m1"><a href="./playHistory.do" id="gnb_0" class="top_link">접속 / 재생 이력</a></li>
+				    <li class="top" id="m1"><a href="/playHistory/ListPagingData.do" id="gnb_0" class="top_link">접속 / 재생 이력</a></li>
 
-				    <li class="top border_right" id="m2"><a href="./userManage.do" id="gnb_0" class="top_link">계정 관리</a></li>
+				    <li class="top border_right" id="m2"><a href="/gnrlmber/ListPagingData.do" id="gnb_0" class="top_link">계정 관리</a></li>
 
-				    <li class="top border_right" id="m2"><a href="./fileDeleteHIstory.do" id="gnb_0" class="top_link">삭제 이력</a></li>
+<!-- 				    <li class="top border_right" id="m2"><a href="./fileDeleteHIstory.do" id="gnb_0" class="top_link">삭제 이력</a></li> -->
 				</ul>
 			</div>
 		</div>

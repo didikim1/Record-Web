@@ -7,10 +7,6 @@
 <tag:layout>
 
     <div id="layout_content">
-<!-- 	    <div class="content_top"> -->
-<!-- 						<p class="tl">녹취파일 검색 / 재생 </p> -->
-<!-- 			</div> -->
-
 			<div class="border">
 				<h1 class="tit01">검색조건</h1>
 				<form name="recordSearchForm">
@@ -24,12 +20,6 @@
 								<input type="text" class="common_input2 right pointer" name="eDate" id="eDate" autocomplete="off" placeholder="종료일" value="${paramMap.eDate}" readonly="readonly"/>
 								<button type="button" class="common_button2 margin_l3" onclick="recordSearch();"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;검색</button>
 								<button type="button" onclick="excelWrite();" class="common_button1 margin_l3"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;EXCEL 출력</button>
-								<select class="common_select margin_l3" onchange="selectView(this.value);" id="sel" name="sel">
-									<option value="10" <c:if test="${paramMap.sel == 10}"> selected="selected"</c:if>>10개 보기</option>
-									<option value="30" <c:if test="${paramMap.sel == 30}"> selected="selected"</c:if>>30개 보기</option>
-									<option value="50" <c:if test="${paramMap.sel == 50}"> selected="selected"</c:if>>50개 보기</option>
-									<option value="100" <c:if test="${paramMap.sel == 100}"> selected="selected"</c:if>>100개 보기</option>
-								</select>
 							</td>
 						</tr>
 					</table>
@@ -94,9 +84,10 @@
 
 			<c:if test="${count > 0 }">
 				<div class="border">
-<%-- 					<tag:page formName="recordSearchForm"/> --%>
+					<tag:Page formName="recordSearchForm"/>
 				</div>
 			</c:if>
 
     </div>
+ <jsp:include page="ListPagingDataS.jsp" flush="false" />
 </tag:layout>
