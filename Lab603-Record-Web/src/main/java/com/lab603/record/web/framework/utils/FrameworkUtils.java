@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.util.StringUtils;
 /**
  * @FileName : FrameworkUtils.java
@@ -157,6 +160,29 @@ public class FrameworkUtils extends StringUtils{
         else
             return false;
     }
+
+	 public static String getClientIP(HttpServletRequest request)
+	 {
+	    String ip = request.getHeader("X-Forwarded-For");
+
+	    if (ip == null) {
+	        ip = request.getHeader("Proxy-Client-IP");
+	    }
+	    if (ip == null) {
+	        ip = request.getHeader("WL-Proxy-Client-IP");
+	    }
+	    if (ip == null) {
+	        ip = request.getHeader("HTTP_CLIENT_IP");
+	    }
+	    if (ip == null) {
+	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+	    }
+	    if (ip == null) {
+	        ip = request.getRemoteAddr();
+	    }
+	    return ip;
+	}
+
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//	   Array
     /////////////////////////////////////////////////////////////////////////////////////////

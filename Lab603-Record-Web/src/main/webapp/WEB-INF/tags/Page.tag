@@ -8,40 +8,49 @@ function goPage(page) {
     $("[name=${formName}]").submit();
 };
 </script>
-
-<div class="pagingArea">
-	<div class="paging">
-		<c:choose>
-			<c:when test="${pageing.totalPageCount == 1}">
-			</c:when>
+<div align="center">
+	  <ul class="pagination pagination-sm">
+		  <c:choose>
 		   	<c:when test="${pageing.currentPageNo == 1}">
-				<a href="javascript:goPage('1')" class="first">First</a>
-				<a href="javascript:goPage('1')" class="prev">Prev</a>
-			</c:when>
-			<c:otherwise>
-				<a href="javascript:goPage('1')" class="first">First</a>
-				<a href="javascript:goPage(${pageing.currentPageNo-1})" class="prev">Prev</a>
-			</c:otherwise>
-		</c:choose>
+		   		<li><span aria-hidden="true" title="첫 페이지 이동"><strong>&nbsp;&nbsp;<i class="fa fa-angle-double-left line" aria-hidden="true"></i>&nbsp;&nbsp;</strong></span></li>
+		   		<li><span aria-hidden="true"><strong>Prev</strong></span></li>
+		   	</c:when>
+		   	<c:otherwise>
+		   		<li>
+				   	<a href="javascript:goPage('1');" aria-label="Next" >
+				   		<span aria-hidden="true" title="첫 페이지 이동"><strong>&nbsp;&nbsp;<i class="fa fa-angle-double-left line" aria-hidden="true"></i>&nbsp;&nbsp;</strong></span>
+				   	</a>
+				</li>
+		   		<li><a href="javascript:goPage('${pageing.currentPageNo-1}');"  aria-label="Previous"><span aria-hidden="true" title="이전 페이지 이동"><strong>Prev</strong></span></a></li>
+		   	</c:otherwise>
+		  </c:choose>
 
-		<c:forEach var="i" begin="${pageing.firstPageNoOnPageList}" end="${pageing.lastPageNoOnPageList}" step="1">
-			<c:choose>
-				<c:when test="${i == pageing.currentPageNo}">
-					 <span onclick="javascript:goPage(${i})">${i}</span>
-				</c:when>
-				<c:otherwise>
-					 <a href="javascript:goPage(${i})">${i}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+		   <c:forEach var="i" begin="${pageing.firstPageNoOnPageList}" end="${pageing.lastPageNoOnPageList}" step="1">
+		   		<c:if test="${ pageing.totalPageCount ge i }">
+					<c:choose>
+						<c:when test="${i == pageing.currentPageNo}">
+							 <li class="active"><a href="#"><strong>${i}</strong></a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="javascript:goPage('${i}');"><strong>${i}</strong></a></li><li>
+						</c:otherwise>
+					</c:choose>
+				</c:if>
+			</c:forEach>
 
-		<c:choose>
-	    	<c:when test="${pageing.currentPageNo<pageing.totalPageCount}">
-	    		<a href="javascript:goPage(${pageing.currentPageNo+1})" class="next">Next</a>
-				<a href="javascript:goPage(${pageing.totalPageCount})" class="last">Last</a>
-	    	</c:when>
-	    	<c:otherwise>
-	    	</c:otherwise>
-	    </c:choose>
-	</div>
+		    <c:choose>
+		    	<c:when test="${pageing.currentPageNo < pageing.totalPageCount}">
+		    		<li><a href="javascript:goPage('${pageing.currentPageNo+1}');" aria-label="Next" ><span aria-hidden="true" title="다음 페이지 이동"><strong>Next</strong></span></a></li>
+		    		<li>
+					   	<a href="javascript:goPage('${pageing.totalPageCount}');" aria-label="Next">
+							<span aria-hidden="true" title="마지막 페이지 이동"><strong>&nbsp;&nbsp;<i class="fa fa-angle-double-right line" aria-hidden="true"></i>&nbsp;&nbsp;</strong></span>
+					   	</a>
+					</li>
+		    	</c:when>
+		    	<c:otherwise>
+		    		<li><span aria-hidden="true" title="다음 페이지 이동"><strong>Next</strong></span></li>
+		    		<li><span aria-hidden="true" title="마지막 페이지 이동"><strong>&nbsp;&nbsp;<i class="fa fa-angle-double-right line" aria-hidden="true"></i>&nbsp;&nbsp;</strong></span></li>
+		    	</c:otherwise>
+		    </c:choose>
+	  </ul>
 </div>

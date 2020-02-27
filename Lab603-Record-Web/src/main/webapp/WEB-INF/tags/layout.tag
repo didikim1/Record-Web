@@ -4,7 +4,7 @@
 <%@ attribute name="activePageIndex" required="false"%>
 <%@ attribute name="bodyClass" required="false"%>
 <c:set var="_url" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath }" scope="application"/>
-<c:set var="Ver"  value="20200212_005" scope="application"/>
+<c:set var="Ver"  value="20200225_001" scope="application"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,11 +22,13 @@
 <script type="text/javascript" src="${_resource}/js/common/jquery/jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="${_resource}/js/common/jquery/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="${_resource}/js/common/jquery/jquery.function.js"></script>
-<script type="text/javascript" src="${_resource}/js/common/jquery/jquery-ui-1.10.3.custom.min.js"></script>
 <script type="text/javascript" src="${_resource}/js/common/jquery/jquery.ui.datepicker-ko.js"></script>
 <script type="text/javascript" src="${_resource}/js/common/common.js"></script>
 <script type="text/javascript" src="${_resource}/js/common/uicommon.js"></script>
 <script type="text/javascript" src="${_resource}/js/common/jquery/jquery.form.js"></script>
+
+<link rel="stylesheet" type="text/css"  href="${_resource}/lib/audio/skin/blue.monday/css/jplayer.blue.monday.css"/>
+<script type="text/javascript" src="${_resource}/lib/audio/jplayer/jquery.jplayer.min.js"></script>
 
 <!-- Font-awesome -->
 <link rel="stylesheet" type="text/css" href="${_resource}/lib/font-awesome/css/font-awesome.min.css" />

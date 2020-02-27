@@ -30,7 +30,7 @@
 				,FRST_REGISTER_PNTTM	as frstRegisterPnttm	<!-- 최초등록일 -->
 				,LAST_UPDUSR_PNTTM		as lastUpdusrPnttm		<!-- 최종등록일 -->
 		FROM
-			 CONSTANTIVRTTS T1
+			 COMTN_GNRLMBER T1
 		WHERE 1=1
 			AND
 				MBER_ID = #{mberId}

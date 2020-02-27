@@ -8,4 +8,12 @@ import org.springframework.stereotype.Component;
 @Scope(value="session")
 public class SessionBean
 {
+	public String mberId 			= "";
+	public String uniqId 			= "";
+	public String mberName 			= "";
+	public String mberSttus 		= "";
+	public String mberRole 			= "";
+	public String moblphonNo 		= "";
+	public String emailAddress 		= "";
 }
+

@@ -4,12 +4,16 @@
 <%@ taglib prefix="tag" tagdir="/WEB-INF/tags"%>
 <c:set var="_url" value="${pageContext.request.contextPath == '/' ? '' : pageContext.request.contextPath }" scope="application"/>
 
-<tag:layout>
 
+
+<tag:layout>
+	<style>
+	</style>
     <div id="layout_content">
 			<div class="border">
 				<h1 class="tit01">검색조건</h1>
 				<form name="recordSearchForm">
+					<input type="hidden" name="page" />
 					<table class="wtable_sub">
 						<tr>
 							<td>
@@ -19,72 +23,55 @@
 								<input type="text" class="common_input2 pointer"  name="sDate" id="sDate" style="border-right:none;" autocomplete="off" placeholder="시작일" value="${paramMap.sDate}" readonly="readonly"/>
 								<input type="text" class="common_input2 right pointer" name="eDate" id="eDate" autocomplete="off" placeholder="종료일" value="${paramMap.eDate}" readonly="readonly"/>
 								<button type="button" class="common_button2 margin_l3" onclick="recordSearch();"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;검색</button>
-								<button type="button" onclick="excelWrite();" class="common_button1 margin_l3"><i class="fa fa-file-excel-o" aria-hidden="true"></i>&nbsp;EXCEL 출력</button>
 							</td>
 						</tr>
 					</table>
 				</form>
 			</div>
 
-
-			<table id="myTable" class="wtable tablesorter-blackice border table-hover">
+			<table id="myTable" class="wtable border">
 				<thead>
 					<tr>
-						<th scope="col" width="10%">번호</th>
-						<th scope="col" width="10%">업무코드</th>
-						<th scope="col" width="10%">고객번호</th>
-						<th scope="col" width="15%">통화일자</th>
+						<th scope="col" width="5%">번호</th>
 						<th scope="col" width="15%">통화 시작시간</th>
+						<th scope="col" width="15%">통화 수신시간</th>
 						<th scope="col" width="15%">통화 종료시간</th>
-						<th scope="col" width="10%">시간(sec)</th>
-						<th scope="col" width="10%">수신확인</th>
+						<th scope="col" width="5%">시간(sec)</th>
+						<th scope="col" width="15%">발신번호</th>
+						<th scope="col" width="15%">수신번호</th>
 						<th scope="col" width="5%">듣기</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="BOARD" items="${list}" varStatus="status">
+					<c:forEach var="board" items="${Data.list}" varStatus="status">
 						<tr>
-							<td>${totalCount -((pageNUM -1) * paramMap.sel) - status.index}</td>
-							<td>02</td>
-							<td>${BOARD.AUTHREQNUMBER}</td>
+							<td>${Data.paginationInfo.totalRecordCount -((Data.paginationInfo.currentPageNo -1) * Data.paginationInfo.recordCountPerPage) - status.index}</td>	<!-- 번호 -->
+							<td>${board.btime}</td>				<!-- 통화 시작시간 -->
+							<td>${board.rbtime}</td>			<!-- 통화 수신시간 -->
+							<td>${board.etime}</td>				<!-- 통화 종료시간 -->
+							<td>${board.callduration}</td>		<!-- 시간(sec) -->
+							<td>${board.caller}</td>			<!-- 발신번호 -->
+							<td class=""><div class="textOverflow">${board.called}</div></td>			<!-- 수신번호 -->
 							<td>
-								<fmt:parseDate var="dateRequesttime" value="${BOARD.REQUESTTIME}" pattern="yyyyMMddHHmmss" />
-								<fmt:formatDate value="${dateRequesttime}" pattern="yyyy-MM-dd HH:mm:ss" />
-							</td>
-							<td>
-								<fmt:parseDate var="dateBtime" value="${BOARD.BTIME}" pattern="yyyyMMddHHmmss" />
-								<fmt:formatDate value="${dateBtime}" pattern="yyyy-MM-dd HH:mm:ss" />
-							</td>
-							<td>
-								<fmt:parseDate var="dateEtime" value="${BOARD.ETIME}" pattern="yyyyMMddHHmmss" />
-								<fmt:formatDate value="${dateEtime}" pattern="yyyy-MM-dd HH:mm:ss" />
-							</td>
-							<td>${BOARD.RECTIME}</td>
-							<td>
-								<c:choose>
-									<c:when test="${BOARD.ISRCV == 'Y'}">완료</c:when>
-									<c:otherwise>미수신</c:otherwise>
-								</c:choose>
-							</td>
-							<td>
-								<div class="position">
-									<input type="button" class="btn_it01" onclick="recordPlay('${BOARD.C_ID}');"  value="재생"/>
-								</div>
+								<input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/>
+<!-- 								<div class="position"> -->
+<%-- 									<input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/> --%>
+<!-- 								</div> -->
 							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 
-				<c:if test="${count == 0 }">
+				<c:if test="${Data.paginationInfo.totalRecordCount == 0 }">
 					<tr>
 						<td width="100%" colspan="9" >데이터가 존재 하지 않습니다.</td>
 					</tr>
 				</c:if>
 			</table>
 
-			<c:if test="${count > 0 }">
+			<c:if test="${Data.paginationInfo.totalRecordCount > 0 }">
 				<div class="border">
-					<tag:Page formName="recordSearchForm"/>
+					<tag:Page formName="recordSearchForm" pageing="${Data.paginationInfo}"/>
 				</div>
 			</c:if>
 

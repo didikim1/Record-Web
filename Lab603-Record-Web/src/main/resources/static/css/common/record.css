@@ -3,9 +3,9 @@
 	margin:0;
 	padding:0;
 	color:#333;
-	width:1100px;
+	width:80%;
 	min-width:1100px;
-	
+
 	min-height: 100%;
 	margin: 100px auto 160px auto;
 /* 	border: 1px solid #e0e0e0; */
@@ -21,42 +21,42 @@
 	clear:both;
 	color:#333;
 	width:450px;
-	}		
-	
-	
+	}
+
+
 .content_top {
 	margin:0 5px;
 	height:50px;
 	}
-	
-	
+
+
 .tit01 {
 	text-align:left ;
 	height:  35px;
-	background-color:#464646; 
-	margin:0; 
-	padding:6px 0 0 10px; 
-	font-size:15px; 
-	color:#fff; 
+	background-color:#464646;
+	margin:0;
+	padding:6px 0 0 10px;
+	font-size:15px;
+	color:#fff;
 	}
-			
+
 table { border-collapse:collapse; }
 
 table.wtable {
-	width:100%;	
+	width:100%;
 	text-align:center;
 	margin-top: 20px;
 	margin-bottom: 20px;
 	font-size: 14px;
 	}
-	
-table.wtable th {		
+
+table.wtable th {
 	background-color:#464646;
 	line-height: 30px;
 	padding:2px;
 	color:#fff;
 	}
-	
+
 table.wtable td {
 	font-size: 12px;
 	padding:3px;
@@ -67,40 +67,40 @@ table.wtable td {
 
 
 table.wtable_sub {
-	width:100%;	
+	width:100%;
 	text-align:center;
 	margin: 5px;
 	font-size: 14px;
 	}
-	
-table.wtable_sub th {		
+
+table.wtable_sub th {
 	background-color:#3C5A91;
 	line-height: 30px;
 	padding:2px;
 	color:#fff;
 	}
-	
+
 table.wtable_sub td {
 	font-size: 13px;
 	padding:3px;
 	line-height: 30px;
 	color:#404040;
 	}
-	
+
 table.htable {
-	width:100%;	
+	width:100%;
 	text-align:center;
 	font-size: 14px;
 	}
-	
-table.htable th {		
+
+table.htable th {
 	background-color:#3C5A91;
 	line-height: 40px;
 	padding:2px;
 	color:#fff;
 	border-bottom:solid 1px #e6e6e6;
 	}
-	
+
 table.htable td {
 	font-size: 13px;
 	padding:3px;
@@ -108,7 +108,7 @@ table.htable td {
 	border-bottom:solid 1px #e6e6e6;
 	color:#404040;
 	}
-	
+
 
 /* �뀒�씠釉� sorter */
 
@@ -138,27 +138,27 @@ table.htable td {
 
 /* �뀒�씠釉� sorter */
 
-	
+
 #layout_content input.common_input1{
-  width: 100px; 
+  width: 100px;
   height: 30px;
   padding: 2px;
   font-size: 14px;
   color: #1b1b1b;
   border: 1px solid #ccc;
   border-right:none;
-  text-align: center; 
+  text-align: center;
   float: left;
 }
 
 #layout_content div.common_div,
 #layout_content_popup div.common_div{
-  width: 100px; 
+  width: 100px;
   height: 30px;
   font-size: 14px;
   color: #1b1b1b;
   background-color:#eee;
-  text-align: center; 
+  text-align: center;
   border: 1px solid #ccc;
   border-right:none;
   float: left;
@@ -166,33 +166,33 @@ table.htable td {
 
 #layout_content input.common_input2,
 #layout_content_popup input.common_input2 {
-  width: 140px; 
+  width: 140px;
   height: 30px;
   line-height:24px;
   font-size: 14px;
   color: #1b1b1b;
   border: 1px solid #ccc;
-  text-align: center; 
+  text-align: center;
   float: left;
   vertical-align: middle;
 }
 
 #layout_content select.common_select,
 #layout_content_popup select.common_select{
-  width: 120px; 
+  width: 120px;
   height: 30px;
   cursor:pointer;
   font-size: 14px;
   color: #1b1b1b;
   padding:5px 0;
   border: 1px solid #ccc;
-  text-align: center; 
+  text-align: center;
   float: left;
 }
 
 #layout_content button.common_button1,
 #layout_content_popup button.common_button1{
-  width: 120px; 
+  width: 120px;
   height: 30px;
   line-height:24px;
   cursor:pointer;
@@ -201,7 +201,7 @@ table.htable td {
   background-color: #464646;
   border: none;
   border-radius: 4px;
-  text-align: center; 
+  text-align: center;
   float: left;
   behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
 }
@@ -214,7 +214,7 @@ table.htable td {
 
 #layout_content button.common_button2,
 #layout_content_popup button.common_button2{
-  width: 80px; 
+  width: 80px;
   height: 30px;
   line-height:24px;
   cursor:pointer;
@@ -223,7 +223,7 @@ table.htable td {
   background-color: #464646;
   border: none;
   border-radius: 4px;
-  text-align: center; 
+  text-align: center;
   float: left;
   behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
 }
@@ -234,7 +234,7 @@ table.htable td {
 }
 
 #layout_content_popup_sub table.htable input.userManageInput{
-  width: 300px; 
+  width: 300px;
   height: 30px;
   line-height:24px;
   margin-left:10px;
@@ -246,7 +246,7 @@ table.htable td {
 }
 
 #layout_content_popup_sub table.htable select.userManageSelect{
-  width: 300px; 
+  width: 300px;
   height: 30px;
   min-height:30px;
   margin-left:10px;
@@ -260,14 +260,14 @@ table.htable td {
 
 
 #layout_content_popup_sub button.userManageButton{
-  width: 200px; 
+  width: 200px;
   height: 40px;
   min-height:40px;
   padding: 2px;
   margin:5px auto 5px auto;
   font-size: 14px;
   color: #fff;
-  background-color:#263238; 
+  background-color:#263238;
   border: 1px solid transparent;
   cursor:pointer;
 }
@@ -277,31 +277,31 @@ table.htable td {
 }
 
 
-.btn_it01 { 
-	width: 50px; 
+.btn_it01 {
+	width: 50px;
 	height: 25px;
-	background-color:#464646; 
-	border:solid 1px transparent; 
-	font-size:13px; 
-	color:#fff; 
+	background-color:#464646;
+	border:solid 1px transparent;
+	font-size:13px;
+	color:#fff;
 	cursor:pointer;
 	border-radius: 4px;
 	behavior: url(/r2pRecordStreaming/static/lib/PIE/PIE.htc);
-	}		
+	}
 
 .btn_it01:hover{
 	background-color:#848484;
 }
 
-.btn_it02 { 
-	width: 180px; 
+.btn_it02 {
+	width: 180px;
 	height: 30px;
-	background-color:#464646; 
-	border:solid 1px transparent; 
-	font-size:14px; 
-	color:#fff; 
+	background-color:#464646;
+	border:solid 1px transparent;
+	font-size:14px;
+	color:#fff;
 	cursor:pointer;
-	margin-top: 4px; 
+	margin-top: 4px;
 	border-radius: 3px;
 	margin-left : 15px;
 	float: left;
@@ -310,7 +310,7 @@ table.htable td {
 
 .btn_it02:hover{
 	background-color:#848484;
-}		
+}
 
 
 .left{
@@ -353,4 +353,10 @@ table.htable td {
 
 
 
-
+.textOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  height: 20px;
+}

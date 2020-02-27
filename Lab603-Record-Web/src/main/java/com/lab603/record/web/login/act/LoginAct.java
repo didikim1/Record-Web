@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lab603.record.web.framework.beans.BasicBean;
 import com.lab603.record.web.framework.beans.FrameworkBeans;
@@ -11,7 +12,7 @@ import com.lab603.record.web.framework.mymap.MyCamelMap;
 import com.lab603.record.web.framework.mymap.MyMap;
 import com.lab603.record.web.framework.result.ResultCode;
 import com.lab603.record.web.framework.result.ResultMessage;
-import com.lab603.record.web.recordplay.biz.RecordPlayBiz;
+import com.lab603.record.web.login.service.LoginBiz;
 
 @Controller
 @RequestMapping("/login")
@@ -22,13 +23,12 @@ public class LoginAct
 
 	final String pagePrefix = "login";
 
-	@Resource(name="com.lab603.record.web.recordplay.biz.RecordPlayBiz")
-	RecordPlayBiz mBiz;
+	@Resource(name="com.lab603.record.web.login.service.LoginBiz")
+	LoginBiz mBiz;
 
 	@RequestMapping(value = { "/", "/index.do" })
 	public String index(Model model)
 	{
-		Logger.debug("???");
 		return pagePrefix + "/index";
 	}
 
@@ -47,16 +47,30 @@ public class LoginAct
 	}
 
 	@RequestMapping(value = { "/SelectOneData.do" })
-	public String SelectOneData(Model model)
+	public @ResponseBody ResultMessage SelectOneData(Model model)
 	{
 		MyMap 		paramMap 	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		MyCamelMap 	resultMap 	= new MyCamelMap();
+		MyCamelMap 	resultMap 	= null;
+		String  	resultCode	= ResultCode.RESULT_OK;
 
 		resultMap = mBiz.SelectOneData(paramMap);
 
-		model.addAttribute("Data", resultMap);
+		if ( resultMap == null )
+		{
+			resultCode = ResultCode.RESULT_EMPTY;
+		}
+		else
+		{
+			FrameworkBeans.findSessionBean().mberId 		= resultMap.getStr("mberId");
+			FrameworkBeans.findSessionBean().uniqId 		= resultMap.getStr("uniqId");
+			FrameworkBeans.findSessionBean().mberName 		= resultMap.getStr("mberName");
+			FrameworkBeans.findSessionBean().mberSttus 		= resultMap.getStr("mberSttus");
+			FrameworkBeans.findSessionBean().mberRole 		= resultMap.getStr("mberRole");
+			FrameworkBeans.findSessionBean().moblphonNo 	= resultMap.getStr("moblphonNo");
+			FrameworkBeans.findSessionBean().emailAddress 	= resultMap.getStr("emailAddress");
+		}
 
-		return pagePrefix + "/SelectOneData";
+		return new ResultMessage(resultCode, "success");
 	}
 
 	@RequestMapping(value = { "/RegisterData.do" })

@@ -4,6 +4,7 @@
 <mapper namespace="com.lab603.record.web.mapper.login.LoginHistoryMapper">
 
 	<sql id="addWhere">
+
 	</sql>
 
 	<!-- 페이징 갯수 -->
@@ -20,7 +21,8 @@
 	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
 			 LOGINID 							as loginid			<!-- 로그인이력ID -->
-			,UNIQ_ID 							as uniqId			<!-- 접속시도ID -->
+			,MBER_ID 							as mberId			<!-- 접속시도ID -->
+			,IPADDR 							as ipaddr			<!-- 접속시도IP -->
 			,LOGINRTN 							as loginrtn			<!-- 로그인성공여부 -->
 			,REASON 							as reason			<!-- 로그인실패사유 -->
 			,CREATETIME 						as createtime		<!-- 생성일 -->
@@ -35,7 +37,8 @@
 	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
 			 LOGINID 							as loginid			<!-- 로그인이력ID -->
-			,UNIQ_ID 							as uniqId			<!-- 접속시도ID -->
+			,MBER_ID 							as mberId			<!-- 접속시도ID -->
+			,IPADDR 							as ipaddr			<!-- 접속시도IP -->
 			,LOGINRTN 							as loginrtn			<!-- 로그인성공여부 -->
 			,REASON 							as reason			<!-- 로그인실패사유 -->
 			,CREATETIME 						as createtime		<!-- 생성일 -->
@@ -49,14 +52,16 @@
 	<update id="RegisterData" parameterType="myMap" >
 		INSERT INTO COMTN_LOGINLOG
 			(
-			   UNIQ_ID				<!-- 접속시도ID -->
+			   MBER_ID				<!-- 접속시도ID -->
+			  ,IPADDR				<!-- 접속시도IP -->
 			  ,LOGINRTN				<!-- 로그인성공여부 -->
 			  ,REASON				<!-- 로그인실패사유 -->
 			  ,CREATETIME			<!-- 생성일 -->
 			)
 			 VALUES
 			(
-			   #{uniqId}				<!-- 접속시도ID -->
+			   #{mberId}				<!-- 접속시도ID -->
+			  ,#{ipaddr}				<!-- 접속시도IP -->
 			  ,#{loginrtn}				<!-- 로그인성공여부 -->
 			  ,#{reason}				<!-- 로그인실패사유 -->
 			  ,NOW()					<!-- 생성일 -->
@@ -67,7 +72,8 @@
 	<update id="ModifyData" parameterType="myMap">
 		UPDATE COMTN_LOGINLOG
 			 SET
-			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(uniqId)">      ,UNIQ_ID 		= #{uniqId}   			</if>  <!-- 접속시도ID -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(mberId)">      ,MBER_ID 		= #{mberId}   			</if>  <!-- 접속시도ID -->
+			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(ipaddr)">      ,IPADDR 		= #{ipaddr}   			</if>  <!-- 접속시도IP -->
 			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(loginrtn)">    ,LOGINRTN 	= #{loginrtn} 			</if>  <!-- 로그인성공여부 -->
 			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(reason)">      ,REASON 		= #{reason} 			</if>  <!-- 로그인실패사유 -->
 		WHERE LOGINID = #{loginid}

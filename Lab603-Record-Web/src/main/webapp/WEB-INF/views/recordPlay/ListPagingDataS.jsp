@@ -14,32 +14,13 @@ $(document).ready(function(){
         showAnim: "fadeIn"
     });
 
-	$("#sDate").datepicker({
-
-		onClose: function( selectedDate ) {
-
-		$("#eDate").datepicker( "option", "minDate", selectedDate );
-
-    	var date = $(this).datepicker('getDate');
-
-   		date.setDate(date.getDate() + 30);
-
-    	$('#eDate').datepicker("option", "maxDate", date);
-		}
-	});
-
-	$('#eDate').datepicker({
-        onClose: function( selectedDate ) {
-            $("#sDate").datepicker( "option", "maxDate", selectedDate );
-        }
-	});
-
-	$('#Date').datepicker();
+    $("#sDate").datepicker();
+    $("#eDate").datepicker();
 
 });
 
 
-function recordPlay(cid)
+function fnRecordPlay(cid)
 {
 	if(cid == "" || cid == null)
 	{
@@ -51,11 +32,14 @@ function recordPlay(cid)
 			content:"재생 하시겠습니까?",
 			"buttons":{
 				"확인": function() {
-
+					$(this).dialog('destroy').remove();
 					$.fun.ajax({
 						type:'get',
-						url:"./RecordPlay.do?cid="+cid,
+						url:"./SelectOneData.do?cid="+cid,
 						success:function(data){
+
+							console.log(data)
+
 							$.fun.layout({
 								id:"induacaAdd",
 								"content":data,
@@ -65,7 +49,6 @@ function recordPlay(cid)
 							});
 						}
 					});
-					$(this).dialog('destroy').remove();
 				},
 				"닫기": function() {
 					$(this).dialog('destroy').remove();

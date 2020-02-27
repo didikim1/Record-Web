@@ -23,13 +23,13 @@ public class RecordPlayAct
 {
 	final String pagePrefix = "recordPlay";
 
-	private static final Logger log = LoggerFactory.getLogger(RecordPlayAct.class);
+	private static final Logger logger = LoggerFactory.getLogger(RecordPlayAct.class);
 
 
 	@Resource(name="com.lab603.record.web.recordplay.biz.RecordPlayBiz")
 	RecordPlayBiz mBiz;
 
-	@RequestMapping(value = { "/ListPagingData.do" })
+	@RequestMapping(value = { "/" ,  "/ListPagingData.do" })
 	public String ListPagingData(Model model)
 	{
 		MyMap 		paramMap 	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
@@ -37,7 +37,8 @@ public class RecordPlayAct
 
 		resultBean = mBiz.ListPagingData( paramMap );
 
-		model.addAttribute("Data", resultBean);
+		model.addAttribute("Data", 		resultBean);
+		model.addAttribute("paramMap",  paramMap);
 
 		return pagePrefix + "/ListPagingData";
 	}
@@ -47,8 +48,29 @@ public class RecordPlayAct
 	{
 		MyMap 		paramMap 	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
 		MyCamelMap 	resultMap 	= new MyCamelMap();
+		String 		strPlayUrl	= null;
 
-		resultMap = mBiz.SelectOneData(paramMap);
+		String		strServerIP	= null;
+		String		strWavDir	= null;
+		String		strWavFile	= null;
+
+		resultMap = mBiz.SelectOneData( paramMap );
+
+		logger.debug( resultMap.toString() );
+
+		strServerIP = resultMap.getStr("serverIp");
+		strWavDir 	= resultMap.getStr("dirname");
+		strWavFile 	= resultMap.getStr("filename");
+
+		if ( "127.0.0.1".equals( strServerIP ))
+		{
+			strServerIP = "211.61.220.42";
+		}
+
+		strWavDir	= strWavDir.replace("/var/spool/asterisk", "");
+		strPlayUrl  = "http://"+strServerIP+"/"+strWavDir+"/"+strWavFile+".wav";
+
+		resultMap.put("mp3path", strPlayUrl);
 
 		model.addAttribute("Data", resultMap);
 

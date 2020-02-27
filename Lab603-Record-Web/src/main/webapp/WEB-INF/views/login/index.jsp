@@ -23,26 +23,24 @@
 				    		</div>
 
 				    		<div class="login_input_box block">
-				    			<div class="login_div_sub">
-				    				<div class="login_div">아이디</div>
-									<input type="text" name="uniqId" id="uniqId" class="loginInput" placeholder="아이디"/>
-									<div class="login_div">비밀번호</div>
-									<input type="text" name="password" id="password" class="loginInput" placeholder="비밀번호"/>
-								</div>
-
-				    			<form name="form" method="post" action="./index_exec.do" >
-									<input type="hidden" id="USER_ID" name="USER_ID"/>
-									<input type="hidden" id="USER_PW" name="USER_PW"/>
+				    			<form action="" name="loginForm">
+					    			<div class="login_div_sub">
+					    				<div class="login_div">아이디</div>
+										<input type="text" name="mberId" id="mberId" class="loginInput" placeholder="아이디"/>
+										<div class="login_div">비밀번호</div>
+										<input type="password" name="password" id="password" class="loginInput" placeholder="비밀번호"/>
+									</div>
 								</form>
-									<button class="loginButton" type="button" id="btnLogin">
-										<b>로그인</b>
-									</button>
 
-									<p class="main_text3">
-										<span class="glyphicon glyphicon-exclamation-sign"></span>
-										본 사이트는 승인 받은 관리자의 PC에서만 접속 가능합니다.<br/> Chrome (1920x1080)에 최적화되어 있습니다.
-									</p>
-				    			</div>
+								<button class="loginButton" type="button" id="btnLogin">
+									<b>로그인</b>
+								</button>
+
+								<p class="main_text3">
+									<span class="glyphicon glyphicon-exclamation-sign"></span>
+									본 사이트는 승인 받은 관리자의 PC에서만 접속 가능합니다.<br/> Chrome (1920x1080)에 최적화되어 있습니다.
+								</p>
+				    		</div>
 				    	</div>
 				</div>
 
