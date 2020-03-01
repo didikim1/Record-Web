@@ -21,7 +21,7 @@ public class LoginHistoryBiz
 	/**
 	* 페이징 데이터
 	* @param paramMap
-	* @return
+	* @return BasicBean
 	*/
 	@SuppressWarnings("unchecked")
 	public BasicBean ListPagingData(MyMap paramMap) {
@@ -37,16 +37,25 @@ public class LoginHistoryBiz
 	/**
 	* 상세 조회
 	* @param paramMap
-	* @return
+	* @return MyCamelMap
 	*/
 	public MyCamelMap SelectOneData(MyMap paramMap) {
 		return mMapper.SelectOneData(paramMap);
 	}
 
 	/**
+	 * 등록/수정
+	 * @param paramMap
+	 * @return MyMap
+	 */
+	public void RegisterDataFirst(MyMap paramMap) {
+		mMapper.RegisterDataFirst(paramMap);
+	}
+
+	/**
 	* 등록/수정
 	* @param paramMap
-	* @return
+	* @return int
 	*/
 	public int RegisterData(MyMap paramMap) {
 		return mMapper.RegisterData(paramMap);
@@ -55,7 +64,7 @@ public class LoginHistoryBiz
 	/**
 	* 수정
 	* @param paramMap
-	* @return
+	* @return int
 	*/
 	public int ModifyData(MyMap paramMap) {
 		return mMapper.ModifyData(paramMap);
@@ -64,7 +73,7 @@ public class LoginHistoryBiz
 	/**
 	* 삭제
 	* @param paramMap
-	* @return
+	* @return int
 	*/
 	public int DeleteData(MyMap paramMap) {
 		return mMapper.DeleteData(paramMap);

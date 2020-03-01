@@ -32,6 +32,13 @@ public interface LoginHistoryMapper
 	public MyCamelMap SelectOneData(MyMap paramMap);
 
 	/**
+	 * 추가
+	 * @param RegisterDataFirst
+	 * @return
+	 */
+	public void RegisterDataFirst(MyMap paramMap);
+
+	/**
 	* 추가
 	* @param paramMap
 	* @return

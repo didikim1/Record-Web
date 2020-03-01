@@ -1,6 +1,8 @@
 package com.lab603.record.web.login.act;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,9 @@ import com.lab603.record.web.framework.mymap.MyCamelMap;
 import com.lab603.record.web.framework.mymap.MyMap;
 import com.lab603.record.web.framework.result.ResultCode;
 import com.lab603.record.web.framework.result.ResultMessage;
+import com.lab603.record.web.framework.utils.FrameworkUtils;
 import com.lab603.record.web.login.service.LoginBiz;
+import com.lab603.record.web.login.service.LoginHistoryBiz;
 
 @Controller
 @RequestMapping("/login")
@@ -25,6 +29,9 @@ public class LoginAct
 
 	@Resource(name="com.lab603.record.web.login.service.LoginBiz")
 	LoginBiz mBiz;
+
+	@Resource(name="com.lab603.record.web.login.service.LoginHistoryBiz")
+	LoginHistoryBiz mLoginHistoryBiz;
 
 	@RequestMapping(value = { "/", "/index.do" })
 	public String index(Model model)
@@ -47,17 +54,31 @@ public class LoginAct
 	}
 
 	@RequestMapping(value = { "/SelectOneData.do" })
-	public @ResponseBody ResultMessage SelectOneData(Model model)
+	public @ResponseBody ResultMessage SelectOneData(Model model, HttpServletRequest request)
 	{
-		MyMap 		paramMap 	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		MyCamelMap 	resultMap 	= null;
-		String  	resultCode	= ResultCode.RESULT_OK;
+		MyMap 		paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		MyMap		insertLoginHistoryMap	= new MyMap();
+		MyCamelMap 	resultMap 				= null;
 
-		resultMap = mBiz.SelectOneData(paramMap);
+		String  	resultCode				= ResultCode.RESULT_OK;
+		String		strClientIP				= FrameworkUtils.getClientIP(request);
+
+
+		resultMap 			  = mBiz.SelectOneData(paramMap);
+
+		mLoginHistoryBiz.RegisterDataFirst( insertLoginHistoryMap );
+
+		Logger.debug("insertLoginHistoryMap="+ insertLoginHistoryMap);
+
+		insertLoginHistoryMap.put("loginid", 	insertLoginHistoryMap.getInt("LOGINID"));
+		insertLoginHistoryMap.put("mberId", 	paramMap.getInt("mberId"));
+		insertLoginHistoryMap.put("ipaddr", 	strClientIP);
 
 		if ( resultMap == null )
 		{
 			resultCode = ResultCode.RESULT_EMPTY;
+
+			insertLoginHistoryMap.put("loginrtn", "N");
 		}
 		else
 		{
@@ -68,7 +89,11 @@ public class LoginAct
 			FrameworkBeans.findSessionBean().mberRole 		= resultMap.getStr("mberRole");
 			FrameworkBeans.findSessionBean().moblphonNo 	= resultMap.getStr("moblphonNo");
 			FrameworkBeans.findSessionBean().emailAddress 	= resultMap.getStr("emailAddress");
+
+			insertLoginHistoryMap.put("loginrtn", "Y");
 		}
+
+		mLoginHistoryBiz.ModifyData( insertLoginHistoryMap );
 
 		return new ResultMessage(resultCode, "success");
 	}
