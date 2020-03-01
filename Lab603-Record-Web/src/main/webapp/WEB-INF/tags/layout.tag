@@ -37,6 +37,15 @@
 <script type="text/javascript" src="${_resource}/lib/tablesorter/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="${_resource}/lib/tablesorter/jquery.tablesorter.widgets.js"></script>
 
+<script type="text/javascript">
+	function btnLogout(){
+		location.href="/login/DeleteData.do";
+	}
+	$(function(){
+
+	});
+</script>
+
 </head>
 <body>
 	<div class="wrap">
@@ -47,8 +56,8 @@
 		   </div>
 
 		    <div class="rbtn">
-		    	<font class="rbtn_font1"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>&nbsp;관리자 그룹 </font>
-		  	    <font class="rbtn_font2">${session_emp_nm}</font>
+<!-- 		    	<font class="rbtn_font1"><i class="fa fa-user-circle-o fa-lg" aria-hidden="true"></i>&nbsp;관리자 그룹 </font> -->
+<%-- 		  	    <font class="rbtn_font2">${session_emp_nm}</font> --%>
 		  	    <button type="button" class="header_button" onclick="btnLogout();">로그아웃</button>
 		    </div>
 
@@ -59,9 +68,9 @@
 				<ul id="nav">
 				    <li class="top" id="m0"><a href="/recordPlay/ListPagingData.do" id="gnb_0" class="top_link">검색 / 재생</a></li>
 
-				    <li class="top" id="m1"><a href="/playHistory/ListPagingData.do" id="gnb_0" class="top_link">접속 / 재생 이력</a></li>
+<!-- 				    <li class="top" id="m1"><a href="/playHistory/ListPagingData.do" id="gnb_0" class="top_link">접속 / 재생 이력</a></li> -->
 
-				    <li class="top border_right" id="m2"><a href="/gnrlmber/ListPagingData.do" id="gnb_0" class="top_link">계정 관리</a></li>
+<!-- 				    <li class="top border_right" id="m2"><a href="/gnrlmber/ListPagingData.do" id="gnb_0" class="top_link">계정 관리</a></li> -->
 
 <!-- 				    <li class="top border_right" id="m2"><a href="./fileDeleteHIstory.do" id="gnb_0" class="top_link">삭제 이력</a></li> -->
 				</ul>

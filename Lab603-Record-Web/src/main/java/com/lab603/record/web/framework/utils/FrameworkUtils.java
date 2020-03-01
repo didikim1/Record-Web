@@ -1,4 +1,6 @@
 package com.lab603.record.web.framework.utils;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -160,6 +162,55 @@ public class FrameworkUtils extends StringUtils{
         else
             return false;
     }
+
+	public enum SecureHashAlgorithm
+	{
+			 SHA1
+			,SHA_256
+	}
+
+	public static String msgSecureHashAlgorithm(String str, SecureHashAlgorithm digest)
+ 	{
+ 		String 		  rtnValue = "";
+ 		MessageDigest sh 	   = null;
+
+ 		if ( str == null) return "";
+
+ 		try
+ 		{
+ 			switch ( digest )
+ 			{
+				case SHA1:
+					sh = MessageDigest.getInstance("SHA1");
+					break;
+				case SHA_256:
+					sh = MessageDigest.getInstance("SHA-256");
+					break;
+				default:
+					sh = MessageDigest.getInstance("SHA1");
+					break;
+				}
+ 			sh.update(str.getBytes());
+ 			byte byteData[] = sh.digest();
+ 			StringBuffer sb = new StringBuffer();
+ 			for(int i = 0 ; i < byteData.length ; i++)
+ 			{
+ 				sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+ 			}
+ 			rtnValue = sb.toString();
+ 		}
+ 		catch(NoSuchAlgorithmException e)
+ 		{
+ 			e.printStackTrace();
+ 			rtnValue = null;
+ 		}
+ 		return rtnValue;
+ 	}
+
+ 	public static String msgSecureHashAlgorithm(String str)
+ 	{
+ 		return msgSecureHashAlgorithm(str, SecureHashAlgorithm.SHA1);
+ 	}
 
 
 	/////////////////////////////////////////////////////////////////////////////////////////

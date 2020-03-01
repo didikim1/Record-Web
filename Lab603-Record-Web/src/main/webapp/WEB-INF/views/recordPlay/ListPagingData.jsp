@@ -17,8 +17,10 @@
 					<table class="wtable_sub">
 						<tr>
 							<td>
-								<div class="common_div left">고객번호</div>
-								<input type="text" class="common_input2 right" name="req" id="req" placeholder="고객번호" value="${paramMap.req}" autocomplete="off"/>
+								<div class="common_div left">발신번호</div>
+								<input type="text" class="common_input2 right" name="caller" id="caller" placeholder="고객번호" value="${paramMap.caller}" autocomplete="off"/>
+								<div class="common_div left margin_l3">수신번호</div>
+								<input type="text" class="common_input2 right" name="called2" id="called2" placeholder="고객번호" value="${paramMap.called2}" autocomplete="off"/>
 								<div class="common_div left margin_l3">기간선택</div>
 								<input type="text" class="common_input2 pointer"  name="sDate" id="sDate" style="border-right:none;" autocomplete="off" placeholder="시작일" value="${paramMap.sDate}" readonly="readonly"/>
 								<input type="text" class="common_input2 right pointer" name="eDate" id="eDate" autocomplete="off" placeholder="종료일" value="${paramMap.eDate}" readonly="readonly"/>
@@ -51,12 +53,9 @@
 							<td>${board.etime}</td>				<!-- 통화 종료시간 -->
 							<td>${board.callduration}</td>		<!-- 시간(sec) -->
 							<td>${board.caller}</td>			<!-- 발신번호 -->
-							<td class=""><div class="textOverflow">${board.called}</div></td>			<!-- 수신번호 -->
+							<td class="">${board.called2}</td>			<!-- 수신번호 -->
 							<td>
 								<input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/>
-<!-- 								<div class="position"> -->
-<%-- 									<input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/> --%>
-<!-- 								</div> -->
 							</td>
 						</tr>
 					</c:forEach>

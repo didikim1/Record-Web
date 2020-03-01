@@ -101,7 +101,7 @@ jQuery.fun = {
 			height : conf.height ? conf.height : 'auto',
 			title: conf.title,
 			modal: conf.modal ? conf.modal:true,
-			position: conf.position ? conf.position :"center",
+//			position: conf.position ? conf.position :"center",
 			buttons: buttons,
 			zIndex: 999999,
 			dialogClass:'SYWORKS_POP_LAYOUT',

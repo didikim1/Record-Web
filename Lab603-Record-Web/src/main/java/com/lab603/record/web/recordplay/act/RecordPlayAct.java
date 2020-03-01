@@ -15,6 +15,7 @@ import com.lab603.record.web.framework.mymap.MyCamelMap;
 import com.lab603.record.web.framework.mymap.MyMap;
 import com.lab603.record.web.framework.result.ResultCode;
 import com.lab603.record.web.framework.result.ResultMessage;
+import com.lab603.record.web.framework.utils.FrameworkUtils;
 import com.lab603.record.web.recordplay.biz.RecordPlayBiz;
 
 @Controller
@@ -32,8 +33,14 @@ public class RecordPlayAct
 	@RequestMapping(value = { "/" ,  "/ListPagingData.do" })
 	public String ListPagingData(Model model)
 	{
-		MyMap 		paramMap 	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		BasicBean 	resultBean  = null;
+		MyMap 		paramMap 		  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		MyMap 		searchMap 		  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		BasicBean 	resultBean  	  = null;
+
+		if ( FrameworkUtils.isNotNull( paramMap.getStr("called2", "")  ))
+		{
+			searchMap.getStr("called2", FrameworkUtils.msgSecureHashAlgorithm( paramMap.getStr("called2", "") ));
+		}
 
 		resultBean = mBiz.ListPagingData( paramMap );
 

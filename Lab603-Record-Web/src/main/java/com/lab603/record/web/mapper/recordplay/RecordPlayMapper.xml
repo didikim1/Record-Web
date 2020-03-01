@@ -7,9 +7,14 @@
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(cid)">
 			AND CID 	=  #{cid}
 		</if>
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(called2)">
+			AND CALLED2 	=  #{called2}
+		</if>
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(caller)">
+			AND CALLER 	=  #{caller}
+		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(sDate)">
 			AND DATE_FORMAT(CREATETIME, '%Y-%m-%d') BETWEEN #{sDate} AND #{eDate}
-
 		</if>
 	</sql>
 
@@ -35,10 +40,8 @@
 			,CALLDURATION                                               as callduration 	<!--통화시간-->
 			,CALLER 		                                            as caller 			<!--발신번호-->
 			,CALLED 		                                            as called 			<!--수신번호-->
+			,CALLED2 		                                            as called2 			<!--수신번호2-->
 			,CPID 			                                            as cpid 			<!--고객사코드명-->
-			,CPNAME 		                                            as cpname 			<!--고객사명칭-->
-			,CPFILENAME  	                                            as cpfilename 		<!--고객사요청파일명-->
-			,CPRECUSE  		                                            as cprecuse 		<!--고객사녹취요청여부-->
 			,LINKEDID 		                                            as linkedid  		<!--통화이력고유값-->
 			,DIRNAME  		                                            as dirname 			<!--녹취파일디렉토리-->
 			,FILENAME  		                                            as filename 		<!--녹취파일명-->
@@ -70,10 +73,8 @@
 			,CALLDURATION   as CALLDURATION 	<!--통화시간-->
 			,CALLER 		as CALLER 			<!--발신번호-->
 			,CALLED 		as CALLED 			<!--수신번호-->
+			,CALLED2 		as called2 			<!--수신번호2-->
 			,CPID 			as CPID 			<!--고객사코드명-->
-			,CPNAME 		as CPNAME 			<!--고객사명칭-->
-			,CPFILENAME  	as CPFILENAME 		<!--고객사요청파일명-->
-			,CPRECUSE  		as CPRECUSE 		<!--고객사녹취요청여부-->
 			,LINKEDID 		as LINKEDID  		<!--통화이력고유값-->
 			,DIRNAME  		as DIRNAME 			<!--녹취파일디렉토리-->
 			,FILENAME  		as FILENAME 		<!--녹취파일명-->

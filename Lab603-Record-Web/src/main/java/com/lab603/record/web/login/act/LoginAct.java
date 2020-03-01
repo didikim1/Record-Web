@@ -63,7 +63,6 @@ public class LoginAct
 		String  	resultCode				= ResultCode.RESULT_OK;
 		String		strClientIP				= FrameworkUtils.getClientIP(request);
 
-
 		resultMap 			  = mBiz.SelectOneData(paramMap);
 
 		mLoginHistoryBiz.RegisterDataFirst( insertLoginHistoryMap );
@@ -71,7 +70,7 @@ public class LoginAct
 		Logger.debug("insertLoginHistoryMap="+ insertLoginHistoryMap);
 
 		insertLoginHistoryMap.put("loginid", 	insertLoginHistoryMap.getInt("LOGINID"));
-		insertLoginHistoryMap.put("mberId", 	paramMap.getInt("mberId"));
+		insertLoginHistoryMap.put("mberId", 	paramMap.getStr("mberId"));
 		insertLoginHistoryMap.put("ipaddr", 	strClientIP);
 
 		if ( resultMap == null )
@@ -127,16 +126,18 @@ public class LoginAct
 	}
 
 	@RequestMapping(value = { "/DeleteData.do" })
-	public ResultMessage DeleteData(Model model)
+	public String DeleteData(Model model)
 	{
-		MyMap 		paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		MyCamelMap 	resultMap 				= new MyCamelMap();
-		int			resultDeleteDataCount 	= 0;
+		FrameworkBeans.findSessionBean().mberId 		= "";
+		FrameworkBeans.findSessionBean().uniqId 		= "";
+		FrameworkBeans.findSessionBean().mberName 		= "";
+		FrameworkBeans.findSessionBean().mberSttus 		= "";
+		FrameworkBeans.findSessionBean().mberRole 		= "";
+		FrameworkBeans.findSessionBean().moblphonNo 	= "";
+		FrameworkBeans.findSessionBean().emailAddress 	= "";
 
-		resultDeleteDataCount = mBiz.DeleteData( paramMap );
+		FrameworkBeans.findHttpServletBean().getHttpServletRequest().getSession().invalidate();
 
-		resultMap.put("ResultDataCount", resultDeleteDataCount);
-
-		return new ResultMessage(ResultCode.RESULT_OK, resultMap);
+		return "redirect:/login/";
 	}
 }

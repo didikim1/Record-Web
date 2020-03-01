@@ -47,7 +47,26 @@ public class AuthenticationInterceptor implements HandlerInterceptor
 
         Logger.info( sbReqMessage.toString() );
 
-        return true;
+        if( 	    url.indexOf("/login/") >= 0
+        		|| 	url.indexOf("/login/index.do") >= 0
+        		|| 	url.indexOf("/login/SelectOneData.do") >= 0
+        		|| 	url.indexOf("/login/DeleteData.do") >= 0
+        	)
+        {
+        	return true;
+        }
+        else
+        {
+        	if( FrameworkUtils.isNull( FrameworkBeans.findSessionBean().mberId ))
+        	{
+        		FrameworkBeans.findHttpServletBean().getHttpServletResponse().sendRedirect("/login/index.do");
+        		return false;
+        	}
+        	else
+        	{
+        		return true;
+        	}
+        }
     }
 
 
