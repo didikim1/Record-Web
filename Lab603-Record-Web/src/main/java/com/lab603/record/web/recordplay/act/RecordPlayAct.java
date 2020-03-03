@@ -39,10 +39,12 @@ public class RecordPlayAct
 
 		if ( FrameworkUtils.isNotNull( paramMap.getStr("called2", "")  ))
 		{
-			searchMap.getStr("called2", FrameworkUtils.msgSecureHashAlgorithm( paramMap.getStr("called2", "") ));
+			searchMap.put("called2", FrameworkUtils.msgSecureHashAlgorithm( paramMap.getStr("called2", "") ));
 		}
 
-		resultBean = mBiz.ListPagingData( paramMap );
+		logger.debug(" searchMap::: " + searchMap);
+
+		resultBean = mBiz.ListPagingData( searchMap );
 
 		model.addAttribute("Data", 		resultBean);
 		model.addAttribute("paramMap",  paramMap);

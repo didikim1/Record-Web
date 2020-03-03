@@ -4,6 +4,9 @@
 <mapper namespace="com.lab603.record.web.mapper.recordplay.RecordPlayMapper">
 
 	<sql id="addWhere">
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(rid)">
+			AND RID 	= CONCAT('%',#{rid},'%')
+		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(cid)">
 			AND CID 	=  #{cid}
 		</if>
@@ -32,7 +35,8 @@
 	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
 			 CID														as cid				<!--통화이력 고유번호-->
-			,SERVER_IP 													as serverIp	 	<!--IVR서버-->
+			,SERVER_IP 													as serverIp	 		<!--IVR서버-->
+			,RID 														as rid	 			<!--RID-->
 			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   	as btime 			<!--통화시작시간-->
 			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   	as etime 			<!--통화시작시간-->
 			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화시작시간-->
@@ -51,6 +55,10 @@
 			,INFO2  		                                            as info2 			<!--기타정보2-->
 			,INFO3  		                                            as info3 			<!--기타정보3-->
 			,INFO4 			                                            as info4 			<!--기타정보4-->
+
+			,RESULTCODE 			                                    as resultcode 		<!--결과코드-->
+			,RESULTMESSAGE 			                                    as resultmessage 	<!--결과메세지-->
+
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			as  createtime 		<!--생성일-->
 			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 			as  updatetime 		<!--마지막업데이트일-->
 		FROM
@@ -64,28 +72,33 @@
 	<!-- 상세 -->
 	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
-			 CID			as CID				<!--통화이력 고유번호-->
-			,SERVER_IP 		as SERVER_IP	 	<!--IVR서버-->
-			,BTIME  		as BTIME 			<!--통화시작시간-->
-			,ETIME  		as ETIME 			<!--통화종료시간-->
-			,RBTIME 		as RBTIME 			<!--통화수신시간-->
-			,TELECOM  		as TELECOM 			<!--트렁크정보 및 통신사정보-->
-			,CALLDURATION   as CALLDURATION 	<!--통화시간-->
-			,CALLER 		as CALLER 			<!--발신번호-->
-			,CALLED 		as CALLED 			<!--수신번호-->
-			,CALLED2 		as called2 			<!--수신번호2-->
-			,CPID 			as CPID 			<!--고객사코드명-->
-			,LINKEDID 		as LINKEDID  		<!--통화이력고유값-->
-			,DIRNAME  		as DIRNAME 			<!--녹취파일디렉토리-->
-			,FILENAME  		as FILENAME 		<!--녹취파일명-->
-			,FILESIZE 		as FILESIZE  		<!--녹취파일사이즈-->
-			,RECORDCHARGEID as RECORDCHARGEID 	<!--녹취고유ID-->
-			,INFO1   		as INFO1 			<!--기타정보1-->
-			,INFO2  		as INFO2 			<!--기타정보2-->
-			,INFO3  		as INFO3 			<!--기타정보3-->
-			,INFO4 			as INFO4 			<!--기타정보4-->
-			,CREATETIME  	as CREATETIME 		<!--생성일-->
-			,UPDATETIME 	as UPDATETIME 		<!--마지막업데이트일-->
+			 CID														as cid				<!--통화이력 고유번호-->
+			,SERVER_IP 													as serverIp	 		<!--IVR서버-->
+			,RID 														as rid	 			<!--RID-->
+			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   	as btime 			<!--통화시작시간-->
+			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   	as etime 			<!--통화시작시간-->
+			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화시작시간-->
+			,TELECOM  		                                            as telecom 			<!--트렁크정보 및 통신사정보-->
+			,CALLDURATION                                               as callduration 	<!--통화시간-->
+			,CALLER 		                                            as caller 			<!--발신번호-->
+			,CALLED 		                                            as called 			<!--수신번호-->
+			,CALLED2 		                                            as called2 			<!--수신번호2-->
+			,CPID 			                                            as cpid 			<!--고객사코드명-->
+			,LINKEDID 		                                            as linkedid  		<!--통화이력고유값-->
+			,DIRNAME  		                                            as dirname 			<!--녹취파일디렉토리-->
+			,FILENAME  		                                            as filename 		<!--녹취파일명-->
+			,FILESIZE 		                                            as filesize  		<!--녹취파일사이즈-->
+			,RECORDCHARGEID                                             as recordchargeid 	<!--녹취고유ID-->
+			,INFO1   		                                            as info1 			<!--기타정보1-->
+			,INFO2  		                                            as info2 			<!--기타정보2-->
+			,INFO3  		                                            as info3 			<!--기타정보3-->
+			,INFO4 			                                            as info4 			<!--기타정보4-->
+
+			,RESULTCODE 			                                    as resultcode 		<!--결과코드-->
+			,RESULTMESSAGE 			                                    as resultmessage 	<!--결과메세지-->
+
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			as  createtime 		<!--생성일-->
+			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 			as  updatetime 		<!--마지막업데이트일-->
 		FROM
 			 CALL_HISTORY T1
 		WHERE 1=1
