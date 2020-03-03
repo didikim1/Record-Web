@@ -357,6 +357,6 @@ table.htable td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100px;
+  width: 200px;
   height: 20px;
 }

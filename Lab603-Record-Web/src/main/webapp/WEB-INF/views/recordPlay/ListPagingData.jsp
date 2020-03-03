@@ -61,7 +61,7 @@
 							<td>${board.caller}</td>			<!-- 발신번호 -->
 							<td>${board.called2}</td>			<!-- 수신번호 -->
 							<td>${board.resultcode}</td>		<!-- 결과코드 -->
-							<td>${board.resultmessage}</td>	<!-- 결과메세지 -->
+							<td><div class="textOverflow" title="${board.resultmessage}">${board.resultmessage}</div></td>		<!-- 결과메세지 -->
 							<td><input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>
 						</tr>
 					</c:forEach>
