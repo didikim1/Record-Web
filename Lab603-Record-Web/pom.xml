@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.lab603.record.web</groupId>
 	<artifactId>Lab603-Record-Web</artifactId>
-	<version>20200303_001</version>
+	<version>20200303_002</version>
 	<name>Lab603-Record-Web</name>
 	<description>Lab603-Record-Web</description>
 	<packaging>war</packaging>

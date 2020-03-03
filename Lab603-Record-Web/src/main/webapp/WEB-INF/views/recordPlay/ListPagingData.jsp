@@ -69,7 +69,7 @@
 
 				<c:if test="${Data.paginationInfo.totalRecordCount == 0 }">
 					<tr>
-						<td width="100%" colspan="9" >데이터가 존재 하지 않습니다.</td>
+						<td width="100%" colspan="11" >데이터가 존재 하지 않습니다.</td>
 					</tr>
 				</c:if>
 			</table>
