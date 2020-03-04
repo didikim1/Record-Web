@@ -69,7 +69,7 @@
 			 CALL_HISTORY T1
 		WHERE 1=1
 			<include refid="addWhere"/>
-		ORDER BY CREATETIME DESC
+		ORDER BY T1.ETIME DESC
 		LIMIT #{start}, #{end}
 	</select>
 
