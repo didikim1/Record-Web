@@ -57,7 +57,7 @@
 							<td>${board.btime}</td>				<!-- 통화 시작시간 -->
 							<td>${board.rbtime}</td>			<!-- 통화 수신시간 -->
 							<td>${board.etime}</td>				<!-- 통화 종료시간 -->
-							<td>${board.callduration}</td>		<!-- 시간(sec) -->
+							<td>${board.callduration2} &#47; ${board.callduration}</td>		<!-- 시간(sec) -->
 							<td>${board.caller}</td>			<!-- 발신번호 -->
 							<td>${board.called2}</td>			<!-- 수신번호 -->
 							<td>${board.resultcode}</td>		<!-- 결과코드 -->

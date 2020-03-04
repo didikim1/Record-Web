@@ -39,9 +39,13 @@
 			,RID 														as rid	 			<!--RID-->
 			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   	as btime 			<!--통화시작시간-->
 			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   	as etime 			<!--통화시작시간-->
-			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화시작시간-->
+			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화수신시간-->
 			,TELECOM  		                                            as telecom 			<!--트렁크정보 및 통신사정보-->
+
 			,CALLDURATION                                               as callduration 	<!--통화시간-->
+
+			,TIMESTAMPDIFF(SECOND, T1.BTIME, T1.ETIME)					as callduration2	<!-- 전체통화시간 -->
+
 			,CALLER 		                                            as caller 			<!--발신번호-->
 			,CALLED 		                                            as called 			<!--수신번호-->
 			,CALLED2 		                                            as called2 			<!--수신번호2-->
@@ -77,9 +81,12 @@
 			,RID 														as rid	 			<!--RID-->
 			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   	as btime 			<!--통화시작시간-->
 			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   	as etime 			<!--통화시작시간-->
-			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화시작시간-->
+			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화수신시간-->
 			,TELECOM  		                                            as telecom 			<!--트렁크정보 및 통신사정보-->
+
 			,CALLDURATION                                               as callduration 	<!--통화시간-->
+			,TIMESTAMPDIFF(SECOND, T1.BTIME, T1.ETIME)					as callduration2	<!-- 전체통화시간 -->
+
 			,CALLER 		                                            as caller 			<!--발신번호-->
 			,CALLED 		                                            as called 			<!--수신번호-->
 			,CALLED2 		                                            as called2 			<!--수신번호2-->
