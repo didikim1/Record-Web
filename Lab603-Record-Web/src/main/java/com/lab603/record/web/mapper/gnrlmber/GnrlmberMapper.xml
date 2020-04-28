@@ -11,7 +11,7 @@
 		SELECT
 			COUNT(0)
 		FROM
-			COMTN_GNRLMBER
+			comtn_gnrlmber
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -32,7 +32,7 @@
 				,FRST_REGISTER_PNTTM	as frstRegisterPnttm	<!-- 최초등록일 -->
 				,LAST_UPDUSR_PNTTM		as lastUpdusrPnttm		<!-- 최종등록일 -->
 		FROM
-			 COMTN_GNRLMBER T1
+			 comtn_gnrlmber T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 		LIMIT #{start}, #{end}
@@ -54,14 +54,14 @@
 				,FRST_REGISTER_PNTTM	as frstRegisterPnttm	<!-- 최초등록일 -->
 				,LAST_UPDUSR_PNTTM		as lastUpdusrPnttm		<!-- 최종등록일 -->
 		FROM
-			 COMTN_GNRLMBER T1
+			 comtn_gnrlmber T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>
 
 	<!-- 추가 -->
 	<update id="RegisterData" parameterType="myMap" >
-		INSERT INTO COMTN_GNRLMBER
+		INSERT INTO comtn_gnrlmber
 			(
 			     MBER_ID					<!-- 회원ID -->
 				,UNIQ_ID					<!-- 고유ID -->
@@ -91,7 +91,7 @@
 
 	<!-- 수정 -->
 	<update id="ModifyData" parameterType="myMap">
-		UPDATE COMTN_GNRLMBER
+		UPDATE comtn_gnrlmber
 			 SET
 				 LAST_UPDUSR_ID 	=  #{lastUpdusrId}
 				,LAST_UPDUSR_PNTTM  =  now()
@@ -112,7 +112,7 @@
 
 	<!-- 삭제 -->
 	<update id="DeleteData" parameterType="myMap">
-		DELETE FROM COMTN_GNRLMBER WHERE MBER_ID = #{mberId}
+		DELETE FROM comtn_gnrlmber WHERE MBER_ID = #{mberId}
 	</update>
 
 </mapper>

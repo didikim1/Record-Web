@@ -12,7 +12,7 @@
 		SELECT
 			COUNT(0)
 		FROM
-			COMTN_LOGINLOG
+			comtn_loginlog
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -27,7 +27,7 @@
 			,REASON 							as reason			<!-- 로그인실패사유 -->
 			,CREATETIME 						as createtime		<!-- 생성일 -->
 		FROM
-			 COMTN_LOGINLOG T1
+			 comtn_loginlog T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 		LIMIT #{start}, #{end}
@@ -43,7 +43,7 @@
 			,REASON 							as reason			<!-- 로그인실패사유 -->
 			,CREATETIME 						as createtime		<!-- 생성일 -->
 		FROM
-			 COMTN_LOGINLOG T1
+			 comtn_loginlog T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>
@@ -51,7 +51,7 @@
 
 	<!-- 추가 -->
 	<insert id="RegisterDataFirst" parameterType="myMap" keyProperty="LOGINID" useGeneratedKeys="true">
-		INSERT INTO COMTN_LOGINLOG
+		INSERT INTO comtn_loginlog
 			(
 			  CREATETIME			<!-- 생성일 -->
 			)
@@ -63,7 +63,7 @@
 
 	<!-- 추가 -->
 	<update id="RegisterData" parameterType="myMap" >
-		INSERT INTO COMTN_LOGINLOG
+		INSERT INTO comtn_loginlog
 			(
 			   MBER_ID				<!-- 접속시도ID -->
 			  ,IPADDR				<!-- 접속시도IP -->
@@ -83,7 +83,7 @@
 
 	<!-- 수정 -->
 	<update id="ModifyData" parameterType="myMap">
-		UPDATE COMTN_LOGINLOG
+		UPDATE comtn_loginlog
 			 SET
 			 IPADDR 		= #{ipaddr}
 			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(mberId)">      ,MBER_ID 		= #{mberId}   			</if>  <!-- 접속시도ID -->
@@ -94,7 +94,7 @@
 
 	<!-- 삭제 -->
 	<update id="DeleteData" parameterType="myMap">
-		DELETE FROM COMTN_LOGINLOG WHERE LOGINID = #{loginid}
+		DELETE FROM comtn_loginlog WHERE LOGINID = #{loginid}
 	</update>
 
 </mapper>

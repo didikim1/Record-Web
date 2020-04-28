@@ -15,7 +15,7 @@
 		SELECT
 			COUNT(0)
 		FROM
-			CONSTANTIVRTTS
+			constantivrtts
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -46,7 +46,7 @@
 			,DATE_FORMAT(LAST_UPDUSR_PNTTM, '%Y-%m-%d %H:%i:%s') 	as lastUpdusrPnttm		<!-- 마지막수정시점 -->
 			,LAST_UPDUSR_ID											as lastUpdusrId			<!-- 마지막수정ID -->
 		FROM
-			 CONSTANTIVRTTS T1
+			 constantivrtts T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 		LIMIT #{start}, #{end}
@@ -78,14 +78,14 @@
 			,DATE_FORMAT(LAST_UPDUSR_PNTTM, '%Y-%m-%d %H:%i:%s') 	as lastUpdusrPnttm		<!-- 마지막수정시점 -->
 			,LAST_UPDUSR_ID											as lastUpdusrId			<!-- 마지막수정ID -->
 		FROM
-			 CONSTANTIVRTTS T1
+			 constantivrtts T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>
 
 	<!-- 추가 -->
 	<update id="RegisterData" parameterType="myMap" >
-		INSERT INTO CONSTANTIVRTTS
+		INSERT INTO constantivrtts
 			(
 			   IVRCMD				<!-- IVR전문번호 -->
 			  ,CALLTYPE				<!-- 콜타입 -->
@@ -137,7 +137,7 @@
 
 	<!-- 수정 -->
 	<update id="ModifyData" parameterType="myMap">
-		UPDATE CONSTANTIVRTTS
+		UPDATE constantivrtts
 			 SET
 				 LAST_UPDUSR_ID 	=  #{lastUpdusrId}
 				,LAST_UPDUSR_PNTTM  =  now()
@@ -162,7 +162,7 @@
 
 	<!-- 삭제 -->
 	<update id="DeleteData" parameterType="myMap">
-		DELETE FROM CONSTANTIVRTTS WHERE CMPNYIVRTTSID = #{cmpnyivrttsid}
+		DELETE FROM constantivrtts WHERE CMPNYIVRTTSID = #{cmpnyivrttsid}
 	</update>
 
 </mapper>

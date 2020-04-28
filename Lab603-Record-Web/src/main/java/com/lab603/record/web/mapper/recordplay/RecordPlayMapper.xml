@@ -26,7 +26,7 @@
 		SELECT
 			COUNT(0)
 		FROM
-			CALL_HISTORY
+			call_history
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -66,7 +66,7 @@
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			as  createtime 		<!--생성일-->
 			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 			as  updatetime 		<!--마지막업데이트일-->
 		FROM
-			 CALL_HISTORY T1
+			 call_history T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 		ORDER BY T1.ETIME DESC
@@ -107,7 +107,7 @@
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			as  createtime 		<!--생성일-->
 			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 			as  updatetime 		<!--마지막업데이트일-->
 		FROM
-			 CALL_HISTORY T1
+			 call_history T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>

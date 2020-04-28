@@ -26,7 +26,7 @@
 			,FILENAME		as filename			<!-- 복사파일명 -->
 			,CREATETIME		as createtime		<!-- 생성일 -->
 		FROM
-			 CALL_LISTEN T1
+			 call_listen T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 		LIMIT #{start}, #{end}
@@ -42,14 +42,14 @@
 			,FILENAME		as filename			<!-- 복사파일명 -->
 			,CREATETIME		as createtime		<!-- 생성일 -->
 		FROM
-			 CALL_LISTEN T1
+			 call_listen T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>
 
 	<!-- 추가 -->
 	<update id="RegisterData" parameterType="myMap" >
-		INSERT INTO CALL_LISTEN
+		INSERT INTO call_listen
 			(
 				 MBER_ID		<!-- 회원ID -->
 				,CID			<!-- 통화이력 고유번호 -->
@@ -69,7 +69,7 @@
 
 	<!-- 수정 -->
 	<update id="ModifyData" parameterType="myMap">
-		UPDATE CALL_LISTEN
+		UPDATE call_listen
 			 SET
 				 MBER_ID 	=  #{mberId}	<!-- 회원ID -->
 			<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(cid)">    		,CID 			= #{cid}   			</if>  <!-- 통화이력 고유번호  -->
@@ -80,7 +80,7 @@
 
 	<!-- 삭제 -->
 	<update id="DeleteData" parameterType="myMap">
-		DELETE FROM CALL_LISTEN WHERE LISTENID = #{listenid}
+		DELETE FROM call_listen WHERE LISTENID = #{listenid}
 	</update>
 
 </mapper>
