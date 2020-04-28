@@ -16,6 +16,9 @@
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(caller)">
 			AND CALLER 	=  #{caller}
 		</if>
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(linkedid)">
+			AND LINKEDID 	=  #{linkedid}
+		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(sDate)">
 			AND DATE_FORMAT(CREATETIME, '%Y-%m-%d') BETWEEN #{sDate} AND #{eDate}
 		</if>

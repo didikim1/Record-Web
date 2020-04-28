@@ -20,6 +20,10 @@ $(document).ready(function(){
 });
 
 
+function fnShowLinkID(linkID){
+	$.fun.alert({content:"LinkID:"+linkID});
+}
+
 function fnRecordPlay(cid)
 {
 	if(cid == "" || cid == null)

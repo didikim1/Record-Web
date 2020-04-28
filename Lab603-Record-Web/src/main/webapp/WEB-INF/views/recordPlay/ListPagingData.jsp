@@ -26,6 +26,10 @@
 								<input type="text" class="common_input2 right" name="caller" id="caller" placeholder="발신번호" value="${paramMap.caller}" autocomplete="off"/>
 								<div class="common_div left margin_l3">수신번호</div>
 								<input type="text" class="common_input2 right" name="called2" id="called2" placeholder="수신번호" value="${paramMap.called2}" autocomplete="off"/>
+
+								<div class="common_div left margin_l3">링크ID</div>
+								<input type="text" class="common_input2 right" name="linkedid" id="linkedid" placeholder="수신번호" value="${paramMap.linkedid}" autocomplete="off"/>
+
 								<button type="button" class="common_button2 margin_l3" onclick="recordSearch();"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;검색</button>
 							</td>
 						</tr>
@@ -59,7 +63,7 @@
 							<td>${board.etime}</td>				<!-- 통화 종료시간 -->
 							<td>${board.callduration2} &#47; ${board.callduration}</td>		<!-- 시간(sec) -->
 							<td>${board.caller}</td>			<!-- 발신번호 -->
-							<td>${board.called2} // ${board.linkedid}</td>			<!-- 수신번호 -->
+							<td onclick="fnShowLinkID('${board.linkedid}')" >${board.called2}</td>			<!-- 수신번호 -->
 							<td>${board.resultcode}</td>		<!-- 결과코드 -->
 							<td><div class="textOverflow" title="${board.resultmessage}">${board.resultmessage}</div></td>		<!-- 결과메세지 -->
 							<td><input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>
