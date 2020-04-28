@@ -59,7 +59,7 @@
 							<td>${board.etime}</td>				<!-- 통화 종료시간 -->
 							<td>${board.callduration2} &#47; ${board.callduration}</td>		<!-- 시간(sec) -->
 							<td>${board.caller}</td>			<!-- 발신번호 -->
-							<td>${board.called2}</td>			<!-- 수신번호 -->
+							<td>${board.called2} // ${board.linkedid}</td>			<!-- 수신번호 -->
 							<td>${board.resultcode}</td>		<!-- 결과코드 -->
 							<td><div class="textOverflow" title="${board.resultmessage}">${board.resultmessage}</div></td>		<!-- 결과메세지 -->
 							<td><input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>
