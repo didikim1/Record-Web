@@ -67,12 +67,9 @@
 			<div id="layout_menu">
 				<ul id="nav">
 				    <li class="top" id="m0"><a href="/recordPlay/ListPagingData.do" id="gnb_0" class="top_link">검색 / 재생</a></li>
-
-<!-- 				    <li class="top" id="m1"><a href="/playHistory/ListPagingData.do" id="gnb_0" class="top_link">접속 / 재생 이력</a></li> -->
-
-<!-- 				    <li class="top border_right" id="m2"><a href="/gnrlmber/ListPagingData.do" id="gnb_0" class="top_link">계정 관리</a></li> -->
-
-<!-- 				    <li class="top border_right" id="m2"><a href="./fileDeleteHIstory.do" id="gnb_0" class="top_link">삭제 이력</a></li> -->
+				    <li class="top" id="m1"><a href="#" onclick="alert('준비중입니다.');"  id="gnb_0" class="top_link">통신사 변경</a></li>
+				    <li class="top" id="m1"><a href="#" onclick="alert('준비중입니다.');"  class="top_link">고객사 등록</a></li>
+				    <li class="top" id="m1"><a href="#" onclick="alert('준비중입니다.');"  class="top_link">TTS생성</a></li>
 				</ul>
 			</div>
 		</div>
@@ -84,11 +81,9 @@
 
 	<div id="footer">
 		<div class="footer_div1">
-<%-- 			<img  src="${_url}/r2pRecordStreaming/static/images/logo/hyundai_ci2.png"/> --%>
 		</div>
 		<div class="footer_div2">
 			<span class="footer_font1">서울시 마포구 마포대로 49, 1007호 (도화동,  성우빌딩)<br/></span>
-<!-- 			<b><span class="footer_font2">COPYRIGHT © HYUNDAI COMMERCIAL INC. ALL RIGHTS RESERVED.</span></b> -->
 		</div>
 	</div>
 

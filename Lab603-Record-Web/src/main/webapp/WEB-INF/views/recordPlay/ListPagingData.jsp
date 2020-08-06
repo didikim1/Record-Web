@@ -71,7 +71,15 @@
 						<tr>
 							<td>${Data.paginationInfo.totalRecordCount -((Data.paginationInfo.currentPageNo -1) * Data.paginationInfo.recordCountPerPage) - status.index}</td>	<!-- 번호 -->
 							<td>${board.rid}</td>				<!-- 통화 시작시간 -->
-							<td>${board.companyname}</td>		<!-- 통화 시작시간 -->
+							<td>
+								<c:set var="companyname" value="-"/>
+								<c:forEach var="data" items="${companyCodes}" varStatus="status">
+										<c:if test="${board.cpid eq data.companycode}">
+										<c:set var="companyname" value="${data.companyname}"/>
+										</c:if>
+								</c:forEach>
+								${companyname}
+							</td>
 							<td>${board.btime}</td>				<!-- 통화 시작시간 -->
 							<td>${board.rbtime}</td>			<!-- 통화 수신시간 -->
 							<td>${board.etime}</td>				<!-- 통화 종료시간 -->
@@ -87,7 +95,7 @@
 
 				<c:if test="${Data.paginationInfo.totalRecordCount == 0 }">
 					<tr>
-						<td width="100%" colspan="11" >데이터가 존재 하지 않습니다.</td>
+						<td width="100%" colspan="12" >데이터가 존재 하지 않습니다.</td>
 					</tr>
 				</c:if>
 			</table>

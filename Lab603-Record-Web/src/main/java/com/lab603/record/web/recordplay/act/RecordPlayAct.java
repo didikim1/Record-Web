@@ -50,6 +50,15 @@ public class RecordPlayAct
 		}
 
 		logger.debug(" searchMap::: " + searchMap);
+		
+		if ( FrameworkUtils.isNull( searchMap.getStr("sDate", "")) )
+		{
+			searchMap.put("sDate", FrameworkUtils.getDateToStr("yyyy-MM-dd"));
+			searchMap.put("eDate", FrameworkUtils.getDateToStr("yyyy-MM-dd"));
+			
+			paramMap.put("sDate", FrameworkUtils.getDateToStr("yyyy-MM-dd"));
+			paramMap.put("eDate", FrameworkUtils.getDateToStr("yyyy-MM-dd"));
+		}
 
 		resultBean = mBiz.ListPagingData( searchMap );
 		companyCodes = mCompanyCodeBiz.ListPagingData( new MyMap() ).getList();

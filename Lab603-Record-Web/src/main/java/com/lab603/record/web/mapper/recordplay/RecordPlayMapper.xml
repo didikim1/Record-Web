@@ -43,8 +43,6 @@
 			COUNT(0)
 		FROM
 				 call_history T1
-		LEFT OUTER JOIN comtn_companycode T2
-		ON T1.cpid = T2.companycode
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -78,11 +76,8 @@
 			,T1.RESULTMESSAGE 			                                    as resultmessage 	<!--결과메세지-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 				as createtime 		<!--생성일-->
 			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 				as updatetime 		<!--마지막업데이트일-->
-			,IFNULL(T2.companyname, '-') 								    as companyname
 		FROM
 				 call_history T1
-		LEFT OUTER JOIN comtn_companycode T2
-		ON T1.cpid = T2.companycode
 		WHERE 1=1
 			<include refid="addWhere"/>
 		ORDER BY T1.ETIME DESC
