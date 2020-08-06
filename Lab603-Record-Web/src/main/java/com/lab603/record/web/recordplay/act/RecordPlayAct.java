@@ -1,5 +1,7 @@
 package com.lab603.record.web.recordplay.act;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lab603.record.web.comtn.biz.CompanyCodeBiz;
 import com.lab603.record.web.framework.beans.BasicBean;
 import com.lab603.record.web.framework.beans.FrameworkBeans;
 import com.lab603.record.web.framework.mymap.MyCamelMap;
@@ -29,13 +32,17 @@ public class RecordPlayAct
 
 	@Resource(name="com.lab603.record.web.recordplay.biz.RecordPlayBiz")
 	RecordPlayBiz mBiz;
+	
+	@Resource(name="com.lab603.record.web.comtn.biz.CompanyCodeBiz")
+	CompanyCodeBiz mCompanyCodeBiz;
 
 	@RequestMapping(value = { "/" ,  "/ListPagingData.do" })
 	public String ListPagingData(Model model)
 	{
-		MyMap 		paramMap 		  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		MyMap 		searchMap 		  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		BasicBean 	resultBean  	  = null;
+		MyMap 			 paramMap 		  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		MyMap 			 searchMap 		  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		BasicBean 		 resultBean  	  = null;
+		List<MyCamelMap> companyCodes 	  = null;
 
 		if ( FrameworkUtils.isNotNull( paramMap.getStr("called2", "")  ))
 		{
@@ -45,9 +52,11 @@ public class RecordPlayAct
 		logger.debug(" searchMap::: " + searchMap);
 
 		resultBean = mBiz.ListPagingData( searchMap );
+		companyCodes = mCompanyCodeBiz.ListPagingData( new MyMap() ).getList();
 
-		model.addAttribute("Data", 		resultBean);
-		model.addAttribute("paramMap",  paramMap);
+		model.addAttribute("Data", 			resultBean);
+		model.addAttribute("companyCodes",  companyCodes);
+		model.addAttribute("paramMap",  	paramMap);
 
 		return pagePrefix + "/ListPagingData";
 	}

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 수신입금계좌정보 -->
+<mapper namespace="com.lab603.record.web.mapper.comtn.code.CompanyCodeMapper">
+
+	<sql id="addWhere">
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+	</select>
+	
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+			SELECT 
+				 seq
+				,companycode
+				,companyname
+				,createtime
+			FROM
+				comtn_companycode
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+		
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+		
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+		
+	</update>
+
+</mapper>

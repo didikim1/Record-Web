@@ -20,8 +20,21 @@
 			AND LINKEDID 	=  #{linkedid}
 		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(sDate)">
-			AND DATE_FORMAT(CREATETIME, '%Y-%m-%d') BETWEEN #{sDate} AND #{eDate}
+			AND DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d') BETWEEN #{sDate} AND #{eDate}
 		</if>
+		
+		
+		<choose>
+			<when test="cpid == '-'.toString()">
+				AND ( T1.CPID = 'empty' or T1.CPID  = '' or T1.CPID is null )
+			</when>
+			<when test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(cpid)">
+				AND T1.CPID = #{cpid}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		
 	</sql>
 
 	<!-- 페이징 갯수 -->
@@ -29,7 +42,9 @@
 		SELECT
 			COUNT(0)
 		FROM
-			call_history
+				 call_history T1
+		LEFT OUTER JOIN comtn_companycode T2
+		ON T1.cpid = T2.companycode
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -37,39 +52,37 @@
 	<!-- 페이징 목록 -->
 	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
-			 CID														as cid				<!--통화이력 고유번호-->
-			,SERVER_IP 													as serverIp	 		<!--IVR서버-->
-			,RID 														as rid	 			<!--RID-->
-			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   	as btime 			<!--통화시작시간-->
-			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   	as etime 			<!--통화시작시간-->
-			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 			<!--통화수신시간-->
-			,TELECOM  		                                            as telecom 			<!--트렁크정보 및 통신사정보-->
-
-			,CALLDURATION                                               as callduration 	<!--통화시간-->
-
-			,TIMESTAMPDIFF(SECOND, T1.BTIME, T1.ETIME)					as callduration2	<!-- 전체통화시간 -->
-
-			,CALLER 		                                            as caller 			<!--발신번호-->
-			,CALLED 		                                            as called 			<!--수신번호-->
-			,CALLED2 		                                            as called2 			<!--수신번호2-->
-			,CPID 			                                            as cpid 			<!--고객사코드명-->
-			,LINKEDID 		                                            as linkedid  		<!--통화이력고유값-->
-			,DIRNAME  		                                            as dirname 			<!--녹취파일디렉토리-->
-			,FILENAME  		                                            as filename 		<!--녹취파일명-->
-			,FILESIZE 		                                            as filesize  		<!--녹취파일사이즈-->
-			,RECORDCHARGEID                                             as recordchargeid 	<!--녹취고유ID-->
-			,INFO1   		                                            as info1 			<!--기타정보1-->
-			,INFO2  		                                            as info2 			<!--기타정보2-->
-			,INFO3  		                                            as info3 			<!--기타정보3-->
-			,INFO4 			                                            as info4 			<!--기타정보4-->
-
-			,RESULTCODE 			                                    as resultcode 		<!--결과코드-->
-			,RESULTMESSAGE 			                                    as resultmessage 	<!--결과메세지-->
-
-			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			as  createtime 		<!--생성일-->
-			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 			as  updatetime 		<!--마지막업데이트일-->
+			 T1.CID															as cid				<!--통화이력 고유번호-->
+			,T1.SERVER_IP 													as serverIp	 		<!--IVR서버-->
+			,T1.RID 														as rid	 			<!--RID-->
+			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   		as btime 			<!--통화시작시간-->
+			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   		as etime 			<!--통화시작시간-->
+			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 				<!--통화수신시간-->
+			,T1.TELECOM  		                                            as telecom 			<!--트렁크정보 및 통신사정보-->
+			,T1.CALLDURATION                                                as callduration 	<!--통화시간-->
+			,TIMESTAMPDIFF(SECOND, T1.BTIME, T1.ETIME)					    as callduration2	<!-- 전체통화시간 -->
+			,T1.CALLER 		                                            	as caller 			<!--발신번호-->
+			,T1.CALLED 		                                            	as called 			<!--수신번호-->
+			,T1.CALLED2 		                                            as called2 			<!--수신번호2-->
+			,T1.CPID 			                                            as cpid 			<!--고객사코드명-->
+			,T1.LINKEDID 		                                            as linkedid  		<!--통화이력고유값-->
+			,T1.DIRNAME  		                                            as dirname 			<!--녹취파일디렉토리-->
+			,T1.FILENAME  		                                            as filename 		<!--녹취파일명-->
+			,T1.FILESIZE 		                                            as filesize  		<!--녹취파일사이즈-->
+			,T1.RECORDCHARGEID                                             	as recordchargeid 	<!--녹취고유ID-->
+			,T1.INFO1   		                                            as info1 			<!--기타정보1-->
+			,T1.INFO2  		                                            	as info2 			<!--기타정보2-->
+			,T1.INFO3  		                                           	 	as info3 			<!--기타정보3-->
+			,T1.INFO4 			                                            as info4 			<!--기타정보4-->
+			,T1.RESULTCODE 			                                    	as resultcode 		<!--결과코드-->
+			,T1.RESULTMESSAGE 			                                    as resultmessage 	<!--결과메세지-->
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 				as createtime 		<!--생성일-->
+			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 				as updatetime 		<!--마지막업데이트일-->
+			,IFNULL(T2.companyname, '-') 								    as companyname
 		FROM
-			 call_history T1
+				 call_history T1
+		LEFT OUTER JOIN comtn_companycode T2
+		ON T1.cpid = T2.companycode
 		WHERE 1=1
 			<include refid="addWhere"/>
 		ORDER BY T1.ETIME DESC
@@ -109,8 +122,12 @@
 
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			as  createtime 		<!--생성일-->
 			,DATE_FORMAT(T1.UPDATETIME, '%Y-%m-%d %H:%i:%s') 			as  updatetime 		<!--마지막업데이트일-->
+			
+			,IFNULL(T2.companyname, '-') 								as companyname
 		FROM
-			 call_history T1
+				 call_history T1
+		LEFT OUTER JOIN comtn_companycode T2
+			ON T1.cpid = T2.companycode
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>
