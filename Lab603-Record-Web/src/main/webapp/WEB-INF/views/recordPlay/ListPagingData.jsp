@@ -49,6 +49,10 @@
 				</form>
 			</div>
 			
+			<p class="result" style="font-size: 12px;text-align: right;">
+				총 <span style="color: #ff0000; font-weight: bold;">${Data.paginationInfo.totalRecordCount}</span>개의 리스트가 있습니다.
+			</p>
+			
 			<table id="myTable" class="wtable border">
 				<thead>
 					<tr>
