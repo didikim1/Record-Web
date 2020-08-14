@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 수신입금계좌정보 -->
+<mapper namespace="com.lab603.record.web.mapper.trunk.TrunkMapper">
+
+	<sql id="addWhere">
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(seq)">
+			AND SEQ 	=  #{seq}
+		</if>
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(status)">
+			AND STATUS 	=  #{status}
+		</if>
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+		SELECT
+			COUNT(0)
+		FROM
+				 trunk T1
+		WHERE 1=1
+		<include refid="addWhere"/>
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 T1.SEQ															as seq				<!--고유번호-->
+			,T1.TELECOM_NAME 												as telecomName	 	<!--통신사명칭-->
+			,T1.TRUNK_NAME 													as trunkName	 	<!--트렁크명칭-->
+			,T1.TRUNK_IP  		                                            as trunkIp 			<!--트렁크IP-->
+			,T1.TRUNK_PORT                                               	as trunkPort 		<!--트렁크Port-->
+			,T1.TRUNK_USERNAME 		                                        as trunkUsername 	<!--트렁크사용자-->
+			,T1.TRUNK_PASSWORD 		                                        as trunkPassword 	<!--트렁크패스워드-->
+			,T1.STATUS 		                                            	as status 			<!--상태-->
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
+			,DATE_FORMAT(T1.MODIFYTIME, '%Y-%m-%d %H:%i:%s') 			   	as modifytime 		<!--수정일-->
+		FROM
+			trunk T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+		ORDER BY T1.STATUS ASC , T1.MODIFYTIME DESC
+		LIMIT #{start}, #{end}
+	</select>
+	
+	<!-- 페이징 목록 -->
+	<select id="ListData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 T1.SEQ															as seq				<!--고유번호-->
+			,T1.TELECOM_NAME 												as telecomName	 	<!--통신사명칭-->
+			,T1.TRUNK_NAME 													as trunkName	 	<!--트렁크명칭-->
+			,T1.TRUNK_IP  		                                            as trunkIp 			<!--트렁크IP-->
+			,T1.TRUNK_PORT                                               	as trunkPort 		<!--트렁크Port-->
+			,T1.TRUNK_USERNAME 		                                        as trunkUsername 	<!--트렁크사용자-->
+			,T1.TRUNK_PASSWORD 		                                        as trunkPassword 	<!--트렁크패스워드-->
+			,T1.STATUS 		                                            	as status 			<!--상태-->
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
+			,DATE_FORMAT(T1.MODIFYTIME, '%Y-%m-%d %H:%i:%s') 			   	as modifytime 		<!--수정일-->
+			,DATE_FORMAT(T1.ACTTIME, '%Y-%m-%d %H:%i:%s') 			   		as acttime 			<!--활성화시간-->
+		FROM
+			trunk T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 T1.SEQ															as seq				<!--고유번호-->
+			,T1.TELECOM_NAME 												as telecomName	 	<!--통신사명칭-->
+			,T1.TRUNK_NAME 													as trunkName	 	<!--트렁크명칭-->
+			,T1.TRUNK_IP  		                                            as trunkIp 			<!--트렁크IP-->
+			,T1.TRUNK_PORT                                               	as trunkPort 		<!--트렁크Port-->
+			,T1.TRUNK_USERNAME 		                                        as trunkUsername 	<!--트렁크사용자-->
+			,T1.TRUNK_PASSWORD 		                                        as trunkPassword 	<!--트렁크패스워드-->
+			,T1.STATUS 		                                            	as status 			<!--상태-->
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
+			,DATE_FORMAT(T1.MODIFYTIME, '%Y-%m-%d %H:%i:%s') 			   	as modifytime 		<!--수정일-->
+			,DATE_FORMAT(T1.ACTTIME, '%Y-%m-%d %H:%i:%s') 			   		as acttime 			<!--활성화시간-->
+		FROM
+			trunk T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+		UPDATE trunk 
+			SET 
+				MODIFYTIME = NOW()
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(telecomName)">	, TELECOM_NAME 			= #{telecomName} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(trunkName)">		, TRUNK_NAME 			= #{trunkName} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(trunkIp)">		, TRUNK_IP 				= #{trunkIp} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(trunkPort)">		, TRUNK_PORT 			= #{trunkPort} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(trunkUsername)">	, TRUNK_USERNAME 		= #{trunkUsername} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(trunkPassword)">	, TRUNK_PASSWORD 		= #{trunkPassword} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(status)">		, STATUS 				= #{status} </if>
+			WHERE	SEQ = #{seq}
+	</update>
+	
+	<update id="ModifyMainData" parameterType="myMap">
+		UPDATE trunk 
+			SET 
+				ACTTIME = NOW()
+			WHERE	SEQ = #{seq}
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+		DELETE FROM trunk  WHERE  SEQ = #{seq}
+	</update>
+
+</mapper>

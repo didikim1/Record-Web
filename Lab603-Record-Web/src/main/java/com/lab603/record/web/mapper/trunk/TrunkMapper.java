@@ -1,14 +1,13 @@
-package com.lab603.record.web.mapper.recordplay;
+package com.lab603.record.web.mapper.trunk;
 
 import org.springframework.stereotype.Repository;
-
 import com.lab603.record.web.framework.config.mybatis.support.Master;
 import com.lab603.record.web.framework.mymap.MyCamelMap;
 import com.lab603.record.web.framework.mymap.MyMap;
 
 @Master
-@Repository("com.lab603.record.web.mapper.recordplay.RecordPlayMapper")
-public interface RecordPlayMapper
+@Repository("com.lab603.record.web.mapper.trunk.TrunkMapper")
+public interface TrunkMapper 
 {
 	/** 
 	* 페이징 갯수
@@ -23,6 +22,13 @@ public interface RecordPlayMapper
 	* @return
 	*/
 	public java.util.List ListPagingData(MyMap paramMap);
+	
+	/**
+	 * 목록
+	 * @param paramMap
+	 * @return
+	 */
+	public java.util.List ListData(MyMap paramMap);
 
 	/**
 	* 상세
@@ -44,6 +50,14 @@ public interface RecordPlayMapper
 	* @return
 	*/
 	public int ModifyData(MyMap paramMap);
+	
+	
+	/**
+	 * 활성화된 시간 업데이트
+	 * @param paramMap
+	 * @return
+	 */
+	public int ModifyMainData(MyMap paramMap);
 
 	/**
 	* 삭제
@@ -51,5 +65,4 @@ public interface RecordPlayMapper
 	* @return
 	*/
 	public int DeleteData(MyMap paramMap);
-
 }
