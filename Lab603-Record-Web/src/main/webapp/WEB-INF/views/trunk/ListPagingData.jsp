@@ -12,14 +12,13 @@
     <div id="layout_content">
 			<div class="border">
 			</div>
+			<c:set var="timeActive" value="${MainTrunk.minutehour} 시간"/>
+			<c:if test="${MainTrunk.minutehour == 0}">
+				<c:set var="timeActive" value="${MainTrunk.minutediff} 분"/>
+			</c:if>
 			
-			<div class="border margin_l6" style="font-size: 13px;font-weight: bold;text-align: left;padding-left: 10px; vertical-align: botto">
-<%-- 				${MainTrunk} --%>
-<!-- 				{seq=1, telecomName=드림라인, trunkName=TRUNK_070-8016-221X, trunkIp=61.103.31.26, trunkPort=5060, trunkUsername=07080162210, trunkPassword=07080162210, status=A, createtime=2020-08-14 17:12:45, modifytime=2020-08-14 17:48:19} -->
-				
-				 
-				 <label>현재 Asterisk(IVR) 는 ${MainTrunk.telecomName} ${MainTrunk.trunkName} 로 연결되어 ${MainTrunk.acttime} 서비스 중입니다.</label> 
-				
+			<div class="border" style="font-size: 15px;font-weight: bold;padding-left: 10px;height: 40px;">
+				 <div style="margin-top: 10px;">현재 Asterisk(IVR) 는 ${MainTrunk.telecomName} ${MainTrunk.trunkName} 로 연결되어 ( ${MainTrunk.acttime}, ${timeActive}) 서비스 중입니다.</div> 
 			</div>
 				
 			<p class="result" style="font-size: 12px;text-align: right;">
@@ -52,7 +51,10 @@
 							<td>${board.trunkUsername}</td>				<!-- 사용자 -->
 							<td>										<!-- 상태 -->
 								<c:choose>
-									<c:when test="${board.status == 'A'}"><font style="color: green;font-weight: bold;">메인</font></c:when>
+									<c:when test="${board.status == 'A'}">
+									<img alt="" src="${_resource}/lib/ajax-loader_20200818.gif">
+									<font style="color: green;font-weight: bold;">(서비스 중)</font>
+									</c:when>
 									<c:otherwise>백업</c:otherwise>
 								</c:choose>
 							</td>					

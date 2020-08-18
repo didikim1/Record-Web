@@ -57,6 +57,8 @@
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
 			,DATE_FORMAT(T1.MODIFYTIME, '%Y-%m-%d %H:%i:%s') 			   	as modifytime 		<!--수정일-->
 			,DATE_FORMAT(T1.ACTTIME, '%Y-%m-%d %H:%i:%s') 			   		as acttime 			<!--활성화시간-->
+			,TIMESTAMPDIFF(MINUTE, ACTTIME, NOW()) 							as minutediff		<!-- 분 경과시간 -->
+			,TIMESTAMPDIFF(HOUR, ACTTIME, NOW()) 							as minutehour		<!-- 분 경과시간 -->
 		FROM
 			trunk T1
 		WHERE 1=1
@@ -77,6 +79,8 @@
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
 			,DATE_FORMAT(T1.MODIFYTIME, '%Y-%m-%d %H:%i:%s') 			   	as modifytime 		<!--수정일-->
 			,DATE_FORMAT(T1.ACTTIME, '%Y-%m-%d %H:%i:%s') 			   		as acttime 			<!--활성화시간-->
+			,TIMESTAMPDIFF(MINUTE, ACTTIME, NOW()) 							as minutediff		<!-- 분 경과시간 -->
+			,TIMESTAMPDIFF(HOUR, ACTTIME, NOW()) 							as minutehour		<!-- 분 경과시간 -->
 		FROM
 			trunk T1
 		WHERE 1=1
