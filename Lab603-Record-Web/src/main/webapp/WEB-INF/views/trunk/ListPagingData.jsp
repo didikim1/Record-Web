@@ -20,6 +20,10 @@
 			<div class="border" style="font-size: 15px;font-weight: bold;padding-left: 10px;height: 40px;">
 				 <div style="margin-top: 10px;">현재 Asterisk(IVR) 는 ${MainTrunk.telecomName} ${MainTrunk.trunkName} 로 연결되어 ( ${MainTrunk.acttime}, ${timeActive}) 서비스 중입니다.</div> 
 			</div>
+			
+			<div class="border margin_l6">
+				<button type="button" class="btn_it02" onclick="fnTrunkRegister();">Trunk 생성</button>
+			</div>
 				
 			<p class="result" style="font-size: 12px;text-align: right;">
 				총 <span style="color: #ff0000; font-weight: bold;">${Data.paginationInfo.totalRecordCount}</span>개의 리스트가 있습니다.
@@ -81,6 +85,7 @@
 					<tag:Page formName="recordSearchForm" pageing="${Data.paginationInfo}"/>
 				</div>
 			</c:if>
+			
 
     </div>
  <jsp:include page="ListPagingDataS.jsp" flush="false" />

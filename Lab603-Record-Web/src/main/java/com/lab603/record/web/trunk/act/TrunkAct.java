@@ -59,7 +59,31 @@ public class TrunkAct
 	@RequestMapping(value = { "/RegisterData.do" })
 	public @ResponseBody ResultMessage RegisterData(Model model)
 	{
-		return new ResultMessage(ResultCode.RESULT_OK, null);
+		MyMap 				paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		MyMap 				rtnMap 				= new MyMap();
+		StringBuffer		rtnDocument				= new StringBuffer();
+		
+		System.out.println("TrunkFileName:" + paramMap.getStr("TrunkFileName"));
+		System.out.println("TrunkName:" + paramMap.getStr("TrunkName"));
+		System.out.println("TrunkNumber:" + paramMap.getStr("TrunkNumber"));
+		System.out.println("TrunkIP:" + paramMap.getStr("TrunkIP"));
+		System.out.println("TrunkPort:" + paramMap.getStr("TrunkPort"));
+		
+		
+		
+		List<String> documentLines = TrunkFileView.documentView(paramMap.getStr("TrunkName"), paramMap.getStr("TrunkNumber"), paramMap.getStr("TrunkIP"), paramMap.getStr("TrunkPort"));
+		
+		for (String line : documentLines) 
+		{
+			rtnDocument.append(line + "<br/>");
+		}
+		
+		rtnMap.put("data", 		rtnDocument.toString());
+		rtnMap.put("fileName", 	paramMap.getStr("TrunkFileName"));
+		
+		
+		
+		return new ResultMessage(ResultCode.RESULT_OK, rtnMap);
 	}
 
 	@RequestMapping(value = { "/ModifyData.do" })

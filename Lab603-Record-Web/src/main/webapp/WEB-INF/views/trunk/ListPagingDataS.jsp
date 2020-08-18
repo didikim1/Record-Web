@@ -51,6 +51,78 @@ function fnModify(seq, telecomName, trunkName){
 }
 
 
+function fnTrunkRegisterHTML(){
+	
+	var innerHTML = "";
+	
+	innerHTML += '<div id="layout_content_popup_sub">';
+	innerHTML += '	<div class="content">';
+	innerHTML += '		<div class="border_sub">';
+	innerHTML += '			<form name="registerForm">';
+	innerHTML += '				<div align="center" >';
+	innerHTML += '					<table class="htable">';
+	innerHTML += '						<tr>';
+	innerHTML += '							<th scope="col" width="120px">Trunk 파일명</th>';
+	innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkFileName" autocomplete="off"></td>';
+	innerHTML += '						</tr>';
+	innerHTML += '						<tr>';
+	innerHTML += '							<th scope="col" width="120px">Trunk 명칭</th>';
+	innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkName" autocomplete="off"></td>';
+	innerHTML += '						</tr>';
+	innerHTML += '						<tr>';
+	innerHTML += '							<th scope="col" width="120px">Trunk 메인번호</th>';
+	innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkNumber" autocomplete="off"></td>';
+	innerHTML += '						</tr>';
+	innerHTML += '						<tr>';
+	innerHTML += '							<th scope="col" width="120px">Trunk IP</th>';
+	innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkIP" autocomplete="off"></td>';
+	innerHTML += '						</tr>';
+	innerHTML += '						<tr>';
+	innerHTML += '							<th scope="col" width="120px">Trunk Port</th>';
+	innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkPort" autocomplete="off"></td>';
+	innerHTML += '						</tr>';
+	innerHTML += '					</table>';
+	innerHTML += '				</div>';
+	innerHTML += '			</form>';
+	innerHTML += '		</div>';
+	innerHTML += '		<div class="border margin_l7">';
+	innerHTML += '			<button type="button" class="userManageButton" onclick="fnTrunkRegisterProc()">등록하기</button>';
+	innerHTML += '		</div>';
+	innerHTML += '	</div>';
+	innerHTML += '</div>';
+	
+	return innerHTML;
+}
+
+function fnTrunkRegister(){
+		$.fun.layout({
+			id:"induacaAdd",
+			"content":fnTrunkRegisterHTML(),
+			"title":"Trunk 생성",
+			"width":470,
+			"buttons":{}
+		});
+}
+
+function fnTrunkRegisterProc(){
+	$.ajax({
+		type:'get',
+		data: $("[name=registerForm]").serialize(),
+		url:'./RegisterData.do',
+		dataType : "json",
+		success:function(data){
+			$.fun.layout({
+				id:"induacaAdd",
+				"content":"<div style='text-align: left'>" + data.result.data + "</div>",
+				"title":data.result.fileName,
+				"width":470,
+				"buttons":{}
+			});
+		}
+	});
+}
+
+
 function fnShowLinkID(linkID){
 	$.fun.alert({content:"LinkID:"+linkID});
 }
@@ -70,6 +142,10 @@ function fnRecordPlay(cid)
 					$(this).dialog('destroy').remove();
 					$.fun.ajax({
 						type:'get',
+						
+						// text-align: left
+						// <div style='text-align: left'></div>
+						
 						url:"./SelectOneData.do?cid="+cid,
 						success:function(data){
 
