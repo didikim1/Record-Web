@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.lab603.record.web</groupId>
 	<artifactId>Lab603-Record-Web</artifactId>
-	<version>20220406_001</version>
+	<version>20220406_002</version>
 	<name>Lab603-Record-Web</name>
 	<description>Lab603-Record-Web</description>
 	<packaging>war</packaging>
@@ -152,6 +152,18 @@
 				</configuration>
 			</plugin>
 		</plugins>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
 	</build>
 
 </project>
