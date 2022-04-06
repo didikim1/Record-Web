@@ -4,6 +4,9 @@
 <mapper namespace="com.lab603.record.web.mapper.recordplay.RecordPlayMapper">
 
 	<sql id="addWhere">
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(resultcode)">
+			AND RESULTCODE 	= #{resultcode}
+		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(rid)">
 			AND RID 	= CONCAT('%',#{rid},'%')
 		</if>

@@ -1,5 +1,7 @@
 package com.lab603.record.web.framework.config.interceptor;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.Map.Entry;
 
 import javax.servlet.http.Cookie;
@@ -38,7 +40,13 @@ public class AuthenticationInterceptor implements HandlerInterceptor
         for (Entry<Object, Object> elem : FrameworkBeans.findHttpServletBean().findClientRequestParameter().entrySet())
         {
             String mapKey = (String) elem.getKey();
-            String mapVal = (String) elem.getValue();
+            String mapVal = null;
+            try 
+            {
+            	mapVal = (String) elem.getValue();
+			} catch (Exception e) {
+				mapVal = "";
+			}
 
             sbReqMessage.append("\t " + mapKey + " = " + mapVal + strNewLine);
         }

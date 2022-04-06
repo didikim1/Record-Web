@@ -21,7 +21,12 @@
 								<input type="text" class="common_input2 pointer"  name="sDate" id="sDate" style="border-right:none;" autocomplete="off" placeholder="시작일" value="${paramMap.sDate}" readonly="readonly"/>
 								<input type="text" class="common_input2 right pointer" name="eDate" id="eDate" autocomplete="off" placeholder="종료일" value="${paramMap.eDate}" readonly="readonly"/>
 
-								<div class="common_div left margin_l2">고객사</div>
+								</td>
+								</tr>
+								
+								<tr>
+								<td>
+								<div class="common_div left ">고객사</div>
 								<select class="common_select" name="cpid">
 									<option value="" <c:if test="${paramMap.cpid  == '' || paramMap.cpid  eq null}">selected</c:if> >전체</option>
 									<option value="-" <c:if test="${paramMap.cpid  eq '-' }">selected</c:if> >정보없음</option>
@@ -29,20 +34,22 @@
 										<option value="${data.companycode}" <c:if test="${paramMap.cpid eq data.companycode}">selected</c:if> >${data.companyname}</option>
 									</c:forEach>
 								</select>
-
-								<div class="common_div left margin_l3">고객사고유번호</div>
-								<input type="text" class="common_input2 right" name="rid" id="rid" placeholder="고객번호" value="${paramMap.rid}" autocomplete="off"/>
-
-								<div class="common_div margin_l3 left">발신번호</div>
+								<div class="common_div left margin_l2">발신번호</div>
 								<input type="text" class="common_input2 right" name="caller" id="caller" placeholder="발신번호" value="${paramMap.caller}" autocomplete="off"/>
 
-								<div class="common_div left margin_l3">수신번호</div>
+								<div class="common_div left margin_l2">수신번호</div>
 								<input type="text" class="common_input2 right" name="called2" id="called2" placeholder="수신번호" value="${paramMap.called2}" autocomplete="off"/>
 
-								<div class="common_div left margin_l3">링크ID</div>
-								<input type="text" class="common_input2 right" name="linkedid" id="linkedid" placeholder="수신번호" value="${paramMap.linkedid}" autocomplete="off"/>
+								<div class="common_div left margin_l2">고객사고유번호</div>
+								<input type="text" class="common_input2 right" name="rid" id="rid" placeholder="고객번호" value="${paramMap.rid}" autocomplete="off"/>
 
-								<button type="button" class="common_button2 margin_l3" onclick="recordSearch();"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;검색</button>
+								<div class="common_div left margin_l2">링크ID</div>
+								<input type="text" class="common_input2 right" name="linkedid" id="linkedid" placeholder="수신번호" value="${paramMap.linkedid}" autocomplete="off" />
+									
+								<div class="common_div left margin_l2">결과코드</div>
+								<input type="number" min="00"  class="common_input2 right" name="resultcode" id="resultcode" placeholder="결과코드" value="${paramMap.resultcode}" autocomplete="off"/>
+
+								<button type="button" class="common_button2 margin_l8" onclick="recordSearch();"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;검색</button>
 							</td>
 						</tr>
 					</table>
