@@ -41,10 +41,10 @@
 								<input type="text" class="common_input2 right" name="called2" id="called2" placeholder="수신번호" value="${paramMap.called2}" autocomplete="off"/>
 
 								<div class="common_div left margin_l2">고객사고유번호</div>
-								<input type="text" class="common_input2 right" name="rid" id="rid" placeholder="고객번호" value="${paramMap.rid}" autocomplete="off"/>
+								<input type="text" class="common_input2 right" name="rid" id="rid" placeholder="고객사 고유번호" value="${paramMap.rid}" autocomplete="off"/>
 
 								<div class="common_div left margin_l2">링크ID</div>
-								<input type="text" class="common_input2 right" name="linkedid" id="linkedid" placeholder="수신번호" value="${paramMap.linkedid}" autocomplete="off" />
+								<input type="text" class="common_input2 right" name="linkedid" id="linkedid" placeholder="링크ID" value="${paramMap.linkedid}" autocomplete="off" />
 									
 								<div class="common_div left margin_l2">결과코드</div>
 								<input type="number" min="00"  class="common_input2 right" name="resultcode" id="resultcode" placeholder="결과코드" value="${paramMap.resultcode}" autocomplete="off"/>
@@ -81,7 +81,7 @@
 					<c:forEach var="board" items="${Data.list}" varStatus="status">
 						<tr>
 							<td>${Data.paginationInfo.totalRecordCount -((Data.paginationInfo.currentPageNo -1) * Data.paginationInfo.recordCountPerPage) - status.index}</td>	<!-- 번호 -->
-							<td>${board.rid}</td>				<!-- 통화 시작시간 -->
+							<td>${board.rid}</td>				<!-- RID-->
 							<td>${board.cpid}</td>				<!-- 고객사 -->
 							<td>${board.btime}</td>				<!-- 통화 시작시간 -->
 							<td>${board.rbtime}</td>			<!-- 통화 수신시간 -->

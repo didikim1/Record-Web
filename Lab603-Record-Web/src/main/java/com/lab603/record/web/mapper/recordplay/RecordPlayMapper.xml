@@ -8,7 +8,7 @@
 			AND RESULTCODE 	= #{resultcode}
 		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(rid)">
-			AND RID 	= CONCAT('%',#{rid},'%')
+			AND RID LIKE CONCAT('%',#{rid},'%')
 		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(cid)">
 			AND CID 	=  #{cid}
@@ -58,7 +58,7 @@
 			,T1.RID 														as rid	 			<!--RID-->
 			,DATE_FORMAT(T1.BTIME, '%Y-%m-%d %H:%i:%s') 			   		as btime 			<!--통화시작시간-->
 			,DATE_FORMAT(T1.ETIME, '%Y-%m-%d %H:%i:%s') 			   		as etime 			<!--통화시작시간-->
-			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   	as rbtime 				<!--통화수신시간-->
+			,DATE_FORMAT(T1.RBTIME, '%Y-%m-%d %H:%i:%s') 			   		as rbtime 			<!--통화수신시간-->
 			,T1.TELECOM  		                                            as telecom 			<!--트렁크정보 및 통신사정보-->
 			,T1.CALLDURATION                                                as callduration 	<!--통화시간-->
 			,TIMESTAMPDIFF(SECOND, T1.BTIME, T1.ETIME)					    as callduration2	<!-- 전체통화시간 -->
