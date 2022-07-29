@@ -69,7 +69,7 @@
 				    <li class="top" id="m0"><a href="/recordPlay/ListPagingData.do" id="gnb_0" class="top_link">검색 / 재생</a></li>
 				    <li class="top" id="m1"><a href="/trunk/""  id="gnb_0" class="top_link">트렁크 관리</a></li>
 				    <li class="top" id="m1"><a href="#" onclick="alert('준비중입니다.');"  class="top_link">고객사 등록</a></li>
-				    <li class="top" id="m1"><a href="#" onclick="alert('준비중입니다.');"  class="top_link">TTS생성</a></li>
+				    <li class="top" id="m1"><a href="/makeTTS/ListPagingData.do"  class="top_link">TTS생성</a></li>
 				</ul>
 			</div>
 		</div>
