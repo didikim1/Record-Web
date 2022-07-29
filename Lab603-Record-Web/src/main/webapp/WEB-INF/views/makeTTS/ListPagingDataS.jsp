@@ -128,6 +128,62 @@ function excelWrite() {
 	});
 }
 
+function fnOpenRegisterPage(){
+	$.fun.layout({
+		id:"induacaAdd",
+		"content":fnOpenRegisterPageHTML(),
+		"title":"TTS등록하기",
+		"width":470,
+		"buttons":{}
+	});
+}
+
+function fnOpenRegisterPageHTML(){
+		
+		var innerHTML = "";
+		
+		innerHTML += '<div id="layout_content_popup_sub">';
+		innerHTML += '	<div class="content">';
+		innerHTML += '		<div class="border_sub">';
+		innerHTML += '			<form name="registerForm">';
+		innerHTML += '				<div align="center" >';
+		innerHTML += '					<table class="htable">';
+		innerHTML += '						<button type="button" class="userManageButtonTTSmake" onclick="#">TTS생성</button>';
+		innerHTML += '						<tr>';
+		innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkFileName" autocomplete="off"><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
+		innerHTML += '						</tr>';
+		innerHTML += '					</table>';
+		innerHTML += '				</div>';
+		innerHTML += '				<div class="border margin_l7">';
+		innerHTML += '					<button type="reset" class="userManageButtonTTS">삭제</button>';
+		innerHTML += '					<button type="button" class="userManageButtonTTS" onclick="fnRegisterPageProc()">등록</button>';
+		innerHTML += '				</div>';
+		innerHTML += '			</form>';
+		innerHTML += '		</div>';
+		innerHTML += '	</div>';
+		innerHTML += '</div>';
+		
+		return innerHTML;
+	}
+
+
+function fnRegisterPageProc(){
+	$.ajax({
+		type:'get',
+		data: $("[name=registerForm]").serialize(),
+		url:'./RegisterData.do',
+		dataType : "json",
+		success:function(data){
+			$.fun.layout({
+				id:"induacaAdd",
+				"content":"<div style='text-align: left'>" + data.result.data + "</div>",
+				"title":data.result.fileName,
+				"width":470,
+				"buttons":{}
+			});
+		}
+	});
+}
 
 function selectView(sel) {
 	recordSearchForm.submit() ;

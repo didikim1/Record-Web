@@ -49,8 +49,23 @@ table.wtable {
 	margin-bottom: 20px;
 	font-size: 14px;
 	}
+table.wtableMent {
+	width:100%;
+	text-align:center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 14px;
+	table-layout: fixed;
+	}
 
 table.wtable th {
+	background-color:#464646;
+	line-height: 30px;
+	padding:2px;
+	color:#fff;
+	}
+	
+table.wtableMent th {
 	background-color:#464646;
 	line-height: 30px;
 	padding:2px;
@@ -63,6 +78,19 @@ table.wtable td {
 	line-height: 30px;
 	border-bottom:solid 1px #e6e6e6;
 	color:#404040;
+	}
+	
+table.wtableMent td {
+	width: 300px;
+	font-size: 12px;
+	padding:3px;
+	line-height: 30px;
+	border-bottom:solid 1px #e6e6e6;
+	color:red;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
 	}
 
 
@@ -93,6 +121,13 @@ table.htable {
 	font-size: 14px;
 	}
 
+table.htable th {
+	background-color:#3C5A91;
+	line-height: 40px;
+	padding:2px;
+	color:#fff;
+	border-bottom:solid 1px #e6e6e6;
+	}
 table.htable th {
 	background-color:#3C5A91;
 	line-height: 40px;
@@ -236,15 +271,15 @@ table.htable td {
 }
 
 #layout_content_popup_sub table.htable input.userManageInput{
-  width: 300px;
-  height: 30px;
-  line-height:24px;
-  margin-left:10px;
-  padding: 2px;
-  font-size: 14px;
-  color: #1b1b1b;
-  border: 1px solid #eee;
-  float: left;
+width: 279px;
+    height: 30px;
+    line-height: 24px;
+    margin-left: 10px;
+    margin-right: 8px;
+    padding: 2px;
+    font-size: 14px;
+    color: #1b1b1b;
+    border: 1px solid #eee;
 }
 
 #layout_content_popup_sub table.htable select.userManageSelect{
@@ -271,6 +306,41 @@ table.htable td {
   color: #fff;
   background-color:#263238;
   border: 1px solid transparent;
+  cursor:pointer;
+}
+
+#layout_content_popup_sub button.userManageButtonTTS{
+  width: 120px;
+  height: 30px;
+  padding: 2px;
+  margin:5px 5px 5px auto;
+  font-size: 14px;
+  color: #fff;
+  background-color:#26323863;
+  border: 1px solid transparent;
+  cursor:pointer;
+}
+#layout_content_popup_sub button.userManageButtonTTSmake{
+  width: 120px;
+  height: 30px;
+  padding: 2px;
+  margin:5px 5px 5px auto;
+  font-size: 14px;
+  color: #fff;
+  background-color:#c15555;
+  border: 1px solid transparent;
+  cursor:pointer;
+}
+#layout_content_popup_sub button.userManageButtonTTSplay{
+  width: 20px;
+  height: 30px;
+  padding: 2px;
+  margin:5px 5px 5px auto;
+  font-size: 14px;
+  color: black;
+  background-color:#fff;
+  border: 1px solid black;
+  font-size: 15px;
   cursor:pointer;
 }
 
