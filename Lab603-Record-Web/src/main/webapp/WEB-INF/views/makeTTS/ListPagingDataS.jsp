@@ -132,8 +132,9 @@ function fnOpenRegisterPage(){
 	$.fun.layout({
 		id:"induacaAdd",
 		"content":fnOpenRegisterPageHTML(),
-		"title":"TTS등록하기",
+		"title":"TTS생성",
 		"width":470,
+		"height": 300,
 		"buttons":{}
 	});
 }
@@ -148,9 +149,8 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '			<form name="registerForm">';
 		innerHTML += '				<div align="center" >';
 		innerHTML += '					<table class="htable">';
-		innerHTML += '						<button type="button" class="userManageButtonTTSmake" onclick="#">TTS생성</button>';
 		innerHTML += '						<tr>';
-		innerHTML += '							<td><input type="text" class="userManageInput" id="" name="TrunkFileName" autocomplete="off"><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
+		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;" ></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
 		innerHTML += '						</tr>';
 		innerHTML += '					</table>';
 		innerHTML += '				</div>';
