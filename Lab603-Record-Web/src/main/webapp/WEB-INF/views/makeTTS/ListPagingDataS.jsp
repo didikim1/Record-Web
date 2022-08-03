@@ -67,12 +67,12 @@ function recordSearch() {
 
 	var sDate		= $("[name=sDate]").val();
 	var eDate 		= $("[name=eDate]").val();
-	var req 		= $("[name=req]").val();
+	var ttsMent 	= $("[name=ttsMent]").val();
 
 	var validDate 			= /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
 	var validNumber 		= /^[0-9]*$/;
 
-	if (  ( sDate == "" || eDate == "" ) == true) {
+/* 	if (  ( sDate == "" || eDate == "" ) == true) {
 		$.fun.alert({content:"시작일 또는 종료일을 선택해주세요."});
 		return;
 	}
@@ -81,7 +81,8 @@ function recordSearch() {
 			$.fun.alert({content:"날짜는 지정된 형식으로 입력하세요."});
 			return;
 		}
-	}
+	} 
+*/
 
 	recordSearchForm.submit();
 }
@@ -134,7 +135,7 @@ function fnOpenRegisterPage(){
 		"content":fnOpenRegisterPageHTML(),
 		"title":"TTS생성",
 		"width":470,
-		"height": 300,
+		"height": 350,
 		"buttons":{}
 	});
 }
@@ -150,7 +151,10 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '				<div align="center" >';
 		innerHTML += '					<table class="htable">';
 		innerHTML += '						<tr>';
-		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;" ></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
+		innerHTML += '							<td><input type="text" class="userManageInput" name="name" placeholder="파일명을 입력하세요" name="ttsMent"></td>';
+		innerHTML += '						</tr>';
+		innerHTML += '						<tr>';
+		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;" placeholder="TTS를 입력하세요" name="ttsMent"></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
 		innerHTML += '						</tr>';
 		innerHTML += '					</table>';
 		innerHTML += '				</div>';
@@ -168,22 +172,75 @@ function fnOpenRegisterPageHTML(){
 
 
 function fnRegisterPageProc(){
-	$.ajax({
-		type:'get',
-		data: $("[name=registerForm]").serialize(),
-		url:'./RegisterData.do',
-		dataType : "json",
-		success:function(data){
-			$.fun.layout({
-				id:"induacaAdd",
-				"content":"<div style='text-align: left'>" + data.result.data + "</div>",
-				"title":data.result.fileName,
-				"width":470,
-				"buttons":{}
+	
+	 var name			= $("[name=name]").val();
+	 var ttsMent		= $("[name=ttsMent]").val();
+	 if (isNull(name) && isNull(ttsMent)){
+			$.fun.alert({
+				content : "등록 할 사항이 없습니다. ",
 			});
-		}
-	});
+	 }else if( isNull(name) ){
+			$.fun.alert({
+				content : "파일명을 입력해 주세요.",
+				action : function() {
+					$("[name=name]").focus();
+				}
+			});
+	 }else if( isNull(ttsMent) ){
+			$.fun.alert({
+				content : "TTS멘트를 입력해 주세요.",
+				action : function() {
+					$("[name=ttsMent]").focus();
+				}
+			});
+	 }else {
+		$.ajax({
+			type:'get',
+			data: $("[name=registerForm]").serialize(),
+			url:'./RegisterData.do',
+			dataType : "json",
+			success:function(data){
+				$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
+					location.reload();
+				}});
+			}
+		});
+	}
 }
+function fnDeleteData(name){
+
+		var title = "["+name+"] TTS를 삭제 하시겠습니까?"
+			
+	 	$.fun.layout({
+			id:"induacaAdd",
+			"content":title,
+			"title":"TTS 삭제",
+			"width":400,
+			"buttons":{
+				"확인": function() {
+					$.fun.ajax({
+						type:'get',
+						dataType:"JSON",
+						url:"/makeTTS/DeleteData.do?name="+name,
+						success:function(data){
+							if( "200" == data.code ) {
+								$.fun.alert({content:"정상 처리되었습니다.", action:function(){
+									location.reload();
+								}});
+							} else {
+								$.fun.alert({content:"Error!!!!!", action:function(){
+									location.reload();
+								}});
+							}
+						}
+					});
+				}, 
+				"닫기": function() {
+					$(this).dialog('destroy').remove();
+				}
+			} //button
+		}); 
+	} 
 
 function selectView(sel) {
 	recordSearchForm.submit() ;

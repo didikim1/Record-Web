@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lab603.record.web.mapper.maketts.MakeTTSMapper">
+
+	<sql id="addWhere">
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(name)">
+			AND NAME 	=  #{name}
+		</if>
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(ttsMent)">
+			AND TTS_MENT 	=  #{ttsMent}
+		</if>
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(sDate)">
+			AND DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d') BETWEEN #{sDate} AND #{eDate}
+		</if>
+	</sql>
+
+	<!-- 페이징 갯수 -->
+	<select id="SelectOnePagingCount" parameterType="myMap" resultType="int">
+		SELECT
+			COUNT(0)
+		FROM
+				 make_tts T1
+		WHERE 1=1
+		<include refid="addWhere"/>
+	</select>
+
+	<!-- 페이징 목록 -->
+	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 T1.NAME 														as name	 			<!--파일이름-->
+			,T1.TTS_MENT 													as ttsMent	 		<!-- tts멘트 -->
+			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
+		FROM
+			make_tts T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+		ORDER BY T1.CREATETIME DESC
+	</select>
+	
+	<!-- 상세 -->
+	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
+		SELECT
+			 T1.NAME 														as name	 			<!--파일이름-->
+			,T1.TTS_MENT 													as ttsMent	 		<!-- tts멘트 -->
+			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
+			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
+		FROM
+			make_tts T1
+		WHERE 1=1
+			<include refid="addWhere"/>
+	</select>
+
+	<!-- 추가 -->
+	<update id="RegisterData" parameterType="myMap" >
+			INSERT INTO make_tts
+		(
+			 NAME 							<!-- 파일이름		-->
+			,TTS_MENT 						<!-- tts멘트  	-->
+			,CREATETIME					 	<!-- 등록일 	-->
+		)
+		 VALUES
+		(
+			 #{name}				<!--파일이름 -->
+			,#{ttsMent}				<!--tts멘트  -->
+			,now()					<!--등록일 -->
+		)
+
+	</update>
+
+	<!-- 수정 -->
+	<update id="ModifyData" parameterType="myMap">
+		UPDATE make_tts 
+			SET 
+				CREATETIME = NOW()
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(name)">			, NAME 					= #{name} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(ttsMent)">		, TTS_MENT 				= #{ttsMent} </if>
+			WHERE	NAME = #{name}
+	</update>
+	
+	<update id="ModifyMainData" parameterType="myMap">
+		UPDATE make_tts 
+			SET 
+				ACTTIME = NOW()
+			WHERE	NAME = #{name}
+	</update>
+
+	<!-- 삭제 -->
+	<update id="DeleteData" parameterType="myMap">
+		DELETE FROM make_tts  WHERE  NAME  = #{name}
+	</update>
+
+</mapper>

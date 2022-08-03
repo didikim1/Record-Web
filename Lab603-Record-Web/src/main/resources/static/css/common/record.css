@@ -214,6 +214,20 @@ table.htable td {
   margin-top : 3px;
 }
 
+
+input.common_input3 {
+  width: 300px;
+  height: 30px;
+  line-height:24px;
+  font-size: 14px;
+  color: #1b1b1b;
+  border: 1px solid #ccc;
+  text-align: center;
+  float: left;
+  vertical-align: middle;
+  margin-top : 3px;
+}
+
 #layout_content select.common_select,
 #layout_content_popup select.common_select{
   width: 120px;

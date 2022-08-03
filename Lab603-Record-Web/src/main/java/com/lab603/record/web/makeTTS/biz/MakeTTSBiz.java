@@ -1,5 +1,7 @@
 package com.lab603.record.web.makeTTS.biz;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -7,17 +9,18 @@ import org.springframework.stereotype.Service;
 import com.lab603.record.web.framework.beans.BasicBean;
 import com.lab603.record.web.framework.mymap.MyCamelMap;
 import com.lab603.record.web.framework.mymap.MyMap;
+import com.lab603.record.web.framework.result.ResultCode;
+import com.lab603.record.web.framework.result.ResultMessage;
 import com.lab603.record.web.framework.utils.FrameworkPagingUtils;
-import com.lab603.record.web.mapper.recordplay.RecordPlayMapper;
+import com.lab603.record.web.mapper.maketts.MakeTTSMapper;
+import com.lab603.record.web.mapper.trunk.TrunkMapper;
 
 @Service("com.lab603.record.web.makeTTS.biz.MakeTTSBiz")
-public class MakeTTSBiz
+public class MakeTTSBiz 
 {
-	private static final org.apache.log4j.Logger Logger = org.apache.log4j.Logger.getLogger(MakeTTSBiz.class.getName());
-
-	@Resource(name = "com.lab603.record.web.mapper.recordplay.RecordPlayMapper")
-	RecordPlayMapper mMapper;
-
+	@Resource(name="com.lab603.record.web.mapper.maketts.MakeTTSMapper")
+	MakeTTSMapper mMapper;
+	
 	/**
 	* 페이징 데이터
 	* @param paramMap
@@ -53,6 +56,7 @@ public class MakeTTSBiz
 	{
 		return mMapper.RegisterData(paramMap);
 	}
+	
 
 	/**
 	* 수정
@@ -63,7 +67,8 @@ public class MakeTTSBiz
 	{
 		return mMapper.ModifyData(paramMap);
 	}
-
+	
+	
 	/**
 	* 삭제
 	* @param paramMap
