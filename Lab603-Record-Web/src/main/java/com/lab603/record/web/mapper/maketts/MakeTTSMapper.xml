@@ -3,11 +3,14 @@
 <mapper namespace="com.lab603.record.web.mapper.maketts.MakeTTSMapper">
 
 	<sql id="addWhere">
+		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(seq)">
+			AND SEQ 	=  #{seq}
+		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(name)">
 			AND NAME 	=  #{name}
 		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(ttsMent)">
-			AND TTS_MENT 	=  #{ttsMent}
+			AND TTS_MENT LIKE CONCAT('%',#{ttsMent},'%')
 		</if>
 		<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(sDate)">
 			AND DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d') BETWEEN #{sDate} AND #{eDate}
@@ -27,7 +30,8 @@
 	<!-- 페이징 목록 -->
 	<select id="ListPagingData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
-			 T1.NAME 														as name	 			<!--파일이름-->
+			 T1.SEQ 														as seq	 			<!--seq-->
+			,T1.NAME 														as name	 			<!--파일이름-->
 			,T1.TTS_MENT 													as ttsMent	 		<!-- tts멘트 -->
 			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
@@ -36,12 +40,14 @@
 		WHERE 1=1
 			<include refid="addWhere"/>
 		ORDER BY T1.CREATETIME DESC
+		LIMIT #{start}, #{end}
 	</select>
 	
 	<!-- 상세 -->
 	<select id="SelectOneData" parameterType="myMap" resultType="myCamelMap">
 		SELECT
-			 T1.NAME 														as name	 			<!--파일이름-->
+			 T1.SEQ 														as seq	 			<!--seq-->
+			,T1.NAME 														as name	 			<!--파일이름-->
 			,T1.TTS_MENT 													as ttsMent	 		<!-- tts멘트 -->
 			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
@@ -55,13 +61,13 @@
 	<update id="RegisterData" parameterType="myMap" >
 			INSERT INTO make_tts
 		(
-			 NAME 							<!-- 파일이름		-->
+			 SEQ							<!-- SEQ		-->
 			,TTS_MENT 						<!-- tts멘트  	-->
 			,CREATETIME					 	<!-- 등록일 	-->
 		)
 		 VALUES
 		(
-			 #{name}				<!--파일이름 -->
+			 #{seq}					<!--seq -->
 			,#{ttsMent}				<!--tts멘트  -->
 			,now()					<!--등록일 -->
 		)
@@ -73,21 +79,21 @@
 		UPDATE make_tts 
 			SET 
 				CREATETIME = NOW()
-				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(name)">			, NAME 					= #{name} </if>
+				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(seq)">			, SEQ 					= #{seq} </if>
 				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(ttsMent)">		, TTS_MENT 				= #{ttsMent} </if>
-			WHERE	NAME = #{name}
+			WHERE	SEQ = #{seq}
 	</update>
 	
 	<update id="ModifyMainData" parameterType="myMap">
 		UPDATE make_tts 
 			SET 
 				ACTTIME = NOW()
-			WHERE	NAME = #{name}
+			WHERE	SEQ = #{seq}
 	</update>
 
 	<!-- 삭제 -->
 	<update id="DeleteData" parameterType="myMap">
-		DELETE FROM make_tts  WHERE  NAME  = #{name}
+		DELETE FROM make_tts  WHERE  SEQ  = #{seq}
 	</update>
 
 </mapper>

@@ -151,16 +151,13 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '				<div align="center" >';
 		innerHTML += '					<table class="htable">';
 		innerHTML += '						<tr>';
-		innerHTML += '							<td><input type="text" class="userManageInput" name="name" placeholder="파일명을 입력하세요" name="ttsMent"></td>';
-		innerHTML += '						</tr>';
-		innerHTML += '						<tr>';
 		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;"name="ttsMent" placeholder="TTS를 입력하세요" ></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
 		innerHTML += '						</tr>';
 		innerHTML += '					</table>';
 		innerHTML += '				</div>';
 		innerHTML += '				<div class="border margin_l7">';
-		innerHTML += '					<button type="reset" class="userManageButtonTTS">삭제</button>';
 		innerHTML += '					<button type="button" class="userManageButtonTTS" onclick="fnRegisterPageProc()">등록</button>';
+		innerHTML += '					<button type="reset" class="userManageButtonTTS">삭제</button>';
 		innerHTML += '				</div>';
 		innerHTML += '			</form>';
 		innerHTML += '		</div>';
@@ -173,32 +170,13 @@ function fnOpenRegisterPageHTML(){
 
 function fnRegisterPageProc(){
 	
-	 var name			= $("[name=name]").val();
-	 var ttsMent		= $("[name=ttsMent]").val();
+	 var ttsMent		= $("textarea#[name=ttsMent]").val();
 	 
-	 
-	 if (isNull(name) && isNull(ttsMent)){
+	 if (isNull(ttsMent)){
 			$.fun.alert({
 				content : "입력된 내용이 없습니다. ",
 			});
-	 }else if( isNull(name) ){
-			$.fun.alert({
-				content : "파일명을 입력해 주세요.",
-				action : function() {
-					$("[name=name]").focus();
-				}
- 			});
-	 }else if( isNull(ttsMent) ){
-			$.fun.alert({
-				content : "ttsMent 입력해 주세요.",
-				action : function() {
-					$("[name=ttsMent]").focus();
-				}
-			});
 	 }else {
-		$.fun.alert({
-		content:title,
-		action:function(){
 				$.fun.ajax({
 					type:'get',
 					data: $("[name=registerForm]").serialize(),
@@ -209,15 +187,13 @@ function fnRegisterPageProc(){
 						$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
 							location.reload();
 						}});
-					}
-					}
-				});
+				}
 			}
-		}) // action function
-	}; // alert
+		}) 
+	}; 
 }
 
-function fnDeleteData(name){
+function fnDeleteData(seq){
 
 		var title = "["+name+"] TTS를 삭제 하시겠습니까?"
 			
@@ -231,7 +207,7 @@ function fnDeleteData(name){
 					$.fun.ajax({
 						type:'get',
 						dataType:"JSON",
-						url:"/makeTTS/DeleteData.do?name="+name,
+						url:"/makeTTS/DeleteData.do?seq="+seq,
 						success:function(data){
 							if( "200" == data.code ) {
 								$.fun.alert({content:"정상 처리되었습니다.", action:function(){
@@ -251,6 +227,22 @@ function fnDeleteData(name){
 			} //button
 		}); 
 	} 
+	
+function fnOpenRegisterContentPage(seq){
+	$.fun.ajax({
+		type:'get',
+		url:"/makeTTS/RegisterContent.do?seq="+seq,
+		success:function(data){
+			$.fun.layout({
+				id:"induacaAdd",
+				"content":data,
+				"title":"계정 상세내역",
+				"width":475,
+				"buttons":{}
+			});
+		}
+	});
+}
 
 function selectView(sel) {
 	recordSearchForm.submit() ;

@@ -35,14 +35,11 @@ public class MakeTTSAct
 	public String ListPagingData(Model model)
 	{
 		MyMap 			 paramMap 		  	  = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-		MyMap 			 findMainTrunkMap 	  = new MyMap();
-		MyCamelMap		 resultMainTrunk	  = null;
 		BasicBean 		 resultBean  	      = null;
 		
 		resultBean = mBiz.ListPagingData( paramMap );
-
+		
 		model.addAttribute("Data", 					resultBean);
-		model.addAttribute("MainTrunk", 			resultMainTrunk);
 		model.addAttribute("paramMap",  			paramMap);
 
 		return pagePrefix + "/ListPagingData";
@@ -53,6 +50,21 @@ public class MakeTTSAct
 	{
 		return pagePrefix + "/SelectOneData";
 	}
+	
+	
+//	@RequestMapping(value = { "/RegisterContent.do" })
+//	public String RegisterContent(Model model)
+//	{
+//		MyMap paramMap        = FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+//		List<MyMap> resultMap       = null;
+//
+//		resultMap	 = mBiz.SelectOneData(paramMap).getListMyMap(resultMap);
+//
+//		 model.addAttribute("paramMap",      paramMap);
+//		 model.addAttribute("Info",          resultMap);
+//
+//		return pagePrefix + "/RegisterData";
+//	}
 
 	@RequestMapping(value = { "/RegisterData.do" })
 	public @ResponseBody ResultMessage RegisterData(Model model)

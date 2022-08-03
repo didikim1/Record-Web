@@ -39,9 +39,12 @@
 						
 						<th scope="col" width="5%">번호</th>
 						<th scope="col" width="20%">파일명</th> 		   	
-						<th scope="col" width="30%">TTS</th> 		   	
-						<th scope="col" width="20%">파일크기</th> 			
-						<th scope="col" width="20%">생성일</th> 			
+						<th scope="col" width="20%">TTS</th> 		   	
+						<th scope="col" width="10%">Path</th> 			
+						<th scope="col" width="10%">FullPath</th> 			
+						<th scope="col" width="10%">WebLink</th> 			
+						<th scope="col" width="5%">파일크기</th> 			
+						<th scope="col" width="10%">생성일</th> 			
 						<th scope="col" width="5%">듣기</th>
 						<th scope="col" width="7%">삭제</th>
 					</tr>
@@ -50,10 +53,13 @@
 				<tr>
 				</tr>
 					 <c:forEach var="board" items="${Data.list}" varStatus="status">
-						<tr>
+						<tr onclick="fnOpenRegisterContentPage('${board.seq}')"  style="cursor: pointer;">
 							<td>${Data.paginationInfo.totalRecordCount -((Data.paginationInfo.currentPageNo -1) * Data.paginationInfo.recordCountPerPage) - status.index}</td>	<!-- 번호 -->
 							<td>${board.name}</td>				<!-- 명칭-->
 							<td>${board.ttsMent}</td>			<!-- tts멘트 -->
+							<td>${board.filesize}</td>			<!-- Path -->
+							<td>${board.filesize}</td>			<!-- FullPath -->
+							<td>${board.filesize}</td>			<!-- WebLink -->
 							<td>${board.filesize}</td>			<!-- 파일크기 -->
 							<td>${board.createtime}</td>		<!-- 생성일 --> 
 							<td><input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>
@@ -64,7 +70,7 @@
 
 				<c:if test="${Data.paginationInfo.totalRecordCount == 0 }">
 					<tr>
-						<td width="100%" colspan="12" >데이터가 존재 하지 않습니다.</td>
+						<td width="100%" colspan="10" >데이터가 존재 하지 않습니다.</td>
 					</tr>
 				</c:if>
 			</table>
