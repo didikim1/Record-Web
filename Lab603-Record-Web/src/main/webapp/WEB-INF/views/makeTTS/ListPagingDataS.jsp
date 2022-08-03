@@ -154,7 +154,7 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '							<td><input type="text" class="userManageInput" name="name" placeholder="파일명을 입력하세요" name="ttsMent"></td>';
 		innerHTML += '						</tr>';
 		innerHTML += '						<tr>';
-		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;" placeholder="TTS를 입력하세요" name="ttsMent"></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
+		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;"name="ttsMent" placeholder="TTS를 입력하세요" ></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
 		innerHTML += '						</tr>';
 		innerHTML += '					</table>';
 		innerHTML += '				</div>';
@@ -175,9 +175,11 @@ function fnRegisterPageProc(){
 	
 	 var name			= $("[name=name]").val();
 	 var ttsMent		= $("[name=ttsMent]").val();
+	 
+	 
 	 if (isNull(name) && isNull(ttsMent)){
 			$.fun.alert({
-				content : "등록 할 사항이 없습니다. ",
+				content : "입력된 내용이 없습니다. ",
 			});
 	 }else if( isNull(name) ){
 			$.fun.alert({
@@ -185,28 +187,36 @@ function fnRegisterPageProc(){
 				action : function() {
 					$("[name=name]").focus();
 				}
-			});
+ 			});
 	 }else if( isNull(ttsMent) ){
 			$.fun.alert({
-				content : "TTS멘트를 입력해 주세요.",
+				content : "ttsMent 입력해 주세요.",
 				action : function() {
 					$("[name=ttsMent]").focus();
 				}
 			});
 	 }else {
-		$.ajax({
-			type:'get',
-			data: $("[name=registerForm]").serialize(),
-			url:'./RegisterData.do',
-			dataType : "json",
-			success:function(data){
-				$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
-					location.reload();
-				}});
+		$.fun.alert({
+		content:title,
+		action:function(){
+				$.fun.ajax({
+					type:'get',
+					data: $("[name=registerForm]").serialize(),
+					url:'./RegisterData.do',
+					dataType : "json",
+					success:function(data){
+						if( "200" == data.code ){
+						$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
+							location.reload();
+						}});
+					}
+					}
+				});
 			}
-		});
-	}
+		}) // action function
+	}; // alert
 }
+
 function fnDeleteData(name){
 
 		var title = "["+name+"] TTS를 삭제 하시겠습니까?"
