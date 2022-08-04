@@ -87,47 +87,6 @@ function recordSearch() {
 	recordSearchForm.submit();
 }
 
-if("${result}" == "N"){
-	$.fun.alert({content:"검색된 항목이 없습니다."});
-}
-
-if("${validResult}" == "error"){
-	$.fun.alert({content:"검색값에 오류가 있습니다."});
-}
-
-
-// 테이블 정렬 기능 비활성황
-$(function(){
-	$("table thead th:eq(6)").data("sorter", false);
-	$("table thead th:eq(7)").data("sorter", false);
-
-	$("#myTable").tablesorter({
-		usNumberFormat : false,
-		sortReset      : true,
-		sortRestart    : true
-	});
-});
-
-
-//Excel 출력
-function excelWrite() {
-	$.ajax({
-		type:'get',
-		data: $("[name=recordSearchForm]").serialize(),
-		url:'./RecordSearchAndPlayExcel.do',
-		success:function(data)
-		{
-			if(200 == data)
-		 	{
-				location.href="./CommonExcelDown.do";
-		 	}
-			else if(99 == data)
-			{
-				$.fun.alert({content:"Excel 출력에 실패했습니다."});
-		 	}
-		}
-	});
-}
 
 function fnOpenRegisterPage(){
 	$.fun.layout({
@@ -157,7 +116,7 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '				</div>';
 		innerHTML += '				<div class="border margin_l7">';
 		innerHTML += '					<button type="button" class="userManageButtonTTS" onclick="fnRegisterPageProc()">등록</button>';
-		innerHTML += '					<button type="reset" class="userManageButtonTTS">삭제</button>';
+		innerHTML += '					<button type="reset"  class="userManageButtonTTSReset">지우기</button>';
 		innerHTML += '				</div>';
 		innerHTML += '			</form>';
 		innerHTML += '		</div>';
@@ -194,8 +153,8 @@ function fnRegisterPageProc(){
 }
 
 function fnDeleteData(seq){
-
-		var title = "["+name+"] TTS를 삭제 하시겠습니까?"
+	 
+		var title = "["+name+"] 를 삭제 하시겠습니까?"
 			
 	 	$.fun.layout({
 			id:"induacaAdd",
@@ -236,7 +195,7 @@ function fnOpenRegisterContentPage(seq){
 			$.fun.layout({
 				id:"induacaAdd",
 				"content":data,
-				"title":"계정 상세내역",
+				"title":"TTS상세내역",
 				"width":475,
 				"buttons":{}
 			});

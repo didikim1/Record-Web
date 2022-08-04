@@ -62,8 +62,8 @@
 							<td>${board.filesize}</td>			<!-- WebLink -->
 							<td>${board.filesize}</td>			<!-- 파일크기 -->
 							<td>${board.createtime}</td>		<!-- 생성일 --> 
-							<td><input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>
-							<td><input type="button" class="btn_it01"  value="삭제" onclick="fnDeleteData ('${board.name}')"/></td>
+							<td onclick="event.stopPropagation()"> <input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>
+							<td onclick="event.stopPropagation()"><input type="button" class="btn_it01"  value="삭제" onclick="fnDeleteData ('${board.seq}')"/></td>
 						</tr>
 					</c:forEach>
 				</tbody>

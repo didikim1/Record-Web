@@ -22,7 +22,7 @@
 		SELECT
 			COUNT(0)
 		FROM
-				 make_tts T1
+				 management_tts_wav T1
 		WHERE 1=1
 		<include refid="addWhere"/>
 	</select>
@@ -36,7 +36,7 @@
 			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
 		FROM
-			make_tts T1
+			management_tts_wav T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 		ORDER BY T1.CREATETIME DESC
@@ -52,14 +52,14 @@
 			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
 		FROM
-			make_tts T1
+			management_tts_wav T1
 		WHERE 1=1
 			<include refid="addWhere"/>
 	</select>
 
 	<!-- 추가 -->
 	<update id="RegisterData" parameterType="myMap" >
-			INSERT INTO make_tts
+			INSERT INTO management_tts_wav
 		(
 			 SEQ							<!-- SEQ		-->
 			,TTS_MENT 						<!-- tts멘트  	-->
@@ -76,24 +76,23 @@
 
 	<!-- 수정 -->
 	<update id="ModifyData" parameterType="myMap">
-		UPDATE make_tts 
+		UPDATE management_tts_wav 
 			SET 
 				CREATETIME = NOW()
-				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(seq)">			, SEQ 					= #{seq} </if>
 				<if test="@com.lab603.record.web.framework.config.mybatis.Utily@isNotEmpty(ttsMent)">		, TTS_MENT 				= #{ttsMent} </if>
 			WHERE	SEQ = #{seq}
 	</update>
 	
 	<update id="ModifyMainData" parameterType="myMap">
-		UPDATE make_tts 
+		UPDATE management_tts_wav 
 			SET 
-				ACTTIME = NOW()
+				CREATETIME = NOW()
 			WHERE	SEQ = #{seq}
 	</update>
 
 	<!-- 삭제 -->
 	<update id="DeleteData" parameterType="myMap">
-		DELETE FROM make_tts  WHERE  SEQ  = #{seq}
+		DELETE FROM management_tts_wav WHERE SEQ = #{seq}
 	</update>
 
 </mapper>

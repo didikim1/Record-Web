@@ -128,8 +128,9 @@ table.htable th {
 	color:#fff;
 	border-bottom:solid 1px #e6e6e6;
 	}
-table.htable th {
-	background-color:#3C5A91;
+
+table.htable th.TTSDetail {
+	background-color:#c8c8c8;
 	line-height: 40px;
 	padding:2px;
 	color:#fff;
@@ -143,7 +144,6 @@ table.htable td {
 	border-bottom:solid 1px #e6e6e6;
 	color:#404040;
 	}
-
 
 /* �뀒�씠釉� sorter */
 
@@ -325,6 +325,18 @@ input.common_input3 {
 }
 
 #layout_content_popup_sub button.userManageButtonTTS{
+  width: 120px;
+  height: 30px;
+  padding: 2px;
+  margin:5px 5px 5px auto;
+  font-size: 14px;
+  color: #fff;
+  background-color:#bf0c4963;
+  border: 1px solid transparent;
+  cursor:pointer;
+}
+
+#layout_content_popup_sub button.userManageButtonTTSReset{
   width: 120px;
   height: 30px;
   padding: 2px;
