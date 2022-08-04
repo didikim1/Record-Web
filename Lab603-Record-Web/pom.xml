@@ -18,6 +18,34 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+
+	<repositories>
+		<repository>
+			<id>thirdparty</id>
+			<name>libs-release</name>
+			<url>http://dev01.ring2pay.com:8081/content/repositories/thirdparty/</url>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>central</id>
+			<name>libs-release</name>
+			<url>http://220.73.45.183:8081/content/repositories/central/</url>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>inbiznet</id>
+			<name>inbiznet</name>
+			<url>http://220.73.45.183:8081/content/repositories/snapshots/</url>
+			<releases>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -123,6 +151,12 @@
 		    <groupId>com.jcraft</groupId>
 		    <artifactId>jsch</artifactId>
 		    <version>0.1.54</version>
+		</dependency>
+
+		<dependency>
+		  <groupId>voiceware.libttsapi</groupId>
+		  <artifactId>TTSS</artifactId>
+		  <version>1.0.0</version>
 		</dependency>
 
 	</dependencies>
