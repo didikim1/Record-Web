@@ -110,7 +110,7 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '				<div align="center" >';
 		innerHTML += '					<table class="htable">';
 		innerHTML += '						<tr>';
-		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;"name="ttsMent" placeholder="TTS를 입력하세요" ></textarea><button type="button" class="userManageButtonTTSplay" onclick="#">▶</button></td>';
+		innerHTML += '							<td><textarea class="textareaTTS" style="resize: none;"name="ttsMent" placeholder="TTS를 입력하세요" ></textarea><button type="button" class="userManageButtonTTSplay" onclick="fnMakeTTS()">▶</button></td>';
 		innerHTML += '						</tr>';
 		innerHTML += '					</table>';
 		innerHTML += '				</div>';
@@ -200,6 +200,16 @@ function fnOpenRegisterContentPage(seq){
 				"buttons":{}
 			});
 		}
+	});
+}
+
+function fnMakeTTS(){
+	$.fun.ajax({
+		type:'post',
+		url:"/tts/makeFile.do",
+		success:function(data){
+				alert("생성완료")
+			}
 	});
 }
 
