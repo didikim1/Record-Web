@@ -138,9 +138,9 @@ table.htable th.TTSDetail {
 	}
 
 table.htable td {
-	font-size: 13px;
+	font-size: 12px;
 	padding:3px;
-	line-height: 40px;
+	line-height: 20px;
 	border-bottom:solid 1px #e6e6e6;
 	color:#404040;
 	}
