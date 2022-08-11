@@ -1,5 +1,8 @@
 package com.lab603.record.web;
 
+import java.io.Console;
+import java.io.File;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -26,5 +29,28 @@ public class Lab603RecordWebApplicationTests {
 
 		System.out.println( dto.toString());
 	}
+	
+    @Test
+    public void test() {
+        File targetFolder = new File("D:\\Temp50\\");
+ //       File targetFolder = new File("D:\\Temp50\\sh");
+        boolean isDelete = deleteDirectoryAndFiles(targetFolder);
+    }
+    
+    private boolean deleteDirectoryAndFiles(File targetFolder) {
+        if(!targetFolder.exists()) {
+            return false;
+        }
+        
+        File[] files = targetFolder.listFiles();
+        for(File file : files) {
+            if(file.isDirectory()) {
+                deleteDirectoryAndFiles(file);
+            }
+            file.delete();
+        }
+        
+        return targetFolder.delete();
+    }
 
 }

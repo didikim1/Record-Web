@@ -460,6 +460,7 @@ input.common_input3 {
   white-space: nowrap;
   width: 200px;
   height: 20px;
+ 
 }
 
 textarea{
@@ -471,4 +472,44 @@ textarea{
     font-size: 14px;
     color: #1b1b1b;
     border: 1px solid #c5c5c5;
+}
+
+.InputTitle{
+	width: 410px;
+    height: 40px;
+    border: 1px solid #999999;
+}
+input .InputFilename{
+	width: 400px;
+	height: 25px;
+}
+button .btnUpload{
+	width: 20px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
+.filebox label {
+    color: #999999;
+    vertical-align: middle;
+    cursor: pointer;
+    height: 70px;
+    width: 50px;
+    border: 1px solid #999999;
+    padding: 6.3px;
+}
+.filebox .upload-name {
+    display: inline-block;
+    height: 30px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
 }

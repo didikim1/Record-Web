@@ -17,6 +17,10 @@
 					<td>${Info.name}</td>
 				</tr>
 				<tr>
+					<th scope="col" class="TTSDetail"width="120px" class="LogPart">TITLE</th>
+					<td>${Info.title}</td>
+				</tr>
+				<tr>
 					<th scope="col" class="TTSDetail"width="120px" class="LogPart">TTS</th>
 					<td>${Info.ttsMent}</td>
 				</tr>

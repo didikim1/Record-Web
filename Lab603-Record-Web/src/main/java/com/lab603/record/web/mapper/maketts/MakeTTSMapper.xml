@@ -32,6 +32,7 @@
 		SELECT
 			 T1.SEQ 														as seq	 			<!--seq-->
 			,T1.NAME 														as name	 			<!--파일이름-->
+			,T1.TITLE 														as title	 		<!--파일이름-->
 			,T1.TTS_MENT 													as ttsMent	 		<!-- tts멘트 -->
 			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
@@ -48,6 +49,7 @@
 		SELECT
 			 T1.SEQ 														as seq	 			<!--seq-->
 			,T1.NAME 														as name	 			<!--파일이름-->
+			,T1.TITLE 														as title	 			<!--파일이름-->
 			,T1.TTS_MENT 													as ttsMent	 		<!-- tts멘트 -->
 			,T1.FILESIZE 		                                       	 	as filesize 		<!--파일사이즈-->
 			,DATE_FORMAT(T1.CREATETIME, '%Y-%m-%d %H:%i:%s') 			   	as createtime 		<!--등록일-->
@@ -63,12 +65,20 @@
 		(
 			 SEQ							<!-- SEQ		-->
 			,TTS_MENT 						<!-- tts멘트  	-->
+			,TITLE 							<!-- tts타이틀  	-->
+			,WEB_LINK 						<!-- 실행경로   	-->
+			,IVR_ALL_PATH 					<!-- 실제파일위치  	-->
+			,CALL_TTS_WAV 					<!-- 접근가능경로	-->
 			,CREATETIME					 	<!-- 등록일 	-->
 		)
 		 VALUES
 		(
-			 #{seq}					<!--seq -->
-			,#{ttsMent}				<!--tts멘트  -->
+			 #{seq}					<!--seq 	-->
+			,#{ttsMent}				<!--tts멘트  	-->
+			,#{ttsTitle}			<!--tts타이틀  -->
+			,#{webLink}				<!--실행경로  	-->
+			,#{ivrPath}				<!--실제파일위치  -->
+			,#{callTTSWav}			<!--접근가능경로  -->
 			,now()					<!--등록일 -->
 		)
 

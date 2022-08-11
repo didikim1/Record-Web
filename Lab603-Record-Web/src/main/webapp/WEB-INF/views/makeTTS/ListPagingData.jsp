@@ -27,6 +27,7 @@
 					</table>
 				</form>
 				<button type="button" class="btn_it02" onclick="fnOpenRegisterPage();">TTS생성</button>
+				<button type="button" class="btn_it02" onclick="fnOpenUploadPage();">파일업로드</button>
 			</div>
 
 			<p class="result" style="font-size: 12px;text-align: right;">
@@ -38,7 +39,8 @@
 					<tr>
 						
 						<th scope="col" width="5%">번호</th>
-						<th scope="col" width="20%">파일명</th> 		   	
+						<th scope="col" width="10%">파일명</th> 		   	
+						<th scope="col" width="10%">TITLE</th> 		   	
 						<th scope="col" width="20%">TTS</th> 		   	
 						<th scope="col" width="10%">Path</th> 			
 						<th scope="col" width="10%">FullPath</th> 			
@@ -56,6 +58,7 @@
 						<tr onclick="fnOpenRegisterContentPage('${board.seq}')"  style="cursor: pointer;">
 							<td>${Data.paginationInfo.totalRecordCount -((Data.paginationInfo.currentPageNo -1) * Data.paginationInfo.recordCountPerPage) - status.index}</td>	<!-- 번호 -->
 							<td>${board.name}</td>				<!-- 명칭-->
+							<td>${board.title}</td>				<!-- 명칭-->
 							<td>${board.ttsMent}</td>			<!-- tts멘트 -->
 							<td>${board.filesize}</td>			<!-- Path -->
 							<td>${board.filesize}</td>			<!-- FullPath -->

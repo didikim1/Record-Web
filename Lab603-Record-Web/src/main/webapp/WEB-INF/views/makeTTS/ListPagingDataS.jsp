@@ -94,7 +94,7 @@ function fnOpenRegisterPage(){
 		"content":fnOpenRegisterPageHTML(),
 		"title":"TTS생성",
 		"width":470,
-		"height": 350,
+		"height": 300,
 		"buttons":{}
 	});
 }
@@ -116,7 +116,7 @@ function fnOpenRegisterPageHTML(){
 		innerHTML += '				</div>';
 		innerHTML += '				<div class="border margin_l7">';
 		innerHTML += '					<button type="button" class="userManageButtonTTS" onclick="fnRegisterPageProc()">등록</button>';
-		innerHTML += '					<button type="reset"  class="userManageButtonTTSReset">지우기</button>';
+		innerHTML += '					<button type="button"  class="userManageButtonTTSReset" onclick = "fnRegisterDelect()">지우기</button>';
 		innerHTML += '				</div>';
 		innerHTML += '			</form>';
 		innerHTML += '		</div>';
@@ -125,7 +125,58 @@ function fnOpenRegisterPageHTML(){
 		
 		return innerHTML;
 	}
+	
+ function fnOpenUploadPage(){
+	$.fun.layout({
+		id:"induacaAdd",
+		"content":fnOpenUploadPageHTML(),
+		"title":"파일업로드",
+		"width":470,
+		"height": 250,
+		"buttons":{}
+	});
+}
 
+function fnOpenUploadPageHTML(){
+		
+		var innerHTML = "";
+		innerHTML += '<div id="layout_content_popup_sub">';
+		innerHTML += '	<div class="content">';
+		innerHTML += '		<div class="border_sub">';
+		innerHTML += '			<form id ="UploadForm" name="UploadForm" action="uploadFile" method ="post" enctype="multipart/form-data">';
+		innerHTML += '				<div align="center" >';
+		innerHTML += '					<table class="htable">';
+ 		innerHTML += '						<tr>';
+		innerHTML += '							<td><input type ="text" class="InputTitle" name="ttsTitle" placeholder="타이틀을 입력하세요."></td>';
+		innerHTML += '						</tr>';
+		innerHTML +='       				<tr class="fileTR">';
+		innerHTML +='          					<td>';
+		innerHTML +='              					<div class="ipt_file_area makeFlex ai_C">';
+		innerHTML +='                   			<div class="filebox makeFlex ai_FE">';
+		innerHTML +='                       			<input class="upload-name" disabled="disabled">';
+		innerHTML +='                      				<label>';
+		innerHTML +='                          				파일 업로드 +';
+		innerHTML +='                          				<input type="file" name = "fileName" id="fileName" multiple class="upload-hidden" onchange="uploadName(this)">';
+		innerHTML +='                      				</label>';
+		innerHTML +='                 				</div>';
+		innerHTML +='                 				</div>';
+		innerHTML +='             				</td>';
+		innerHTML +='         				</tr>';
+		innerHTML += '					</table>';
+		innerHTML += '					</div>';
+		innerHTML  += '				</div>'; 
+		innerHTML += '				<div class="border margin_l7">';
+		innerHTML += '				<button type="button" class="userManageButtonTTS" onclick="fnRegisterTitle()">등록</button>';
+		innerHTML += '				<button type="button"  class="userManageButtonTTSReset" onclick = "fnRegisterCancel()">취소</button>';
+		innerHTML += '				</div>';
+		innerHTML += '			</form>';
+		innerHTML += '		</div>';
+		innerHTML += '	</div>';
+		innerHTML += '</div>';
+		
+		return innerHTML;
+	}
+ 
 
 function fnRegisterPageProc(){
 	
@@ -143,15 +194,50 @@ function fnRegisterPageProc(){
 					dataType : "json",
 					success:function(data){
 						if( "200" == data.code ){
-						$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
+							$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
+								location.reload();
+							}});
+						}else {
+							$.fun.alert({content:"등록실패", action:function(){
 							location.reload();
-						}});
-				}
+				}});
 			}
-		}) 
-	}; 
+		  } 
+		}); 
+	}
 }
 
+ function fnRegisterTitle(){
+	
+	 var ttsTitle		= $("[name=ttsTitle]").val();
+	 var fileName		= $("[name=fileName]").val();
+	 var formData 		= new FormData($("#UploadForm")[0]);
+	
+ 	 if (isNull(ttsTitle)){
+			$.fun.alert({
+				content : "타이틀을 입력하세요.",
+			}); 
+ 	 }else if (isNull(fileName)){
+			$.fun.alert({
+				content : "등록할 파일이없습니다.",
+			});
+	 }else {
+				$.fun.ajax({
+					type:'post',
+					url:'./uploadFile.do',
+					data: formData,
+					processData : false,
+					contentType : false,
+			        async    	: false,
+					success:function(data){
+						$.fun.alert({content:"파일업로드 되었습니다.", action:function(){
+							location.reload();
+					}
+				})
+			}
+		})
+	} 
+ }
 function fnDeleteData(seq){
 	 
 		var title = "["+name+"] 를 삭제 하시겠습니까?"
@@ -187,6 +273,10 @@ function fnDeleteData(seq){
 		}); 
 	} 
 	
+function fnRegisterCancel(){
+		location.reload();
+	} 
+	
 function fnOpenRegisterContentPage(seq){
 	$.fun.ajax({
 		type:'get',
@@ -205,13 +295,28 @@ function fnOpenRegisterContentPage(seq){
 
 function fnMakeTTS(){
 	$.fun.ajax({
-		type:'post',
-		url:"/tts/makeFile.do",
+		type:'get',
+		url:"./makeFile.do",
+		data:  $("textarea#[name=ttsMent]"),
 		success:function(data){
-				alert("생성완료")
+				$.fun.alert({content:"파일이 생성 되었습니다.", action:function(){
+				}});
 			}
 	});
 }
+
+function fnRegisterDelect(){
+	$.fun.ajax({
+		type:'get',
+		url:"./DelectFile.do",
+		data:  $("textarea#[name=ttsMent]"),
+		success:function(data){
+				$.fun.alert({content:"파일이 삭제되었습니다.", action:function(){
+				}});
+		}
+	});
+}
+
 
 function selectView(sel) {
 	recordSearchForm.submit() ;
@@ -221,4 +326,15 @@ function selectView(sel) {
 function resetButton() {
 	location.href="./recordSearchAndPlay.do";
 }
+
+
+/*  upload-name 에 파일명을 불러오기 */ 
+function uploadName(e){
+    var files = e.files;
+    var filename = files[0].name;  //console.log(filename);
+    // 추출한 파일명 삽입 
+    var upload_name = e.parentNode.previousElementSibling;
+    upload_name.value = filename;
+}  //uploadName
+ 
 </script>
