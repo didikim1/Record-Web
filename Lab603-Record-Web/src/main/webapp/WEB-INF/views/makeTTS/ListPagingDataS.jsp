@@ -341,10 +341,16 @@ function fnRegisterDelect(){
 	$.fun.ajax({
 		type:'get',
 		url:"./DelectFile.do",
-		data:  $("textarea#[name=ttsMent]"),
+		dataType:"json",
+		data:  temp_tts_wav,
 		success:function(data){
-				$.fun.alert({content:"파일이 삭제되었습니다.", action:function(){
-				}});
+				if(data.code == "200"){
+					$.fun.alert({content:"파일이 삭제되었습니다.", action:function(){
+					}});
+				}else{
+					$.fun.alert({content:"파일이 삭제를 실패하였습니다.", action:function(){
+					}});
+				}
 		}
 	});
 }

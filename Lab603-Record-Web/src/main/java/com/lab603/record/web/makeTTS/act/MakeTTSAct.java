@@ -125,6 +125,8 @@ public class MakeTTSAct
 		ttsWebLink  += filePath.replace(TTS_Wav_TempFile_Prefix, "")+new File(dto.getFilepath()).getName();
 		ttsWebLink	=  ttsWebLink.replaceAll("\\{ip}",  ip);
 
+		System.out.println(dto.toString());
+
 		dto.setWebLink(ttsWebLink);
 
 		resultMap.put("result", dto);
@@ -368,8 +370,8 @@ public class MakeTTSAct
 	@RequestMapping(value = {"/DelectFile.do" })
 	public @ResponseBody ResultMessage DelectFile(Model model)
 	{
-		/*
 		MyMap 		paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		/*
 		MyCamelMap 	resultMap 				= new MyCamelMap();
 
 		File rootDir 	= new File(TTS_Wav_File_Prefix);
@@ -392,7 +394,17 @@ public class MakeTTSAct
 	      }
 	      return new ResultMessage(ResultCode.RESULT_OK, resultMap);
 	      */
-		return null;
+
+		String filepath = paramMap.getStr("filepath");
+
+		System.out.println("filepath = " + filepath);
+
+
+		if( new File(filepath).delete() )
+		{
+			return new ResultMessage(ResultCode.RESULT_OK, null);
+		}
+		return new ResultMessage(ResultCode.RESULT_INTERNAL_SERVER_ERROR, null);
 	}
 
 }
