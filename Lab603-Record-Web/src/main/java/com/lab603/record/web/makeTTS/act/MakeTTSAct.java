@@ -10,6 +10,7 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -43,6 +44,8 @@ import com.lab603.record.web.framework.result.ResultCode;
 import com.lab603.record.web.framework.result.ResultMessage;
 import com.lab603.record.web.makeTTS.biz.MakeTTSBiz;
 import com.lab603.record.web.trunk.biz.TrunkBiz;
+
+import scala.reflect.internal.Trees.New;
 
 
 @Controller
@@ -178,66 +181,41 @@ public class MakeTTSAct
 	 * 파일업로드
 	 */
 	@PostMapping(value = {"/uploadFile.do" })
-	public String uploadFile ( HttpServletRequest request, @RequestParam("fileName") MultipartFile[] fileName)
+	public @ResponseBody ResultMessage uploadFile ( HttpServletRequest request, @RequestParam("fileName") MultipartFile[] fileName)
 	{
-		String saveDir = request.getSession().getServletContext().getRealPath("D:/Temp50/upload");
-
-		File dir = new File(saveDir);
-        if(!dir.exists()) {
-            dir.mkdirs();
-        }
-        
+		
+		MyMap 		paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
+		MyCamelMap 	resultMap 				= new MyCamelMap();
+		int			resultRegisterDataCount = 0;
+		
+//		resultRegisterDataCount = mBiz.RegisterData( paramMap );
+		
+//		String saveDir = request.getSession().getServletContext().getRealPath("D:/Temp50/upload"+orifileName);
+		String Dir = "D:/Temp50/upload/";
+		
         for(MultipartFile multipartFile : fileName) {
             if(!multipartFile.isEmpty()) {
-                // 기존 파일 이름을 받고 확장자 저장
                 String orifileName = multipartFile.getOriginalFilename();
-                String ext = orifileName.substring(orifileName.lastIndexOf("."));
+                String ext = orifileName.substring(orifileName.lastIndexOf(".")); 
 
                 // 파일 저장
                 try {
-                	multipartFile.transferTo(new File(saveDir + "/" + fileName));
+                	multipartFile.transferTo(new File(Dir+ orifileName + ext));
+                	
+	                	Map<String, String> param = new HashMap<String, String>();
+	                	param.put("ttsTitle", orifileName); //  타이틀
+	                	param.put("ivrPath" , Dir); // 파일이 저장된 주소
+	                	resultRegisterDataCount = mBiz.RegisterData( paramMap );
+	                	
                 }catch (IllegalStateException | IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-      return "uploadEnd";
+        return new ResultMessage(ResultCode.RESULT_OK, null);
   }
 	
-//		List<File> list = new ArrayList<>();
-//
-//		for (MultipartFile fileName : uploadfile) {			
-//			File dto = new File( fileName.getOriginalFilename(), fileName.getContentType() );	
-//			list.add(dto);
-//			File newFileName = new File("D:/Temp50/" + dto.getName());
-//			
-//			TTSWavDTO TTsDto = TTSServerInfoBizmBiz.uploadFile(fileName);
-//			
-//			try {
-//				fileName.transferTo(newFileName);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		model.addAttribute("files", list);
-//		return "";
-		
-//		MyMap 	paramMap 				  	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
-//		MyCamelMap 	resultMap 				= new MyCamelMap();
-//		
-//		System.out.println("@@@");
-//		
-//		TTSWavDTO dto = TTSServerInfoBizmBiz.ttsMake(ttsMent);
-//		
-//		System.out.println( dto.toString());
-//		System.out.println( dto.toString());
-//		
-//		resultMap.put("result", dto.toString());
-//		
-//		return new ResultMessage(ResultCode.RESULT_OK, resultMap);
-	
 	/**
-	 *  
 	 * TTS생성(임시파일)
 	 */
 	@RequestMapping(value = {"/makeFile.do" })
@@ -259,7 +237,7 @@ public class MakeTTSAct
 	} 
 	
 	/**
-	 * 임시파일삭제 
+	 * 임시저장 tts 파일삭제 
 	 */
 	@RequestMapping(value = {"/DelectFile.do" })
 	public @ResponseBody ResultMessage DelectFile(Model model)
@@ -288,27 +266,5 @@ public class MakeTTSAct
 	      }
 	      return new ResultMessage(ResultCode.RESULT_OK, resultMap);
 	    }
-	
-//	@PostMapping("/UploadFile.do")
-//	public  ResultMessage uploadPost (MultipartFile[] uploadFile) {
-//		
-//		String uploadFolder = "D:/Temp50/";
-//		
-//		for(MultipartFile multipartFile : uploadFile) {
-//			
-//			String uploadFileName = multipartFile.getOriginalFilename();
-//			
-//			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\")+1);
-//			
-//			File saveFile = new File(uploadFolder, uploadFileName);
-//			
-//			try {
-//				multipartFile.transferTo(saveFile);
-//			} catch (Exception e) {
-//				logger.error(e.getMessage());
-//			}
-//		}
-//		return new ResultMessage(ResultCode.RESULT_OK, resultMap);
-//	}
 	
 }

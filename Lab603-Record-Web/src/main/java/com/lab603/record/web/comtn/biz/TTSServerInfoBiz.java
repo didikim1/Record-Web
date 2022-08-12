@@ -27,6 +27,9 @@ public class TTSServerInfoBiz
 	
 	@Value("${TTS.Wav.RealFile.Prefix}")
 	private String TTS_Wav_RealFile_Prefix;
+	
+	@Value("${TTS.Wav.UploadFile.Prefix}")
+	private String TTS_Wav_UploadFile_Prefix;
 
 	@Resource(name="com.lab603.record.web.mapper.comtn.ttsServerInfo.TTSServerInfoMapper")
 	TTSServerInfoMapper mMapper;
@@ -85,7 +88,6 @@ public class TTSServerInfoBiz
 	}
 
 
-
 	public MyMap SelectOneData(MyMap paramMap)
 	{
 		List<MyMap> result = mMapper.SelectOneData(paramMap);
@@ -96,27 +98,5 @@ public class TTSServerInfoBiz
 		return result.get(0);
 	}
 
-	
-	public TTSWavDTO uploadFile(MultipartFile file) {
-		System.out.println("TTS_Wav_File_Prefix : " + TTS_Wav_File_Prefix);
-		
-		MyMap	    ttsServerInfo 	= null;
-		TTSWavDTO 	dto 			= null;
-		String		filePath	    = null;
-		
-		ttsServerInfo = this.SelectOneData(new MyMap());
-		if( ttsServerInfo == null ) { Logger.error("TTS 서버가 등록되지 않았습니다."); return null; }
-		
-		TTSMake proc = new TTSMake(TTS_Wav_File_Prefix, ttsServerInfo.getStr("ip"), ttsServerInfo.getInt("port"));
-		
-		if( filePath != null )
-		{
-			dto = new TTSWavDTO();
-			dto.setFilepath(filePath);
-			dto.setFilesize(new File(filePath).length());
-		}
-		
-		return dto;
-	}
-	
+
 }
