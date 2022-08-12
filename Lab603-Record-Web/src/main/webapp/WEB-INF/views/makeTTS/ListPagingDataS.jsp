@@ -9,6 +9,13 @@ var temp_tts_wav = {
 		filepath:null,
 		filesize:0
 };
+/*db파일저장*/
+var temp_tts_wav = {
+		tts:null,
+		filepath:null,
+		ivrPath:null;
+		filesize:0
+};
 
 
 $(document).ready(function(){
@@ -187,7 +194,7 @@ function fnOpenUploadPageHTML(){
 	return innerHTML;
 }
 
-
+/*TTS 생성*/
 function fnRegisterPageProc(){
 
 	 var ttsMent		= $("textarea#[name=ttsMent]").val();
@@ -210,6 +217,9 @@ function fnRegisterPageProc(){
 					dataType : "json",
 					success:function(data){
 						if( "200" == data.code ){
+							temp_tts_wav.ivrPath = data.result.result.ivrPath;
+							temp_tts_wav.filesize = data.result.result.filesize;
+							
 							$.fun.alert({content:"TTS가 등록되었습니다.", action:function(){
 								location.reload();
 							}});
@@ -223,6 +233,7 @@ function fnRegisterPageProc(){
 	}
 }
 
+/*파일 업로드*/
  function fnRegisterTitle(){
 
 	 var ttsTitle		= $("[name=ttsTitle]").val();
@@ -254,6 +265,8 @@ function fnRegisterPageProc(){
 		})
 	}
  }
+ 
+ /*DB등록 파일 삭제*/
 function fnDeleteData(seq){
 
 		var title = "["+name+"] 를 삭제 하시겠습니까?"
@@ -268,6 +281,7 @@ function fnDeleteData(seq){
 					$.fun.ajax({
 						type:'get',
 						dataType:"JSON",
+						data:  temp_tts_wav,
 						url:"/makeTTS/DeleteData.do?seq="+seq,
 						success:function(data){
 							if( "200" == data.code ) {
@@ -289,10 +303,13 @@ function fnDeleteData(seq){
 		});
 	}
 
+ /*파일 업로드 취소버튼*/
 function fnRegisterCancel(){
 		location.reload();
 	}
-
+	
+	
+/*tts 상세내역 model*/
 function fnOpenRegisterContentPage(seq){
 	$.fun.ajax({
 		type:'get',
@@ -302,14 +319,14 @@ function fnOpenRegisterContentPage(seq){
 				id:"induacaAdd",
 				"content":data,
 				"title":"TTS상세내역",
-				"width":475,
+				"width":860,
 				"buttons":{}
 			});
 		}
 	});
 }
 
-
+/*임시파일 생성 (재생버튼)*/
 function fnMakeTTS(){
 	$.fun.ajax({
 		type:'get',
@@ -336,7 +353,7 @@ function fnMakeTTS(){
 	});
 
 }
-
+/*임시파일 지우기*/
 function fnRegisterDelect(){
 	$.fun.ajax({
 		type:'get',

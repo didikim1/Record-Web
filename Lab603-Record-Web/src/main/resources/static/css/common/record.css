@@ -142,6 +142,7 @@ table.htable td {
 	padding:3px;
 	line-height: 20px;
 	border-bottom:solid 1px #e6e6e6;
+	white-space:normal;
 	color:#404040;
 	}
 
@@ -428,10 +429,6 @@ input.common_input3 {
 	border: 1px solid #e0e0e0;
 }
 
-.border_sub{
-	border: 1px solid #e0e0e0;
-	border-bottom: none;
-}
 
 .margin_l1{margin-left: 190px;}
 .margin_l2{margin-left: 30px;}

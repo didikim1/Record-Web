@@ -262,6 +262,21 @@ public class MakeTTSAct
 		{
 			resultCode			  		= ResultCode.RESULT_OK;
 		}
+		
+		String filepath = paramMap.getStr("filepath");
+
+		System.out.println(filepath);
+		System.out.println(filepath);
+		System.out.println(filepath);
+		System.out.println(filepath);
+		System.out.println(filepath);
+		System.out.println(filepath);
+		System.out.println(filepath);
+		
+		if( new File(filepath).delete() )
+		{
+			return new ResultMessage(ResultCode.RESULT_OK, null);
+		}
 
 		 model.addAttribute("paramMap",      paramMap);
 
