@@ -58,11 +58,11 @@
 						<tr onclick="fnOpenRegisterContentPage('${board.seq}')"  style="cursor: pointer;">
 							<td>${Data.paginationInfo.totalRecordCount -((Data.paginationInfo.currentPageNo -1) * Data.paginationInfo.recordCountPerPage) - status.index}</td>	<!-- 번호 -->
 							<td>${board.name}</td>				<!-- 명칭-->
-							<td>${board.title}</td>				<!-- 명칭-->
+							<td>${board.title}</td>				<!-- 타이틀-->
 							<td>${board.ttsMent}</td>			<!-- tts멘트 -->
-							<td>${board.filesize}</td>			<!-- Path -->
-							<td>${board.filesize}</td>			<!-- FullPath -->
-							<td>${board.filesize}</td>			<!-- WebLink -->
+							<td>${board.webLink}</td>			<!-- Path -->
+							<td>${board.ivrPath}</td>			<!-- FullPath -->
+							<td>${board.callTTSWav}</td>		<!-- WebLink -->
 							<td>${board.filesize}</td>			<!-- 파일크기 -->
 							<td>${board.createtime}</td>		<!-- 생성일 --> 
 							<td onclick="event.stopPropagation()"> <input type="button" class="btn_it01" onclick="fnRecordPlay('${board.cid}');"  value="재생"/></td>

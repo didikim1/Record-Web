@@ -181,14 +181,12 @@ public class MakeTTSAct
 	 * 파일업로드
 	 */
 	@PostMapping(value = {"/uploadFile.do" })
-	public @ResponseBody ResultMessage uploadFile ( HttpServletRequest request, @RequestParam("fileName") MultipartFile[] fileName)
+	public @ResponseBody ResultMessage uploadFile ( HttpServletRequest request, @RequestParam("fileName") MultipartFile[] fileName, @RequestParam String ttsTitle)
 	{
 		
 		MyMap 		paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
 		MyCamelMap 	resultMap 				= new MyCamelMap();
 		int			resultRegisterDataCount = 0;
-		
-//		resultRegisterDataCount = mBiz.RegisterData( paramMap );
 		
 //		String saveDir = request.getSession().getServletContext().getRealPath("D:/Temp50/upload"+orifileName);
 		String Dir = "D:/Temp50/upload/";
@@ -202,9 +200,8 @@ public class MakeTTSAct
                 try {
                 	multipartFile.transferTo(new File(Dir+ orifileName + ext));
                 	
-	                	Map<String, String> param = new HashMap<String, String>();
-	                	param.put("ttsTitle", orifileName); //  타이틀
-	                	param.put("ivrPath" , Dir); // 파일이 저장된 주소
+                		paramMap.put("ttsTitle" , ttsTitle); // 타이틀
+                		paramMap.put("ivrPath" , Dir); // 파일이 저장된 주소
 	                	resultRegisterDataCount = mBiz.RegisterData( paramMap );
 	                	
                 }catch (IllegalStateException | IOException e) {

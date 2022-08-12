@@ -26,11 +26,11 @@
 				</tr>
 				<tr>
 					<th scope="col" class="TTSDetail"width="120px" class="LogPart">Path</th>
-					<td>${Info.path}</td>
+					<td>${Info.callTTSWav}</td>
 				</tr>
 				<tr>
 					<th scope="col" class="TTSDetail"width="120px" class="LogPart">FullPath</th>
-					<td>${Info.fullPath}</td>
+					<td>${Info.ivrPath}</td>
 				</tr>
 				<tr>
 					<th scope="col" class="TTSDetail"width="120px" class="LogPart">WebLink</th>
