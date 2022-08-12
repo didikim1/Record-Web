@@ -19,10 +19,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.filechooser.FileSystemView;
 
+import org.jxls.common.Size;
 import org.neo4j.cypher.internal.compiler.v1_9.parser.ParsedNamedPath;
 import org.neo4j.cypher.internal.compiler.v2_1.docbuilders.internalDocBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +47,7 @@ import com.lab603.record.web.framework.result.ResultMessage;
 import com.lab603.record.web.makeTTS.biz.MakeTTSBiz;
 import com.lab603.record.web.trunk.biz.TrunkBiz;
 
+import ch.qos.logback.core.util.FileSize;
 import scala.reflect.internal.Trees.New;
 
 
@@ -53,6 +56,15 @@ import scala.reflect.internal.Trees.New;
 public class MakeTTSAct 
 {
 	final String pagePrefix = "makeTTS";
+	
+	@Value("${TTS.Wav.File.Prefix}")
+    private String TTS_Wav_File_Prefix;
+	
+	@Value("${TTS.Wav.RealFile.Prefix}")
+	private String TTS_Wav_RealFile_Prefix;
+	
+	@Value("${TTS.Wav.UploadFile.Prefix}")
+	private String TTS_Wav_UploadFile_Prefix;
 
 	private static final Logger logger = LoggerFactory.getLogger(MakeTTSAct.class);
 	
@@ -189,7 +201,7 @@ public class MakeTTSAct
 		int			resultRegisterDataCount = 0;
 		
 //		String saveDir = request.getSession().getServletContext().getRealPath("D:/Temp50/upload"+orifileName);
-		String Dir = "D:/Temp50/upload/";
+		String Dir = TTS_Wav_UploadFile_Prefix;
 		
         for(MultipartFile multipartFile : fileName) {
             if(!multipartFile.isEmpty()) {
@@ -221,7 +233,6 @@ public class MakeTTSAct
 		MyMap 	paramMap 				  	= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
 		MyCamelMap 	resultMap 				= new MyCamelMap();
 		
-		System.out.println("@@@");
 		
 		TTSWavDTO dto = TTSServerInfoBizmBiz.ttsMake(ttsMent);
 
@@ -243,7 +254,7 @@ public class MakeTTSAct
 		MyMap 		paramMap 				= FrameworkBeans.findHttpServletBean().findClientRequestParameter();
 		MyCamelMap 	resultMap 				= new MyCamelMap();
 		
-		File rootDir 	= new File("D:/Temp50/Pass/");
+		File rootDir 	= new File(TTS_Wav_File_Prefix);
 		
 	    File[] folders 	= rootDir.listFiles();
 	      if (folders != null) 
